@@ -367,5 +367,90 @@ def set_payroll(employee_id):
 
     return jsonify({"employee_id": employee_id, "net_salary": net_salary}), 201
 
+    # GET all departments (with employee count)
+@app.route('/departments', methods=['GET'])
+def get_departments():
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT d.id, d.name, d.description, COUNT(e.id) as employee_count
+        FROM departments d
+        LEFT JOIN employees e ON e.department_id = d.id
+        GROUP BY d.id, d.name, d.description
+    """)
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    departments = []
+    for row in rows:
+        departments.append({
+            "id": row[0], "name": row[1], "description": row[2], "employee_count": row[3]
+        })
+    return jsonify(departments)
+
+# GET employees in one department
+@app.route('/departments/<int:dept_id>/employees', methods=['GET'])
+def get_department_employees(dept_id):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id, name, email, role FROM employees WHERE department_id=%s", (dept_id,))
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    employees = []
+    for row in rows:
+        employees.append({"id": row[0], "name": row[1], "email": row[2], "role": row[3]})
+    return jsonify(employees)
+
+# Admin: Add a new department
+@app.route('/departments', methods=['POST'])
+def add_department():
+    data = request.get_json()
+    name = data.get("name")
+    description = data.get("description", "")
+
+    if not name:
+        return jsonify({"error": "Department name required"}), 400
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("INSERT INTO departments (name, description) VALUES (%s, %s)", (name, description))
+    conn.commit()
+    new_id = cur.lastrowid
+    cur.close()
+    conn.close()
+    return jsonify({"id": new_id, "name": name, "description": description}), 201
+
+# Admin: Edit a department
+@app.route('/departments/<int:dept_id>', methods=['PUT'])
+def update_department(dept_id):
+    data = request.get_json()
+    name = data.get("name")
+    description = data.get("description", "")
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("UPDATE departments SET name=%s, description=%s WHERE id=%s", (name, description, dept_id))
+    conn.commit()
+    cur.close()
+    conn.close()
+    return jsonify({"id": dept_id, "name": name, "description": description})
+
+# Admin: Assign an employee to a department
+@app.route('/employees/<int:employee_id>/department', methods=['PUT'])
+def assign_department(employee_id):
+    data = request.get_json()
+    department_id = data.get("department_id")
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("UPDATE employees SET department_id=%s WHERE id=%s", (department_id, employee_id))
+    conn.commit()
+    cur.close()
+    conn.close()
+    return jsonify({"employee_id": employee_id, "department_id": department_id})
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

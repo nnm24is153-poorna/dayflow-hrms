@@ -87,10 +87,11 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/></svg>
         Attendance
       </a>
-      <a href="#" class="nav-link" data-section-link="departments">
+       <a href="department.html" class="nav-link">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 21V8l9-5 9 5v13M9 21v-6h6v6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
         Departments
       </a>
+      
       <a href="#" class="nav-link" data-section-link="payroll">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="20" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12.5" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
         Payroll
@@ -293,61 +294,88 @@
         </div>
       </section>
 
-      <!-- ===================== PAYROLL (placeholder) ===================== -->
+      <!-- ===================== PAYROLL ===================== -->
       <section data-admin-section="payroll" style="display:none;">
+        <div class="card" style="margin-bottom:20px;">
+          <div class="feature-toolbar">
+            <div>
+              <h3>Set Payroll</h3>
+              <div class="section-sub">Set or update an employee's salary for a given month.</div>
+            </div>
+          </div>
+          <div class="admin-form-grid">
+            <div class="admin-form-group" style="display:flex; flex-direction:column; gap:6px;">
+              <label style="font-size:12px; font-weight:600; color:#475569;">Employee ID</label>
+              <input class="input" type="number" id="payroll-emp-id">
+            </div>
+            <div class="admin-form-group" style="display:flex; flex-direction:column; gap:6px;">
+              <label style="font-size:12px; font-weight:600; color:#475569;">Basic Salary</label>
+              <input class="input" type="number" id="payroll-basic">
+            </div>
+            <div class="admin-form-group" style="display:flex; flex-direction:column; gap:6px;">
+              <label style="font-size:12px; font-weight:600; color:#475569;">Allowances</label>
+              <input class="input" type="number" id="payroll-allow">
+            </div>
+            <div class="admin-form-group" style="display:flex; flex-direction:column; gap:6px;">
+              <label style="font-size:12px; font-weight:600; color:#475569;">Deductions</label>
+              <input class="input" type="number" id="payroll-deduct">
+            </div>
+            <div class="admin-form-group" style="display:flex; flex-direction:column; gap:6px;">
+              <label style="font-size:12px; font-weight:600; color:#475569;">Month</label>
+              <input class="input" type="text" id="payroll-month" placeholder="e.g. August">
+            </div>
+            <div class="admin-form-group" style="display:flex; flex-direction:column; gap:6px;">
+              <label style="font-size:12px; font-weight:600; color:#475569;">Year</label>
+              <input class="input" type="number" id="payroll-year" placeholder="e.g. 2026">
+            </div>
+          </div>
+          <div style="display:flex; justify-content:flex-end; margin-top:16px;">
+            <button class="btn btn-accent" id="payroll-save">Save Payroll</button>
+          </div>
+        </div>
+
         <div class="card">
           <div class="feature-toolbar">
             <div>
               <h3>Payroll / Salary Management</h3>
-              <div class="section-sub">Placeholder UI — no backend endpoint wired up yet.</div>
+              <div class="section-sub">Current salary records for all employees.</div>
             </div>
-          </div>
-          <div style="padding:0 4px 20px;">
-            <div class="notice-banner">
-              This is placeholder UI — there's no <code>/payroll</code> endpoint in your backend,
-              so salary data can't be shown or saved yet. Add that route and this table can pull real numbers.
-            </div>
+            <button class="btn btn-secondary btn-sm" id="refresh-payroll">Refresh</button>
           </div>
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Employee</th><th>Employee ID</th><th>Basic Salary</th><th>Allowances</th><th>Net Salary</th><th>Actions</th></tr></thead>
-              <tbody><tr><td colspan="6" style="color:var(--text-500);">No payroll data source connected.</td></tr></tbody>
+              <thead><tr><th>Employee</th><th>Basic Salary</th><th>Allowances</th><th>Deductions</th><th>Net Salary</th></tr></thead>
+              <tbody id="payroll-table-body"></tbody>
             </table>
+          </div>
+          <div class="empty-state" id="payroll-empty" style="display:none;">
+            <div class="empty-title">No payroll records found</div>
           </div>
         </div>
       </section>
 
-      <!-- ===================== REPORTS (placeholder) ===================== -->
+      <!-- ===================== REPORTS ===================== -->
       <section data-admin-section="reports" style="display:none;">
         <div class="admin-grid">
-          <div class="card admin-info-card"><h4 style="margin:0 0 6px;">Attendance Reports</h4><p style="color:var(--text-500,#64748b); font-size:12.5px;">Requires a reports endpoint.</p></div>
-          <div class="card admin-info-card"><h4 style="margin:0 0 6px;">Payroll Reports</h4><p style="color:var(--text-500,#64748b); font-size:12.5px;">Requires a reports endpoint.</p></div>
-          <div class="card admin-info-card"><h4 style="margin:0 0 6px;">Leave Summary</h4><p style="color:var(--text-500,#64748b); font-size:12.5px;">Requires a reports endpoint.</p></div>
-          <div class="card admin-info-card"><h4 style="margin:0 0 6px;">Org Statistics</h4><p style="color:var(--text-500,#64748b); font-size:12.5px;">Requires a reports endpoint.</p></div>
+          <div class="card admin-info-card"><h4 style="margin:0 0 6px;">Attendance Report</h4><p style="color:#64748b; font-size:12.5px; margin:0 0 10px;">Today's check-in status.</p><button class="btn btn-secondary btn-sm" data-report="attendance">View</button></div>
+          <div class="card admin-info-card"><h4 style="margin:0 0 6px;">Payroll Report</h4><p style="color:#64748b; font-size:12.5px; margin:0 0 10px;">Salary totals across the org.</p><button class="btn btn-secondary btn-sm" data-report="payroll">View</button></div>
+          <div class="card admin-info-card"><h4 style="margin:0 0 6px;">Leave Summary</h4><p style="color:#64748b; font-size:12.5px; margin:0 0 10px;">Requests by status and type.</p><button class="btn btn-secondary btn-sm" data-report="leave">View</button></div>
+          <div class="card admin-info-card"><h4 style="margin:0 0 6px;">Org Statistics</h4><p style="color:#64748b; font-size:12.5px; margin:0 0 10px;">Headline organization numbers.</p><button class="btn btn-secondary btn-sm" data-report="org">View</button></div>
         </div>
         <div class="card" style="margin-top:20px;">
           <div class="card-header"><h3>Report Results</h3></div>
-          <div style="padding:20px;">
-            <div class="notice-banner">
-              This is placeholder UI — there's no <code>/reports</code> endpoint in your backend yet,
-              so these cards aren't wired to real data.
-            </div>
-          </div>
+          <div id="report-results" style="padding:20px; color:#64748b;">Select a report above.</div>
         </div>
       </section>
 
-      <!-- ===================== NOTIFICATIONS (placeholder) ===================== -->
+      <!-- ===================== NOTIFICATIONS ===================== -->
       <section data-admin-section="notifications" style="display:none;">
         <div class="card">
           <div class="feature-toolbar">
-            <div><h3>Notifications</h3><div class="section-sub">Placeholder UI — no backend endpoint wired up yet.</div></div>
+            <div><h3>Notifications</h3><div class="section-sub">Auto-generated from current leave and attendance activity.</div></div>
+            <button class="btn btn-secondary btn-sm" id="refresh-notifications">Refresh</button>
           </div>
-          <div style="padding:0 4px 20px;">
-            <div class="notice-banner">
-              This is placeholder UI — there's no <code>/notifications</code> endpoint in your backend,
-              so nothing loads here yet. Once that route exists, this can show real HR alerts.
-            </div>
-          </div>
+          <div id="notifications-list" style="padding:0 4px 20px;"></div>
         </div>
       </section>
 
@@ -418,6 +446,8 @@ const ENDPOINTS = {
   leaveDecision: (id) => `${API_BASE}/leaves/${id}`,          // PUT { status }
   employees: `${API_BASE}/employees`,                        // -> [{id, name, email, role}] — no department field
   attendanceToday: `${API_BASE}/attendance/today`,            // -> { [employee_id]: "present" | "leave" | "absent" }
+  payroll: `${API_BASE}/payroll`,                              // GET -> [{name, basic_salary, allowances, deductions, net_salary}]
+  payrollForEmployee: (id) => `${API_BASE}/payroll/${id}`,      // GET single; POST { basic_salary, allowances, deductions, month, year }
   health: `${API_BASE}/health`,
 };
 
@@ -574,7 +604,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (section === 'employees') renderManagementEmployees();
       if (section === 'leave') renderAllLeaveRequests();
       if (section === 'attendance') loadAttendance();
-      // departments / payroll / reports / notifications are static placeholders — no data to load
+      if (section === 'payroll') loadPayroll();
+      if (section === 'notifications') renderNotifications();
+      // departments is a static placeholder — no data source yet
     });
   });
 
@@ -736,6 +768,191 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('attendance-absent-count').textContent = absent;
   }
   document.getElementById('refresh-attendance').addEventListener('click', loadAttendance);
+
+  /* ================= Payroll ================= */
+  async function loadPayroll() {
+    const tbody = document.getElementById('payroll-table-body');
+    const empty = document.getElementById('payroll-empty');
+    tbody.innerHTML = `<tr><td colspan="5">Loading payroll...</td></tr>`;
+    const res = await apiRequest(ENDPOINTS.payroll);
+    if (!res.ok || !Array.isArray(res.data)) {
+      tbody.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+    tbody.innerHTML = '';
+    if (res.data.length === 0) { empty.style.display = 'block'; return; }
+    res.data.forEach((row) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${escapeHtml(row.name || '—')}</td>
+        <td>₹${escapeHtml(String(row.basic_salary ?? '—'))}</td>
+        <td>₹${escapeHtml(String(row.allowances ?? '—'))}</td>
+        <td>₹${escapeHtml(String(row.deductions ?? '—'))}</td>
+        <td>₹${escapeHtml(String(row.net_salary ?? '—'))}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+  document.getElementById('refresh-payroll').addEventListener('click', loadPayroll);
+
+  document.getElementById('payroll-save').addEventListener('click', async () => {
+    const employee_id = document.getElementById('payroll-emp-id').value;
+    const basic_salary = document.getElementById('payroll-basic').value;
+    const allowances = document.getElementById('payroll-allow').value;
+    const deductions = document.getElementById('payroll-deduct').value;
+    const month = document.getElementById('payroll-month').value;
+    const year = document.getElementById('payroll-year').value;
+
+    if (!employee_id) { showToast('Enter an employee ID.', 'error'); return; }
+
+    const btn = document.getElementById('payroll-save');
+    btn.disabled = true;
+    const res = await apiRequest(ENDPOINTS.payrollForEmployee(employee_id), {
+      method: 'POST',
+      body: JSON.stringify({ basic_salary, allowances, deductions, month, year }),
+    });
+    btn.disabled = false;
+
+    if (res.networkError) { showToast("Can't reach the server. Payroll not saved.", 'error'); return; }
+    if (!res.ok) { showToast((res.data && (res.data.error || res.data.message)) || 'Could not save payroll.', 'error'); return; }
+
+    showToast('Payroll saved.', 'success');
+    document.getElementById('payroll-emp-id').value = '';
+    document.getElementById('payroll-basic').value = '';
+    document.getElementById('payroll-allow').value = '';
+    document.getElementById('payroll-deduct').value = '';
+    document.getElementById('payroll-month').value = '';
+    document.getElementById('payroll-year').value = '';
+    loadPayroll();
+  });
+
+  /* ================= Reports (computed client-side from data already loaded) ================= */
+  document.querySelectorAll('[data-report]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const type = btn.getAttribute('data-report');
+      const results = document.getElementById('report-results');
+      results.innerHTML = 'Generating report...';
+
+      if (type === 'leave') {
+        const byStatus = { pending: 0, approved: 0, rejected: 0 };
+        const byType = {};
+        allLeaveRequests.forEach((r) => {
+          const s = (r.status || 'pending').toLowerCase();
+          if (byStatus[s] !== undefined) byStatus[s]++;
+          const t = r.leave_type || 'Other';
+          byType[t] = (byType[t] || 0) + 1;
+        });
+        results.innerHTML = `
+          <div class="admin-grid" style="margin-bottom:16px;">
+            <div class="card admin-info-card"><div class="admin-info-label">Total Requests</div><div class="admin-info-value">${allLeaveRequests.length}</div></div>
+            <div class="card admin-info-card"><div class="admin-info-label">Pending</div><div class="admin-info-value">${byStatus.pending}</div></div>
+            <div class="card admin-info-card"><div class="admin-info-label">Approved</div><div class="admin-info-value">${byStatus.approved}</div></div>
+            <div class="card admin-info-card"><div class="admin-info-label">Rejected</div><div class="admin-info-value">${byStatus.rejected}</div></div>
+          </div>
+          <div class="table-wrap"><table><thead><tr><th>Leave Type</th><th>Requests</th></tr></thead><tbody>
+            ${Object.entries(byType).map(([t, c]) => `<tr><td>${escapeHtml(t)}</td><td>${c}</td></tr>`).join('') || '<tr><td colspan="2">No leave data.</td></tr>'}
+          </tbody></table></div>
+        `;
+        return;
+      }
+
+      if (type === 'org') {
+        results.innerHTML = `
+          <div class="admin-grid">
+            <div class="card admin-info-card"><div class="admin-info-label">Total Employees</div><div class="admin-info-value">${allEmployees.length}</div></div>
+            <div class="card admin-info-card"><div class="admin-info-label">Total Leave Requests</div><div class="admin-info-value">${allLeaveRequests.length}</div></div>
+            <div class="card admin-info-card"><div class="admin-info-label">Pending Reviews</div><div class="admin-info-value">${allLeaveRequests.filter(r => (r.status||'pending').toLowerCase()==='pending').length}</div></div>
+            <div class="card admin-info-card"><div class="admin-info-label">Generated</div><div style="font-weight:600; font-size:13px;">${new Date().toLocaleString()}</div></div>
+          </div>
+        `;
+        return;
+      }
+
+      if (type === 'attendance') {
+        const res = await apiRequest(ENDPOINTS.attendanceToday);
+        if (!res.ok || !res.data) { results.innerHTML = 'Unable to load attendance data.'; return; }
+        const statusMap = res.data;
+        let present = 0, onLeave = 0, absent = 0;
+        allEmployees.forEach((emp) => {
+          const s = statusMap[empId(emp)] || 'absent';
+          if (s === 'present') present++; else if (s === 'leave') onLeave++; else absent++;
+        });
+        results.innerHTML = `
+          <div class="admin-grid">
+            <div class="card admin-info-card"><div class="admin-info-label">Present Today</div><div class="admin-info-value">${present}</div></div>
+            <div class="card admin-info-card"><div class="admin-info-label">On Leave</div><div class="admin-info-value">${onLeave}</div></div>
+            <div class="card admin-info-card"><div class="admin-info-label">Absent</div><div class="admin-info-value">${absent}</div></div>
+            <div class="card admin-info-card"><div class="admin-info-label">Total Employees</div><div class="admin-info-value">${allEmployees.length}</div></div>
+          </div>
+        `;
+        return;
+      }
+
+      if (type === 'payroll') {
+        const res = await apiRequest(ENDPOINTS.payroll);
+        if (!res.ok || !Array.isArray(res.data)) { results.innerHTML = 'Unable to load payroll data.'; return; }
+        const rows = res.data;
+        const totalBasic = rows.reduce((sum, r) => sum + (Number(r.basic_salary) || 0), 0);
+        const totalNet = rows.reduce((sum, r) => sum + (Number(r.net_salary) || 0), 0);
+        results.innerHTML = `
+          <div class="admin-grid">
+            <div class="card admin-info-card"><div class="admin-info-label">Payroll Records</div><div class="admin-info-value">${rows.length}</div></div>
+            <div class="card admin-info-card"><div class="admin-info-label">Total Basic Salary</div><div class="admin-info-value">₹${totalBasic.toLocaleString('en-IN')}</div></div>
+            <div class="card admin-info-card"><div class="admin-info-label">Total Net Salary</div><div class="admin-info-value">₹${totalNet.toLocaleString('en-IN')}</div></div>
+          </div>
+        `;
+        return;
+      }
+    });
+  });
+
+  /* ================= Notifications (derived from real leave data, no fake data) ================= */
+  function renderNotifications() {
+    const list = document.getElementById('notifications-list');
+    const pending = allLeaveRequests.filter((r) => (r.status || 'pending').toLowerCase() === 'pending');
+    const recent = allLeaveRequests
+      .filter((r) => (r.status || '').toLowerCase() !== 'pending')
+      .slice(-5)
+      .reverse();
+
+    const items = [];
+    pending.forEach((r) => {
+      items.push({
+        icon: '⏳',
+        title: 'Leave request awaiting review',
+        message: `${escapeHtml(r.employeeName || 'An employee')} requested ${escapeHtml(r.leave_type || 'leave')} from ${escapeHtml(r.start_date || '')} to ${escapeHtml(r.end_date || '')}.`,
+      });
+    });
+    recent.forEach((r) => {
+      const decided = (r.status || '').toLowerCase();
+      items.push({
+        icon: decided === 'approved' ? '✓' : '✕',
+        title: `Leave request ${decided}`,
+        message: `${escapeHtml(r.employeeName || 'An employee')}'s ${escapeHtml(r.leave_type || 'leave')} request was ${decided}.`,
+      });
+    });
+
+    if (items.length === 0) {
+      list.innerHTML = `<div class="empty-state"><div class="empty-title">No notifications</div><div class="empty-sub">You're all caught up.</div></div>`;
+      return;
+    }
+
+    list.innerHTML = items.map((n) => `
+      <div class="notification-item" style="display:flex; gap:12px; padding:14px 0; border-bottom:1px solid #edf0f4;">
+        <div class="notification-icon" style="width:34px; height:34px; border-radius:50%; background:#eef4ff; color:#2563eb; display:flex; align-items:center; justify-content:center; flex-shrink:0;">${n.icon}</div>
+        <div class="notification-content">
+          <div class="notification-title" style="font-size:13px; font-weight:700; color:#1e293b;">${n.title}</div>
+          <div class="notification-message" style="margin-top:3px; font-size:12px; color:#64748b;">${n.message}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+  document.getElementById('refresh-notifications').addEventListener('click', async () => {
+    await loadAllLeaveRequests();
+    renderNotifications();
+  });
 
   function renderLeaveTables() {
     renderHrLeaveTable();

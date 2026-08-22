@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DayFlow - Departments</title>
+<style>
+body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; padding: 24px; }
+h1 { color: #0b1330; }
+.top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.add-btn { padding: 10px 20px; background: #4f46e5; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; }
+
+.dept-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.dept-card { background: white; border-radius: 12px; padding: 18px; box-shadow: 0 2px 8px rgba(11,19,48,0.06); cursor: pointer; transition: box-shadow 0.15s; }
+.dept-card:hover { box-shadow: 0 4px 14px rgba(11,19,48,0.12); }
+.dept-name { font-size: 16px; font-weight: 700; color: #0b1330; margin-bottom: 6px; }
+.dept-desc { font-size: 13px; color: #73798c; margin-bottom: 12px; min-height: 18px; }
+.dept-count { font-size: 12px; color: #4f46e5; font-weight: 600; }
+.dept-actions { margin-top: 12px; display: flex; gap: 8px; }
+.dept-actions button { font-size: 12px; padding: 5px 10px; border: 1px solid #e0e2ea; background: white; border-radius: 5px; cursor: pointer; }
+
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(11,19,48,0.4); align-items: center; justify-content: center; }
+.modal-overlay.is-open { display: flex; }
+.modal-card { background: white; border-radius: 12px; padding: 24px; width: 400px; max-width: 90%; }
+.modal-card h3 { margin-top: 0; color: #0b1330; }
+.modal-card input, .modal-card textarea { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #e0e2ea; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 14px; }
+.btn-secondary { padding: 8px 16px; background: #f0f2f5; border: none; border-radius: 6px; cursor: pointer; }
+.btn-accent { padding: 8px 16px; background: #4f46e5; color: white; border: none; border-radius: 6px; cursor: pointer; }
+
+.employee-list { margin-top: 10px; }
+.employee-row { padding: 8px 0; border-bottom: 1px solid #eef0f5; font-size: 13px; color: #3e4354; }
+.empty-note { color: #9297a6; font-size: 13px; padding: 10px 0; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>Departments</h1>
+  <button class="add-btn" onclick="openAddModal()">+ Add Department</button>
+</div>
+
+<div class="dept-grid" id="deptGrid"></div>
+
+<!-- Add/Edit Modal -->
+<div class="modal-overlay" id="deptModal">
+  <div class="modal-card">
+    <h3 id="modalTitle">Add Department</h3>
+    <input type="hidden" id="dept-id">
+    <input type="text" id="dept-name" placeholder="Department name">
+    <textarea id="dept-desc" placeholder="Description (optional)" rows="3"></textarea>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn-accent" onclick="saveDepartment()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- View Employees Modal -->
+<div class="modal-overlay" id="viewModal">
+  <div class="modal-card">
+    <h3 id="viewDeptName">Department</h3>
+    <div class="employee-list" id="employeeList"></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeViewModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API_URL = "http://127.0.0.1:5000";
+
+function getUser() {
+  const raw = localStorage.getItem('dayflow_user');
+  try { return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+}
+
+const user = getUser();
+if (!user) window.location.href = 'login.html';
+
+async function loadDepartments() {
+  const res = await fetch(`${API_URL}/departments`);
+  const departments = await res.json();
+
+  const grid = document.getElementById('deptGrid');
+  grid.innerHTML = '';
+
+  if (departments.length === 0) {
+    grid.innerHTML = '<p class="empty-note">No departments yet. Click "+ Add Department" to create one.</p>';
+    return;
+  }
+
+  departments.forEach(dept => {
+    const card = document.createElement('div');
+    card.className = 'dept-card';
+    card.innerHTML = `
+      <div class="dept-name">${dept.name}</div>
+      <div class="dept-desc">${dept.description || 'No description'}</div>
+      <div class="dept-count">${dept.employee_count} employee${dept.employee_count === 1 ? '' : 's'}</div>
+      <div class="dept-actions">
+        <button onclick="event.stopPropagation(); editDepartment(${dept.id}, '${dept.name.replace(/'/g, "\\'")}', '${(dept.description || '').replace(/'/g, "\\'")}')">Edit</button>
+        <button onclick="event.stopPropagation(); viewEmployees(${dept.id}, '${dept.name.replace(/'/g, "\\'")}')">View Employees</button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function openAddModal() {
+  document.getElementById('modalTitle').textContent = 'Add Department';
+  document.getElementById('dept-id').value = '';
+  document.getElementById('dept-name').value = '';
+  document.getElementById('dept-desc').value = '';
+  document.getElementById('deptModal').classList.add('is-open');
+}
+
+function editDepartment(id, name, description) {
+  document.getElementById('modalTitle').textContent = 'Edit Department';
+  document.getElementById('dept-id').value = id;
+  document.getElementById('dept-name').value = name;
+  document.getElementById('dept-desc').value = description;
+  document.getElementById('deptModal').classList.add('is-open');
+}
+
+function closeModal() {
+  document.getElementById('deptModal').classList.remove('is-open');
+}
+
+async function saveDepartment() {
+  const id = document.getElementById('dept-id').value;
+  const name = document.getElementById('dept-name').value.trim();
+  const description = document.getElementById('dept-desc').value.trim();
+
+  if (!name) {
+    alert('Please enter a department name.');
+    return;
+  }
+
+  if (id) {
+    await fetch(`${API_URL}/departments/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, description })
+    });
+  } else {
+    await fetch(`${API_URL}/departments`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, description })
+    });
+  }
+
+  closeModal();
+  loadDepartments();
+}
+
+async function viewEmployees(deptId, deptName) {
+  document.getElementById('viewDeptName').textContent = deptName;
+  const res = await fetch(`${API_URL}/departments/${deptId}/employees`);
+  const employees = await res.json();
+
+  const list = document.getElementById('employeeList');
+  list.innerHTML = '';
+
+  if (employees.length === 0) {
+    list.innerHTML = '<div class="empty-note">No employees assigned to this department yet.</div>';
+  } else {
+    employees.forEach(emp => {
+      const row = document.createElement('div');
+      row.className = 'employee-row';
+      row.textContent = `${emp.name} — ${emp.email} (${emp.role})`;
+      list.appendChild(row);
+    });
+  }
+
+  document.getElementById('viewModal').classList.add('is-open');
+}
+
+function closeViewModal() {
+  document.getElementById('viewModal').classList.remove('is-open');
+}
+
+loadDepartments();
+</script>
+
+</body>
+</html>
