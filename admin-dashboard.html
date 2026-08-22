@@ -40,33 +40,9 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M17 20v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM23 20v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         Employees
       </a>
-      <a href="#" class="nav-link" data-section-link="attendance">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/></svg>
-        Attendance
-      </a>
       <a href="#" class="nav-link" data-section-link="leave">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M8 2v4M16 2v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         Leave Management
-      </a>
-      <a href="#" class="nav-link" data-section-link="departments">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 21V8l9-5 9 5v13M9 21v-6h6v6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-        Departments
-      </a>
-      <a href="#" class="nav-link" data-section-link="payroll">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="20" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12.5" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
-        Payroll
-      </a>
-      <a href="#" class="nav-link" data-section-link="reports">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 19V10M12 19V5M20 19v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        Reports
-      </a>
-      <a href="#" class="nav-link" data-section-link="notifications">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M13.7 21a2 2 0 0 1-3.4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        Notifications
-      </a>
-      <a href="#" class="nav-link" data-section-link="settings">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.14.36.4.66.74.85.34.19.5.24.86.24H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-        Settings
       </a>
     </nav>
 
@@ -91,10 +67,6 @@
         <input type="search" placeholder="Search employees…" id="employee-search" aria-label="Search employees">
       </div>
       <div class="topbar-actions">
-        <button class="icon-btn" data-tooltip="Notifications" aria-label="Notifications">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-          <span class="notif-dot" id="notif-dot" style="display:none;"></span>
-        </button>
         <div style="position:relative;">
           <button class="profile-menu-btn" data-profile-toggle>
             <span class="avatar" data-user-initial>H</span>
@@ -111,7 +83,7 @@
 
       <div style="margin-bottom:22px;">
         <div class="section-title">Good day, HR team</div>
-        <div class="section-sub">Here's how the organization is doing today.</div>
+        <div class="section-sub">Here's how leave requests are looking today.</div>
       </div>
 
       <!-- ---------- Summary cards ---------- -->
@@ -120,19 +92,7 @@
           <div class="stat-icon icon-tint-blue"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M17 20v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8"/></svg></div>
           <div class="stat-label">Total Employees</div>
           <div class="stat-value" id="stat-total-employees">—</div>
-          <span class="stat-trend trend-flat">across all departments</span>
-        </div>
-        <div class="card stat-card is-hoverable">
-          <div class="stat-icon icon-tint-teal"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3 8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-          <div class="stat-label">Present Today</div>
-          <div class="stat-value" id="stat-present-today">—</div>
-          <span class="stat-trend trend-up" id="stat-present-pct">—</span>
-        </div>
-        <div class="card stat-card is-hoverable">
-          <div class="stat-icon icon-tint-danger"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M9 9l6 6M15 9l-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-          <div class="stat-label">Absent Today</div>
-          <div class="stat-value" id="stat-absent-today">—</div>
-          <span class="stat-trend trend-down" id="stat-absent-pct">—</span>
+          <span class="stat-trend trend-flat">registered accounts</span>
         </div>
         <div class="card stat-card is-hoverable">
           <div class="stat-icon icon-tint-amber"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" stroke-width="1.8"/></svg></div>
@@ -140,33 +100,17 @@
           <div class="stat-value" id="stat-pending-leave">—</div>
           <span class="stat-trend trend-flat">need review</span>
         </div>
-      </div>
-
-      <div class="grid grid-3" style="margin-bottom:20px; align-items:start;">
-
-        <!-- ---------- Attendance overview chart ---------- -->
-        <div class="card grid-span-2">
-          <div class="card-header">
-            <h3>Attendance Overview</h3>
-            <span class="card-meta">Last 7 days</span>
-          </div>
-          <div class="bar-chart" id="attendance-chart"></div>
-          <div class="empty-state" id="attendance-chart-empty" style="display:none;">
-            <div class="empty-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 19V10M12 19V5M20 19v-7" stroke="currentColor" stroke-width="1.8"/></svg></div>
-            <div class="empty-title">No attendance data yet</div>
-            <div class="empty-sub">Data will appear once employees start checking in.</div>
-          </div>
+        <div class="card stat-card is-hoverable">
+          <div class="stat-icon icon-tint-teal"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3 8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="stat-label">Approved</div>
+          <div class="stat-value" id="stat-approved-leave">—</div>
+          <span class="stat-trend trend-up">total approved</span>
         </div>
-
-        <!-- ---------- Department overview ---------- -->
-        <div class="card">
-          <div class="card-header"><h3>Departments</h3></div>
-          <ul id="department-list" style="display:flex; flex-direction:column; gap:14px;"></ul>
-          <div class="empty-state" id="department-empty" style="display:none;">
-            <div class="empty-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 21V8l9-5 9 5v13" stroke="currentColor" stroke-width="1.8"/></svg></div>
-            <div class="empty-title">No departments set up</div>
-            <div class="empty-sub">Add departments to see the breakdown here.</div>
-          </div>
+        <div class="card stat-card is-hoverable">
+          <div class="stat-icon icon-tint-danger"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M9 9l6 6M15 9l-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <div class="stat-label">Rejected</div>
+          <div class="stat-value" id="stat-rejected-leave">—</div>
+          <span class="stat-trend trend-flat">total rejected</span>
         </div>
       </div>
 
@@ -174,23 +118,17 @@
       <div class="card" style="margin-bottom:20px;">
         <div class="toolbar-row">
           <h3 style="font-size:15.5px; font-weight:700;">Employees</h3>
-          <div class="filter-pills" id="employee-filters">
-            <button class="filter-pill is-active" data-filter="all">All</button>
-            <button class="filter-pill" data-filter="present">Present</button>
-            <button class="filter-pill" data-filter="absent">Absent</button>
-            <button class="filter-pill" data-filter="on-leave">On Leave</button>
-          </div>
         </div>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Employee</th><th>Employee ID</th><th>Department</th><th>Status</th><th>Actions</th></tr></thead>
+            <thead><tr><th>Name</th><th>Email</th><th>Role</th></tr></thead>
             <tbody id="employees-table-body"></tbody>
           </table>
         </div>
         <div class="empty-state" id="employees-empty" style="display:none;">
           <div class="empty-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M17 20v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8"/></svg></div>
           <div class="empty-title">No employees found</div>
-          <div class="empty-sub">Try a different search or filter.</div>
+          <div class="empty-sub">Try a different search.</div>
         </div>
       </div>
 
@@ -199,13 +137,13 @@
         <div class="card-header"><h3>Leave Requests</h3></div>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Employee</th><th>Type</th><th>Dates</th><th>Status</th><th>Actions</th></tr></thead>
+            <thead><tr><th>Employee</th><th>Type</th><th>From</th><th>To</th><th>Remarks</th><th>Status</th><th>Actions</th></tr></thead>
             <tbody id="hr-leave-table-body"></tbody>
           </table>
         </div>
         <div class="empty-state" id="hr-leave-empty" style="display:none;">
           <div class="empty-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" stroke-width="1.8"/></svg></div>
-          <div class="empty-title">No pending leave requests</div>
+          <div class="empty-title">No leave requests yet</div>
           <div class="empty-sub">New requests from employees will show up here.</div>
         </div>
       </div>
@@ -217,136 +155,56 @@
 <script>
 /* ==========================================================================
    DayFlow HRMS — shared API layer
-   Loaded by every page (login.html, employee-dashboard.html, admin-dashboard.html).
-
-   IMPORTANT — assumption flagged for you:
-   No existing project files were available to inspect, so the endpoint
-   paths below are a reasonable placeholder contract for a Node/Express-style
-   backend on port 5000. Nothing here fakes data or fakes a response —
-   every call goes to a real endpoint. If your real backend uses different
-   paths, this is the ONLY file you need to edit: everything else calls
-   the functions below instead of using fetch() directly.
+   Matches the REAL Flask backend (app.py) on http://127.0.0.1:5000
+   No auth token. Role values are lowercase: "employee" / "admin".
    ========================================================================== */
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'http://127.0.0.1:5000';
 
 const ENDPOINTS = {
-  login: `${API_BASE}/auth/login`,
-  signup: `${API_BASE}/auth/signup`,
-  resendVerification: `${API_BASE}/auth/resend-verification`,
-  forgotPassword: `${API_BASE}/auth/forgot-password`,
-  me: `${API_BASE}/auth/me`,
-
-  employeeSummary: `${API_BASE}/employee/summary`,
-  employeeAttendanceToday: `${API_BASE}/employee/attendance/today`,
-  employeeCheckIn: `${API_BASE}/employee/attendance/check-in`,
-  employeeCheckOut: `${API_BASE}/employee/attendance/check-out`,
-  employeeAttendanceHistory: `${API_BASE}/employee/attendance/history`,
-  employeeLeaveBalance: `${API_BASE}/employee/leave/balance`,
-  employeeLeaveRequests: `${API_BASE}/employee/leave/requests`,
-  employeeLeaveApply: `${API_BASE}/employee/leave/apply`,
-  employeeTasks: `${API_BASE}/employee/tasks`,
-  employeeNotifications: `${API_BASE}/employee/notifications`,
-
-  hrSummary: `${API_BASE}/hr/summary`,
-  hrEmployees: `${API_BASE}/hr/employees`,
-  hrAttendanceOverview: `${API_BASE}/hr/attendance/overview`,
-  hrLeaveRequests: `${API_BASE}/hr/leave/requests`,
-  hrLeaveDecision: `${API_BASE}/hr/leave/decision`,
-  hrDepartments: `${API_BASE}/hr/departments`,
-  hrNotifications: `${API_BASE}/hr/notifications`,
+  login: `${API_BASE}/login`,
+  signup: `${API_BASE}/signup`,
+  leaves: `${API_BASE}/leaves`,
+  leavesPending: `${API_BASE}/leaves/pending`,
+  employeeLeaves: (id) => `${API_BASE}/leaves/employee/${id}`,
+  leaveDecision: (id) => `${API_BASE}/leaves/${id}`,
+  employees: `${API_BASE}/employees`,
+  health: `${API_BASE}/health`,
 };
 
-/* ---- localStorage session keys ---- */
-const STORAGE_KEYS = {
-  token: 'dayflow_token',
-  user: 'dayflow_user',
-};
+const STORAGE_KEYS = { user: 'dayflow_user' };
 
-function saveSession(token, user) {
-  localStorage.setItem(STORAGE_KEYS.token, token);
-  localStorage.setItem(STORAGE_KEYS.user, JSON.stringify(user));
-}
-
-function getToken() {
-  return localStorage.getItem(STORAGE_KEYS.token);
-}
-
+function saveSession(user) { localStorage.setItem(STORAGE_KEYS.user, JSON.stringify(user)); }
 function getUser() {
   const raw = localStorage.getItem(STORAGE_KEYS.user);
   try { return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
 }
+function clearSession() { localStorage.removeItem(STORAGE_KEYS.user); }
 
-function clearSession() {
-  localStorage.removeItem(STORAGE_KEYS.token);
-  localStorage.removeItem(STORAGE_KEYS.user);
-}
-
-/**
- * Redirect to the correct dashboard for a role.
- */
 function redirectForRole(role) {
-  if (role === 'HR') {
-    window.location.href = 'admin-dashboard.html';
-  } else {
-    window.location.href = 'employee-dashboard.html';
-  }
+  window.location.href = (role === 'admin') ? 'admin-dashboard.html' : 'employee-dashboard.html';
 }
 
-/**
- * Guard for dashboard pages: bounce back to login if no session exists,
- * and bounce a user to their own dashboard if they land on the wrong one.
- */
 function requireAuth(expectedRole) {
   const user = getUser();
-  const token = getToken();
-  if (!token || !user) {
-    window.location.href = 'login.html';
-    return null;
-  }
-  if (expectedRole && user.role !== expectedRole) {
-    redirectForRole(user.role);
-    return null;
-  }
+  if (!user) { window.location.href = 'login.html'; return null; }
+  if (expectedRole && user.role !== expectedRole) { redirectForRole(user.role); return null; }
   return user;
 }
 
-function logout() {
-  clearSession();
-  window.location.href = 'login.html';
-}
+function logout() { clearSession(); window.location.href = 'login.html'; }
 
-/**
- * Central fetch wrapper. Attaches the auth token, parses JSON, and
- * normalizes errors so callers get a consistent { ok, status, data } shape
- * instead of every screen re-implementing try/catch.
- */
 async function apiRequest(url, options = {}) {
-  const headers = Object.assign(
-    { 'Content-Type': 'application/json' },
-    options.headers || {}
-  );
-  const token = getToken();
-  if (token) headers['Authorization'] = `Bearer ${token}`;
-
+  const headers = Object.assign({ 'Content-Type': 'application/json' }, options.headers || {});
   try {
     const response = await fetch(url, Object.assign({}, options, { headers }));
     let data = null;
     try { data = await response.json(); } catch (e) { /* empty body */ }
-
-    if (response.status === 401) {
-      clearSession();
-    }
-
     return { ok: response.ok, status: response.status, data };
   } catch (networkError) {
     return { ok: false, status: 0, data: null, networkError: true };
   }
 }
-
-/* ==========================================================================
-   Toast notifications (shared across all pages)
-   ========================================================================== */
 
 function ensureToastRegion() {
   let region = document.querySelector('.toast-region');
@@ -358,7 +216,6 @@ function ensureToastRegion() {
   }
   return region;
 }
-
 function showToast(message, type = 'info', duration = 4000) {
   const region = ensureToastRegion();
   const toast = document.createElement('div');
@@ -366,16 +223,8 @@ function showToast(message, type = 'info', duration = 4000) {
   toast.setAttribute('role', 'status');
   toast.textContent = message;
   region.appendChild(toast);
-
-  setTimeout(() => {
-    toast.classList.add('is-leaving');
-    setTimeout(() => toast.remove(), 200);
-  }, duration);
+  setTimeout(() => { toast.classList.add('is-leaving'); setTimeout(() => toast.remove(), 200); }, duration);
 }
-
-/* ==========================================================================
-   Mobile sidebar toggle (shared markup/behavior across both dashboards)
-   ========================================================================== */
 
 function initMobileNav() {
   const openBtn = document.querySelector('[data-open-sidebar]');
@@ -383,56 +232,54 @@ function initMobileNav() {
   const sidebar = document.querySelector('.sidebar');
   const scrim = document.querySelector('.sidebar-scrim');
   if (!sidebar || !scrim) return;
-
   const open = () => { sidebar.classList.add('is-open'); scrim.classList.add('is-open'); };
   const close = () => { sidebar.classList.remove('is-open'); scrim.classList.remove('is-open'); };
-
   if (openBtn) openBtn.addEventListener('click', open);
   if (closeBtn) closeBtn.addEventListener('click', close);
   scrim.addEventListener('click', close);
 }
 
-/* ==========================================================================
-   Profile menu + logout wiring (shared across both dashboards)
-   ========================================================================== */
-
 function initProfileMenu() {
   const btn = document.querySelector('[data-profile-toggle]');
   const menu = document.querySelector('[data-profile-menu]');
   if (btn && menu) {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      menu.classList.toggle('is-open');
-    });
+    btn.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('is-open'); });
     document.addEventListener('click', () => menu.classList.remove('is-open'));
   }
-
   document.querySelectorAll('[data-logout]').forEach((el) => {
-    el.addEventListener('click', (e) => {
-      e.preventDefault();
-      logout();
-    });
+    el.addEventListener('click', (e) => { e.preventDefault(); logout(); });
   });
 }
 
 function initTopbarUser() {
   const user = getUser();
   if (!user) return;
-  document.querySelectorAll('[data-user-name]').forEach((el) => { el.textContent = user.name || user.employeeId || 'User'; });
+  document.querySelectorAll('[data-user-name]').forEach((el) => { el.textContent = user.name || 'User'; });
   document.querySelectorAll('[data-user-role]').forEach((el) => { el.textContent = user.role || ''; });
   document.querySelectorAll('[data-user-initial]').forEach((el) => {
-    const source = user.name || user.employeeId || 'U';
-    el.textContent = source.trim().charAt(0).toUpperCase();
+    el.textContent = (user.name || 'U').trim().charAt(0).toUpperCase();
   });
 }
 
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str == null ? '' : String(str);
+  return div.innerHTML;
+}
+
+function statusBadge(status) {
+  const s = (status || 'pending').toLowerCase();
+  if (s === 'approved') return '<span class="badge badge-success">Approved</span>';
+  if (s === 'rejected') return '<span class="badge badge-danger">Rejected</span>';
+  return '<span class="badge badge-warning">Pending</span>';
+}
 
 /* ==========================================================================
-   DayFlow HRMS — admin-dashboard.html (HR) behavior
+   admin-dashboard.html (HR) behavior
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-  const user = requireAuth('HR');
+  const user = requireAuth('admin');
   if (!user) return;
 
   initMobileNav();
@@ -440,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTopbarUser();
 
   let allEmployees = [];
-  let activeFilter = 'all';
+  let allLeaves = [];
 
   document.querySelectorAll('[data-section-link]').forEach((link) => {
     link.addEventListener('click', (e) => {
@@ -454,95 +301,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  loadSummary();
-  loadAttendanceOverview();
-  loadDepartments();
   loadEmployees();
   loadLeaveRequests();
 
-  /* ================= Summary cards ================= */
-  async function loadSummary() {
-    const res = await apiRequest(ENDPOINTS.hrSummary);
-    if (!res.ok) return;
-    const s = res.data || {};
-    if (s.totalEmployees != null) document.getElementById('stat-total-employees').textContent = s.totalEmployees;
-    if (s.presentToday != null) document.getElementById('stat-present-today').textContent = s.presentToday;
-    if (s.absentToday != null) document.getElementById('stat-absent-today').textContent = s.absentToday;
-    if (s.pendingLeaveRequests != null) document.getElementById('stat-pending-leave').textContent = s.pendingLeaveRequests;
-    if (s.totalEmployees && s.presentToday != null) {
-      const pct = Math.round((s.presentToday / s.totalEmployees) * 100);
-      document.getElementById('stat-present-pct').textContent = `${pct}% of workforce`;
-    }
-    if (s.totalEmployees && s.absentToday != null) {
-      const pct = Math.round((s.absentToday / s.totalEmployees) * 100);
-      document.getElementById('stat-absent-pct').textContent = `${pct}% of workforce`;
-    }
-    if (s.pendingLeaveRequests) document.getElementById('notif-dot').style.display = 'block';
-  }
-
-  /* ================= Attendance overview (CSS bar chart) ================= */
-  async function loadAttendanceOverview() {
-    const res = await apiRequest(ENDPOINTS.hrAttendanceOverview);
-    const chart = document.getElementById('attendance-chart');
-    const empty = document.getElementById('attendance-chart-empty');
-    chart.innerHTML = '';
-
-    if (!res.ok || !Array.isArray(res.data) || res.data.length === 0) {
-      empty.style.display = 'block';
-      return;
-    }
-    empty.style.display = 'none';
-
-    const max = Math.max(...res.data.map((d) => d.total || 1), 1);
-    res.data.forEach((day) => {
-      const pct = Math.round(((day.present || 0) / max) * 100);
-      const col = document.createElement('div');
-      col.className = 'bar-col';
-      col.innerHTML = `
-        <div class="bar is-present" style="height:${pct}%;" data-tooltip="${day.present ?? 0} present"></div>
-        <div class="bar-label">${escapeHtml(day.label || '')}</div>
-      `;
-      chart.appendChild(col);
-    });
-  }
-
-  /* ================= Departments ================= */
-  async function loadDepartments() {
-    const res = await apiRequest(ENDPOINTS.hrDepartments);
-    const list = document.getElementById('department-list');
-    const empty = document.getElementById('department-empty');
-    list.innerHTML = '';
-
-    if (!res.ok || !Array.isArray(res.data) || res.data.length === 0) {
-      empty.style.display = 'block';
-      return;
-    }
-    empty.style.display = 'none';
-
-    const colors = ['var(--teal-500)', 'var(--blue-500)', 'var(--warning-600)', 'var(--navy-700)'];
-    res.data.forEach((dept, i) => {
-      const li = document.createElement('li');
-      li.innerHTML = `
-        <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px;">
-          <span style="font-weight:600; color:var(--text-700);">${escapeHtml(dept.name || '')}</span>
-          <span style="color:var(--text-500);">${escapeHtml(String(dept.count ?? ''))}</span>
-        </div>
-        <div class="timeline-track" style="height:5px;">
-          <div class="timeline-fill" style="width:${dept.percentage || 0}%; background:${colors[i % colors.length]};"></div>
-        </div>
-      `;
-      list.appendChild(li);
-    });
-  }
-
   /* ================= Employees table ================= */
   async function loadEmployees() {
-    const res = await apiRequest(ENDPOINTS.hrEmployees);
-    if (res.ok && Array.isArray(res.data)) {
-      allEmployees = res.data;
-    } else {
-      allEmployees = [];
-    }
+    const res = await apiRequest(ENDPOINTS.employees);
+    allEmployees = (res.ok && Array.isArray(res.data)) ? res.data : [];
+    document.getElementById('stat-total-employees').textContent = allEmployees.length;
     renderEmployees();
   }
 
@@ -552,88 +318,66 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchTerm = document.getElementById('employee-search').value.trim().toLowerCase();
 
     let rows = allEmployees;
-    if (activeFilter !== 'all') {
-      rows = rows.filter((e) => (e.status || '').toLowerCase().replace(' ', '-') === activeFilter);
-    }
     if (searchTerm) {
       rows = rows.filter((e) =>
         (e.name || '').toLowerCase().includes(searchTerm) ||
-        (e.employeeId || '').toLowerCase().includes(searchTerm) ||
-        (e.department || '').toLowerCase().includes(searchTerm)
+        (e.email || '').toLowerCase().includes(searchTerm)
       );
     }
 
     tbody.innerHTML = '';
-    if (rows.length === 0) {
-      empty.style.display = 'block';
-      return;
-    }
+    if (rows.length === 0) { empty.style.display = 'block'; return; }
     empty.style.display = 'none';
 
     rows.forEach((emp) => {
       const tr = document.createElement('tr');
-      const initial = (emp.name || emp.employeeId || '?').trim().charAt(0).toUpperCase();
+      const initial = (emp.name || '?').trim().charAt(0).toUpperCase();
       tr.innerHTML = `
         <td><div class="table-name-cell"><span class="mini-avatar">${initial}</span>${escapeHtml(emp.name || '—')}</div></td>
-        <td>${escapeHtml(emp.employeeId || '—')}</td>
-        <td>${escapeHtml(emp.department || '—')}</td>
-        <td>${employeeStatusBadge(emp.status)}</td>
-        <td><button class="btn btn-secondary btn-sm" data-view-employee="${escapeHtml(emp.employeeId || '')}">View</button></td>
+        <td>${escapeHtml(emp.email || '—')}</td>
+        <td>${escapeHtml(emp.role || '—')}</td>
       `;
       tbody.appendChild(tr);
     });
   }
 
-  function employeeStatusBadge(status) {
-    const s = (status || '').toLowerCase();
-    if (s === 'present') return '<span class="badge badge-success">Present</span>';
-    if (s === 'absent') return '<span class="badge badge-danger">Absent</span>';
-    if (s === 'on-leave' || s === 'on leave') return '<span class="badge badge-warning">On Leave</span>';
-    return '<span class="badge badge-neutral">Unknown</span>';
-  }
-
   document.getElementById('employee-search').addEventListener('input', renderEmployees);
-  document.getElementById('employee-filters').addEventListener('click', (e) => {
-    const pill = e.target.closest('[data-filter]');
-    if (!pill) return;
-    document.querySelectorAll('#employee-filters .filter-pill').forEach((p) => p.classList.remove('is-active'));
-    pill.classList.add('is-active');
-    activeFilter = pill.getAttribute('data-filter');
-    renderEmployees();
-  });
-
-  document.getElementById('employees-table-body').addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-view-employee]');
-    if (!btn) return;
-    showToast(`Viewing profile for ${btn.getAttribute('data-view-employee')} isn't wired up yet.`, 'info');
-  });
 
   /* ================= Leave request management ================= */
   async function loadLeaveRequests() {
-    const res = await apiRequest(ENDPOINTS.hrLeaveRequests);
+    const res = await apiRequest(ENDPOINTS.leaves);
+    allLeaves = (res.ok && Array.isArray(res.data)) ? res.data : [];
+
+    document.getElementById('stat-pending-leave').textContent = allLeaves.filter(r => r.status === 'pending').length;
+    document.getElementById('stat-approved-leave').textContent = allLeaves.filter(r => r.status === 'approved').length;
+    document.getElementById('stat-rejected-leave').textContent = allLeaves.filter(r => r.status === 'rejected').length;
+
+    renderLeaveRequests();
+  }
+
+  function renderLeaveRequests() {
     const tbody = document.getElementById('hr-leave-table-body');
     const empty = document.getElementById('hr-leave-empty');
     tbody.innerHTML = '';
 
-    if (!res.ok || !Array.isArray(res.data) || res.data.length === 0) {
-      empty.style.display = 'block';
-      return;
-    }
+    if (allLeaves.length === 0) { empty.style.display = 'block'; return; }
     empty.style.display = 'none';
 
-    res.data.forEach((req) => {
+    allLeaves.forEach((req) => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td><div class="table-name-cell"><span class="mini-avatar">${(req.employeeName || '?').charAt(0).toUpperCase()}</span>${escapeHtml(req.employeeName || '—')}</div></td>
-        <td>${escapeHtml(req.type || '—')}</td>
-        <td>${escapeHtml(req.startDate || '')} – ${escapeHtml(req.endDate || '')}</td>
+        <td><div class="table-name-cell"><span class="mini-avatar">${(req.employee_name || '?').charAt(0).toUpperCase()}</span>${escapeHtml(req.employee_name || '—')}</div></td>
+        <td>${escapeHtml(req.leave_type || '—')}</td>
+        <td>${escapeHtml(req.start_date || '')}</td>
+        <td>${escapeHtml(req.end_date || '')}</td>
+        <td>${escapeHtml(req.remarks || '—')}</td>
         <td>${statusBadge(req.status)}</td>
         <td>
           ${
             (req.status || '').toLowerCase() === 'pending'
               ? `<div style="display:flex; gap:6px;">
-                   <button class="btn btn-accent btn-sm" data-decision="approve" data-id="${escapeHtml(String(req.id))}">Approve</button>
-                   <button class="btn btn-danger-ghost btn-sm" data-decision="reject" data-id="${escapeHtml(String(req.id))}">Reject</button>
+                   <button class="btn btn-accent btn-sm" data-decision="approved" data-id="${escapeHtml(String(req.id))}">Approve</button>
+                   <button class="btn btn-danger-ghost btn-sm" data-decision="rejected" data-id="${escapeHtml(String(req.id))}">Reject</button>
                  </div>`
               : '<span style="color:var(--text-400); font-size:12.5px;">No action needed</span>'
           }
@@ -643,42 +387,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function statusBadge(status) {
-    const s = (status || 'pending').toLowerCase();
-    if (s === 'approved') return '<span class="badge badge-success">Approved</span>';
-    if (s === 'rejected') return '<span class="badge badge-danger">Rejected</span>';
-    return '<span class="badge badge-warning">Pending</span>';
-  }
-
   document.getElementById('hr-leave-table-body').addEventListener('click', async (e) => {
     const btn = e.target.closest('[data-decision]');
     if (!btn) return;
-    const decision = btn.getAttribute('data-decision');
+    const decision = btn.getAttribute('data-decision'); // "approved" or "rejected"
     const id = btn.getAttribute('data-id');
 
     btn.disabled = true;
-    const res = await apiRequest(ENDPOINTS.hrLeaveDecision, {
-      method: 'POST',
-      body: JSON.stringify({ requestId: id, decision }),
+    const res = await apiRequest(ENDPOINTS.leaveDecision(id), {
+      method: 'PUT',
+      body: JSON.stringify({ status: decision }),
     });
     btn.disabled = false;
 
     if (res.networkError) { showToast("Can't reach the server. Decision not recorded.", 'error'); return; }
-    if (!res.ok) { showToast((res.data && res.data.message) || 'Could not update this request.', 'error'); return; }
+    if (!res.ok) { showToast((res.data && res.data.error) || 'Could not update this request.', 'error'); return; }
 
-    showToast(`Request ${decision === 'approve' ? 'approved' : 'rejected'}.`, 'success');
+    showToast(`Request ${decision}.`, 'success');
     loadLeaveRequests();
-    loadSummary();
   });
-
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str == null ? '' : String(str);
-    return div.innerHTML;
-  }
 });
-
-
 </script>
 </body>
 </html>

@@ -29,8 +29,6 @@
         <p class="desc">DayFlow brings check-ins, leave requests, and team oversight into a single clean dashboard — built for teams that want less admin and more time back in the day.</p>
       </div>
 
-      <!-- Signature element: a "flow" line representing a workday timeline,
-           with floating glass cards that surface live-feeling stats. -->
       <div class="flow-illustration" aria-hidden="true">
         <div class="flow-illustration-stage">
           <div class="float-card float-card-1">
@@ -128,7 +126,6 @@
             <input type="checkbox" id="signin-remember">
             Remember me
           </label>
-          <button type="button" class="link-btn" id="open-forgot">Forgot password?</button>
         </div>
 
         <button type="submit" class="btn btn-primary btn-block" id="signin-submit">
@@ -143,13 +140,10 @@
         <p class="sub">Set up access to DayFlow HRMS.</p>
 
         <div class="form-banner banner-error" id="signup-error" role="alert"></div>
-        <div class="form-banner banner-info" id="signup-verify" role="status">
-          A verification link has been sent to your email. Please verify before signing in.
-        </div>
 
-        <div class="field" id="signup-empid-field">
-          <label for="signup-empid">Employee ID</label>
-          <input class="input" type="text" id="signup-empid" name="employeeId" placeholder="e.g. EMP-0042" required>
+        <div class="field" id="signup-name-field">
+          <label for="signup-name">Employee ID</label>
+          <input class="input" type="text" id="signup-name" name="employeeId" placeholder="e.g. EMP-0042" required>
           <div class="field-error"><span>&#9888;</span><span>Employee ID is required.</span></div>
         </div>
 
@@ -182,14 +176,14 @@
           <label>Role</label>
           <div class="select-row" role="radiogroup" aria-label="Role">
             <label class="role-option is-selected" id="role-employee-label">
-              <input type="radio" name="role" value="Employee" checked>
+              <input type="radio" name="role" value="employee" checked>
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M4 20c0-4 3.5-6 8-6s8 2 8 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
               Employee
             </label>
             <label class="role-option" id="role-hr-label">
-              <input type="radio" name="role" value="HR">
+              <input type="radio" name="role" value="admin">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2 3 6v6c0 5 3.8 8.7 9 10 5.2-1.3 9-5 9-10V6l-9-4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-              HR
+              HR / Admin
             </label>
           </div>
         </div>
@@ -204,82 +198,46 @@
   </section>
 </div>
 
-<!-- ---------- FORGOT PASSWORD MODAL ---------- -->
-<div class="modal-overlay" id="forgot-modal">
-  <div class="modal-card">
-    <h3>Reset your password</h3>
-    <p class="modal-sub">Enter your email and we'll send a reset link if an account exists.</p>
-    <div class="form-banner banner-success" id="forgot-success" role="status">If an account exists for this email, a reset link is on its way.</div>
-    <div class="field" style="margin-bottom:0;">
-      <label for="forgot-email">Email</label>
-      <input class="input" type="email" id="forgot-email" placeholder="you@company.com">
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-secondary" id="forgot-cancel">Cancel</button>
-      <button class="btn btn-primary" id="forgot-send">
-        <span class="btn-label">Send reset link</span>
-        <span class="spinner"></span>
-      </button>
-    </div>
-  </div>
-</div>
-
 <script>
 /* ==========================================================================
    DayFlow HRMS — shared API layer
-   Loaded by every page (login.html, employee-dashboard.html, admin-dashboard.html).
+   Matches the REAL Flask backend (app.py) running on http://127.0.0.1:5000
 
-   IMPORTANT — assumption flagged for you:
-   No existing project files were available to inspect, so the endpoint
-   paths below are a reasonable placeholder contract for a Node/Express-style
-   backend on port 5000. Nothing here fakes data or fakes a response —
-   every call goes to a real endpoint. If your real backend uses different
-   paths, this is the ONLY file you need to edit: everything else calls
-   the functions below instead of using fetch() directly.
+   Real endpoints used:
+     POST /signup   { name, email, password, role }        -> { id, name, email, role }
+     POST /login    { email, password }                    -> { id, name, email, role }
+     GET  /leaves                                           -> [ {id, employee_name, leave_type, start_date, end_date, remarks, status} ]
+     GET  /leaves/employee/<id>                             -> [ {id, leave_type, start_date, end_date, remarks, status} ]
+     POST /leaves   { employee_id, leave_type, start_date, end_date, remarks } -> { id, status }
+     PUT  /leaves/<id> { status }                           -> { id, status }
+     GET  /employees                                        -> [ {id, name, email, role} ]
+     GET  /leaves/pending                                   -> [ ... ]
+     GET  /health                                           -> { status, message }
+
+   NOTE: This backend has NO auth token — login just returns the user object.
+   role values are lowercase: "employee" or "admin".
    ========================================================================== */
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'http://127.0.0.1:5000';
 
 const ENDPOINTS = {
-  login: `${API_BASE}/auth/login`,
-  signup: `${API_BASE}/auth/signup`,
-  resendVerification: `${API_BASE}/auth/resend-verification`,
-  forgotPassword: `${API_BASE}/auth/forgot-password`,
-  me: `${API_BASE}/auth/me`,
-
-  employeeSummary: `${API_BASE}/employee/summary`,
-  employeeAttendanceToday: `${API_BASE}/employee/attendance/today`,
-  employeeCheckIn: `${API_BASE}/employee/attendance/check-in`,
-  employeeCheckOut: `${API_BASE}/employee/attendance/check-out`,
-  employeeAttendanceHistory: `${API_BASE}/employee/attendance/history`,
-  employeeLeaveBalance: `${API_BASE}/employee/leave/balance`,
-  employeeLeaveRequests: `${API_BASE}/employee/leave/requests`,
-  employeeLeaveApply: `${API_BASE}/employee/leave/apply`,
-  employeeTasks: `${API_BASE}/employee/tasks`,
-  employeeNotifications: `${API_BASE}/employee/notifications`,
-
-  hrSummary: `${API_BASE}/hr/summary`,
-  hrEmployees: `${API_BASE}/hr/employees`,
-  hrAttendanceOverview: `${API_BASE}/hr/attendance/overview`,
-  hrLeaveRequests: `${API_BASE}/hr/leave/requests`,
-  hrLeaveDecision: `${API_BASE}/hr/leave/decision`,
-  hrDepartments: `${API_BASE}/hr/departments`,
-  hrNotifications: `${API_BASE}/hr/notifications`,
+  login: `${API_BASE}/login`,
+  signup: `${API_BASE}/signup`,
+  leaves: `${API_BASE}/leaves`,
+  leavesPending: `${API_BASE}/leaves/pending`,
+  employeeLeaves: (id) => `${API_BASE}/leaves/employee/${id}`,
+  leaveDecision: (id) => `${API_BASE}/leaves/${id}`,
+  employees: `${API_BASE}/employees`,
+  health: `${API_BASE}/health`,
 };
 
-/* ---- localStorage session keys ---- */
+/* ---- localStorage session (no token in this backend — just store the user) ---- */
 const STORAGE_KEYS = {
-  token: 'dayflow_token',
   user: 'dayflow_user',
 };
 
-function saveSession(token, user) {
-  localStorage.setItem(STORAGE_KEYS.token, token);
+function saveSession(user) {
   localStorage.setItem(STORAGE_KEYS.user, JSON.stringify(user));
-}
-
-function getToken() {
-  return localStorage.getItem(STORAGE_KEYS.token);
 }
 
 function getUser() {
@@ -288,15 +246,15 @@ function getUser() {
 }
 
 function clearSession() {
-  localStorage.removeItem(STORAGE_KEYS.token);
   localStorage.removeItem(STORAGE_KEYS.user);
 }
 
 /**
  * Redirect to the correct dashboard for a role.
+ * Backend role values are lowercase: "admin" or "employee".
  */
 function redirectForRole(role) {
-  if (role === 'HR') {
+  if (role === 'admin') {
     window.location.href = 'admin-dashboard.html';
   } else {
     window.location.href = 'employee-dashboard.html';
@@ -309,8 +267,7 @@ function redirectForRole(role) {
  */
 function requireAuth(expectedRole) {
   const user = getUser();
-  const token = getToken();
-  if (!token || !user) {
+  if (!user) {
     window.location.href = 'login.html';
     return null;
   }
@@ -327,27 +284,19 @@ function logout() {
 }
 
 /**
- * Central fetch wrapper. Attaches the auth token, parses JSON, and
- * normalizes errors so callers get a consistent { ok, status, data } shape
- * instead of every screen re-implementing try/catch.
+ * Central fetch wrapper. No auth header needed (backend has no token concept).
+ * Normalizes errors so callers get a consistent { ok, status, data } shape.
  */
 async function apiRequest(url, options = {}) {
   const headers = Object.assign(
     { 'Content-Type': 'application/json' },
     options.headers || {}
   );
-  const token = getToken();
-  if (token) headers['Authorization'] = `Bearer ${token}`;
 
   try {
     const response = await fetch(url, Object.assign({}, options, { headers }));
     let data = null;
     try { data = await response.json(); } catch (e) { /* empty body */ }
-
-    if (response.status === 401) {
-      clearSession();
-    }
-
     return { ok: response.ok, status: response.status, data };
   } catch (networkError) {
     return { ok: false, status: 0, data: null, networkError: true };
@@ -428,10 +377,10 @@ function initProfileMenu() {
 function initTopbarUser() {
   const user = getUser();
   if (!user) return;
-  document.querySelectorAll('[data-user-name]').forEach((el) => { el.textContent = user.name || user.employeeId || 'User'; });
+  document.querySelectorAll('[data-user-name]').forEach((el) => { el.textContent = user.name || 'User'; });
   document.querySelectorAll('[data-user-role]').forEach((el) => { el.textContent = user.role || ''; });
   document.querySelectorAll('[data-user-initial]').forEach((el) => {
-    const source = user.name || user.employeeId || 'U';
+    const source = user.name || 'U';
     el.textContent = source.trim().charAt(0).toUpperCase();
   });
 }
@@ -445,7 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // If already signed in, skip straight to the right dashboard.
   const existingUser = getUser();
-  if (existingUser && getToken()) {
+  if (existingUser) {
     redirectForRole(existingUser.role);
     return;
   }
@@ -483,8 +432,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const roleHrLabel = document.getElementById('role-hr-label');
   function syncRoleSelection() {
     const checked = document.querySelector('input[name="role"]:checked').value;
-    roleEmployeeLabel.classList.toggle('is-selected', checked === 'Employee');
-    roleHrLabel.classList.toggle('is-selected', checked === 'HR');
+    roleEmployeeLabel.classList.toggle('is-selected', checked === 'employee');
+    roleHrLabel.classList.toggle('is-selected', checked === 'admin');
   }
   document.querySelectorAll('input[name="role"]').forEach((r) => r.addEventListener('change', syncRoleSelection));
 
@@ -559,54 +508,53 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (!res.ok) {
-      const message = (res.data && res.data.message) || 'Incorrect email or password.';
+      const message = (res.data && res.data.error) || 'Incorrect email or password.';
       showBanner(signinError, message);
       return;
     }
 
-    const { token, user } = res.data || {};
-    if (!token || !user) {
+    // Real backend returns the user object directly: { id, name, email, role }
+    const user = res.data;
+    if (!user || !user.id) {
       showBanner(signinError, 'Unexpected response from server. Please try again.');
       return;
     }
 
-    saveSession(token, user);
+    saveSession(user);
     showBanner(signinSuccess, 'Signed in successfully. Redirecting…');
     setTimeout(() => redirectForRole(user.role), 500);
   });
 
   /* ---------------- Sign up submit ---------------- */
   const signupError = document.getElementById('signup-error');
-  const signupVerify = document.getElementById('signup-verify');
   const signupSubmit = document.getElementById('signup-submit');
 
   formSignup.addEventListener('submit', async (e) => {
     e.preventDefault();
     hideBanner(signupError);
-    hideBanner(signupVerify);
 
-    const employeeId = document.getElementById('signup-empid').value.trim();
+    const name = document.getElementById('signup-name').value.trim();
     const email = document.getElementById('signup-email').value.trim();
     const password = document.getElementById('signup-password').value;
     const confirm = document.getElementById('signup-confirm').value;
-    const role = document.querySelector('input[name="role"]:checked').value;
+    const role = document.querySelector('input[name="role"]:checked').value; // "employee" or "admin"
 
-    const empIdValid = employeeId.length > 0;
+    const nameValid = name.length > 0;
     const emailValid = isValidEmail(email);
     const passwordValid = scorePassword(password) >= 3 && password.length >= 8;
     const confirmValid = password === confirm && confirm.length > 0;
 
-    setFieldError('signup-empid-field', !empIdValid);
+    setFieldError('signup-name-field', !nameValid);
     setFieldError('signup-email-field', !emailValid);
     setFieldError('signup-password-field', !passwordValid);
     setFieldError('signup-confirm-field', !confirmValid);
 
-    if (!empIdValid || !emailValid || !passwordValid || !confirmValid) return;
+    if (!nameValid || !emailValid || !passwordValid || !confirmValid) return;
 
     setLoading(signupSubmit, true);
     const res = await apiRequest(ENDPOINTS.signup, {
       method: 'POST',
-      body: JSON.stringify({ employeeId, email, password, role }),
+      body: JSON.stringify({ name, email, password, role }),
     });
     setLoading(signupSubmit, false);
 
@@ -616,56 +564,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (!res.ok) {
-      const message = (res.data && res.data.message) || 'Could not create your account. Please check your details.';
+      const message = (res.data && res.data.error) || 'Could not create your account. Please check your details.';
       showBanner(signupError, message);
       return;
     }
 
-    // Show the email-verification state rather than logging the user straight in —
-    // per the requirement that email verification is required before sign-in.
-    signupVerify.classList.add('is-visible');
+    // Real backend has no email verification step — account is ready immediately.
+    showToast('Account created! You can now sign in.', 'success');
     formSignup.reset();
     syncRoleSelection();
     meter.className = 'strength-meter';
     strengthLabel.textContent = 'Use 8+ characters with a number and a symbol.';
-    showToast('Account created. Check your email to verify.', 'success');
-  });
-
-  /* ---------------- Forgot password modal ---------------- */
-  const forgotModal = document.getElementById('forgot-modal');
-  const forgotSuccess = document.getElementById('forgot-success');
-  const forgotSend = document.getElementById('forgot-send');
-
-  document.getElementById('open-forgot').addEventListener('click', () => {
-    hideBanner(forgotSuccess);
-    document.getElementById('forgot-email').value = document.getElementById('signin-email').value;
-    forgotModal.classList.add('is-open');
-  });
-  document.getElementById('forgot-cancel').addEventListener('click', () => forgotModal.classList.remove('is-open'));
-  forgotModal.addEventListener('click', (e) => { if (e.target === forgotModal) forgotModal.classList.remove('is-open'); });
-
-  forgotSend.addEventListener('click', async () => {
-    const email = document.getElementById('forgot-email').value.trim();
-    if (!isValidEmail(email)) { showToast('Enter a valid email first.', 'error'); return; }
-
-    setLoading(forgotSend, true);
-    const res = await apiRequest(ENDPOINTS.forgotPassword, {
-      method: 'POST',
-      body: JSON.stringify({ email }),
-    });
-    setLoading(forgotSend, false);
-
-    if (res.networkError) {
-      showToast("Can't reach the server right now.", 'error');
-      return;
-    }
-    // Always show the same neutral confirmation regardless of whether the
-    // email exists, so the UI never reveals account existence.
-    showBanner(forgotSuccess, 'If an account exists for this email, a reset link is on its way.');
+    activate('signin');
+    document.getElementById('signin-email').value = email;
   });
 });
-
-
 </script>
 </body>
 </html>
