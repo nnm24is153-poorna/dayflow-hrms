@@ -161,6 +161,9 @@ def get_pending_leaves():
         "remarks": r[5], "status": r[6]
     } for r in rows]
     return jsonify(leaves)
+@app.route('/health', methods=['GET'])
+def health_check():
+    return jsonify({"status": "ok", "message": "Dayflow backend is running"}), 200
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
