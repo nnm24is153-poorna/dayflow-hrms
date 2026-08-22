@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DayFlow HRMS — Sign in</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="auth-shell">
+
+  <!-- ===================== LEFT: BRAND PANEL ===================== -->
+  <section class="auth-brand">
+    <div class="bg-orb orb-teal" aria-hidden="true"></div>
+    <div class="bg-orb orb-blue" aria-hidden="true"></div>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <div class="auth-brand-inner">
+      <div class="brand-logo">
+        <span class="mark" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 0 1 14.5-4.5M20 12a8 8 0 0 1-14.5 4.5" stroke="#0B1330" stroke-width="2.4" stroke-linecap="round"/><path d="M18.5 4v4h-4M5.5 20v-4h4" stroke="#0B1330" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        DayFlow HRMS
+      </div>
+
+      <div class="auth-copy">
+        <h1>Manage your people. Simplify your workday.</h1>
+        <p class="tagline">One workspace for attendance, leave, and your whole team.</p>
+        <p class="desc">DayFlow brings check-ins, leave requests, and team oversight into a single clean dashboard — built for teams that want less admin and more time back in the day.</p>
+      </div>
+
+      <!-- Signature element: a "flow" line representing a workday timeline,
+           with floating glass cards that surface live-feeling stats. -->
+      <div class="flow-illustration" aria-hidden="true">
+        <div class="flow-illustration-stage">
+          <div class="float-card float-card-1">
+            <span class="fc-icon icon-tint-teal"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3 8-8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Checked in — 9:02 AM
+          </div>
+          <div class="float-card float-card-2">
+            <span class="fc-icon icon-tint-blue"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M17 20v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="2"/></svg></span>
+            24 teammates active
+          </div>
+          <div class="float-card float-card-3">
+            <span class="fc-icon icon-tint-amber"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg></span>
+            8.5 hrs logged today
+          </div>
+
+          <svg width="100%" height="120" viewBox="0 0 420 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 90 C 60 90, 70 30, 130 30 C 190 30, 200 95, 260 95 C 320 95, 330 50, 420 50"
+                  stroke="url(#flowGrad)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="flowGrad" x1="0" y1="0" x2="420" y2="0" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#0FB8A6"/>
+                <stop offset="1" stop-color="#3E6BF0"/>
+              </linearGradient>
+            </defs>
+            <circle cx="0" cy="90" r="4" fill="#0FB8A6"/>
+            <circle cx="130" cy="30" r="4" fill="#0FB8A6">
+              <animate attributeName="r" values="4;6;4" dur="2.4s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="260" cy="95" r="4" fill="#3E6BF0"/>
+            <circle cx="420" cy="50" r="5" fill="#3E6BF0">
+              <animate attributeName="r" values="5;7;5" dur="2.4s" repeatCount="indefinite"/>
+            </circle>
+          </svg>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:11.5px; color:var(--text-on-dark-dim); font-weight:600; margin-top:4px;">
+          <span>Check in</span><span>Focus time</span><span>Break</span><span>Check out</span>
+        </div>
+      </div>
+
+      <ul class="feature-list">
+        <li class="feature-item">
+          <span class="icon-dot"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M17 20v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM23 20v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          Employee Management
+        </li>
+        <li class="feature-item">
+          <span class="icon-dot"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/></svg></span>
+          Attendance Tracking
+        </li>
+        <li class="feature-item">
+          <span class="icon-dot"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M8 2v4M16 2v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          Leave Management
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== RIGHT: AUTH CARD ===================== -->
+  <section class="auth-panel">
+    <div class="auth-card">
+
+      <div class="auth-tabs" role="tablist" aria-label="Authentication mode">
+        <button class="auth-tab is-active" id="tab-signin" role="tab" aria-selected="true" aria-controls="form-signin">Sign In</button>
+        <button class="auth-tab" id="tab-signup" role="tab" aria-selected="false" aria-controls="form-signup">Create Account</button>
+      </div>
+
+      <!-- ---------- SIGN IN FORM ---------- -->
+      <form class="auth-form is-active" id="form-signin" novalidate>
+        <h2>Welcome back</h2>
+        <p class="sub">Sign in to your DayFlow workspace.</p>
+
+        <div class="form-banner banner-error" id="signin-error" role="alert"></div>
+        <div class="form-banner banner-success" id="signin-success" role="status"></div>
+
+        <div class="field" id="signin-email-field">
+          <label for="signin-email">Email</label>
+          <div class="input-wrap">
+            <input class="input" type="email" id="signin-email" name="email" placeholder="you@company.com" autocomplete="email" required>
+          </div>
+          <div class="field-error"><span>&#9888;</span><span>Enter a valid email address.</span></div>
+        </div>
+
+        <div class="field" id="signin-password-field">
+          <label for="signin-password">Password</label>
+          <div class="input-wrap">
+            <input class="input has-icon" type="password" id="signin-password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+            <button type="button" class="input-icon-btn" data-toggle-password="signin-password" aria-label="Show password">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/></svg>
+            </button>
+          </div>
+          <div class="field-error"><span>&#9888;</span><span>Password is required.</span></div>
+        </div>
+
+        <div class="auth-form-footer">
+          <label class="checkbox-row">
+            <input type="checkbox" id="signin-remember">
+            Remember me
+          </label>
+          <button type="button" class="link-btn" id="open-forgot">Forgot password?</button>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" id="signin-submit">
+          <span class="btn-label">Sign In</span>
+          <span class="spinner"></span>
+        </button>
+      </form>
+
+      <!-- ---------- SIGN UP FORM ---------- -->
+      <form class="auth-form" id="form-signup" novalidate>
+        <h2>Create your account</h2>
+        <p class="sub">Set up access to DayFlow HRMS.</p>
+
+        <div class="form-banner banner-error" id="signup-error" role="alert"></div>
+        <div class="form-banner banner-info" id="signup-verify" role="status">
+          A verification link has been sent to your email. Please verify before signing in.
+        </div>
+
+        <div class="field" id="signup-empid-field">
+          <label for="signup-empid">Employee ID</label>
+          <input class="input" type="text" id="signup-empid" name="employeeId" placeholder="e.g. EMP-0042" required>
+          <div class="field-error"><span>&#9888;</span><span>Employee ID is required.</span></div>
+        </div>
+
+        <div class="field" id="signup-email-field">
+          <label for="signup-email">Email</label>
+          <input class="input" type="email" id="signup-email" name="email" placeholder="you@company.com" autocomplete="email" required>
+          <div class="field-error"><span>&#9888;</span><span>Enter a valid email address.</span></div>
+        </div>
+
+        <div class="field" id="signup-password-field">
+          <label for="signup-password">Password</label>
+          <div class="input-wrap">
+            <input class="input has-icon" type="password" id="signup-password" name="password" placeholder="Create a password" autocomplete="new-password" required>
+            <button type="button" class="input-icon-btn" data-toggle-password="signup-password" aria-label="Show password">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/></svg>
+            </button>
+          </div>
+          <div class="strength-meter" id="strength-meter"><span></span><span></span><span></span><span></span></div>
+          <div class="strength-label" id="strength-label">Use 8+ characters with a number and a symbol.</div>
+          <div class="field-error"><span>&#9888;</span><span>Password does not meet the requirements.</span></div>
+        </div>
+
+        <div class="field" id="signup-confirm-field">
+          <label for="signup-confirm">Confirm Password</label>
+          <input class="input" type="password" id="signup-confirm" name="confirmPassword" placeholder="Re-enter your password" autocomplete="new-password" required>
+          <div class="field-error"><span>&#9888;</span><span>Passwords do not match.</span></div>
+        </div>
+
+        <div class="field">
+          <label>Role</label>
+          <div class="select-row" role="radiogroup" aria-label="Role">
+            <label class="role-option is-selected" id="role-employee-label">
+              <input type="radio" name="role" value="Employee" checked>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M4 20c0-4 3.5-6 8-6s8 2 8 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              Employee
+            </label>
+            <label class="role-option" id="role-hr-label">
+              <input type="radio" name="role" value="HR">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2 3 6v6c0 5 3.8 8.7 9 10 5.2-1.3 9-5 9-10V6l-9-4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+              HR
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-accent btn-block" id="signup-submit" style="margin-top:6px;">
+          <span class="btn-label">Create Account</span>
+          <span class="spinner"></span>
+        </button>
+      </form>
+
+    </div>
+  </section>
+</div>
+
+<!-- ---------- FORGOT PASSWORD MODAL ---------- -->
+<div class="modal-overlay" id="forgot-modal">
+  <div class="modal-card">
+    <h3>Reset your password</h3>
+    <p class="modal-sub">Enter your email and we'll send a reset link if an account exists.</p>
+    <div class="form-banner banner-success" id="forgot-success" role="status">If an account exists for this email, a reset link is on its way.</div>
+    <div class="field" style="margin-bottom:0;">
+      <label for="forgot-email">Email</label>
+      <input class="input" type="email" id="forgot-email" placeholder="you@company.com">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="forgot-cancel">Cancel</button>
+      <button class="btn btn-primary" id="forgot-send">
+        <span class="btn-label">Send reset link</span>
+        <span class="spinner"></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ==========================================================================
+   DayFlow HRMS — shared API layer
+   Loaded by every page (login.html, employee-dashboard.html, admin-dashboard.html).
+
+   IMPORTANT — assumption flagged for you:
+   No existing project files were available to inspect, so the endpoint
+   paths below are a reasonable placeholder contract for a Node/Express-style
+   backend on port 5000. Nothing here fakes data or fakes a response —
+   every call goes to a real endpoint. If your real backend uses different
+   paths, this is the ONLY file you need to edit: everything else calls
+   the functions below instead of using fetch() directly.
+   ========================================================================== */
+
+const API_BASE = 'http://localhost:5000/api';
+
+const ENDPOINTS = {
+  login: `${API_BASE}/auth/login`,
+  signup: `${API_BASE}/auth/signup`,
+  resendVerification: `${API_BASE}/auth/resend-verification`,
+  forgotPassword: `${API_BASE}/auth/forgot-password`,
+  me: `${API_BASE}/auth/me`,
+
+  employeeSummary: `${API_BASE}/employee/summary`,
+  employeeAttendanceToday: `${API_BASE}/employee/attendance/today`,
+  employeeCheckIn: `${API_BASE}/employee/attendance/check-in`,
+  employeeCheckOut: `${API_BASE}/employee/attendance/check-out`,
+  employeeAttendanceHistory: `${API_BASE}/employee/attendance/history`,
+  employeeLeaveBalance: `${API_BASE}/employee/leave/balance`,
+  employeeLeaveRequests: `${API_BASE}/employee/leave/requests`,
+  employeeLeaveApply: `${API_BASE}/employee/leave/apply`,
+  employeeTasks: `${API_BASE}/employee/tasks`,
+  employeeNotifications: `${API_BASE}/employee/notifications`,
+
+  hrSummary: `${API_BASE}/hr/summary`,
+  hrEmployees: `${API_BASE}/hr/employees`,
+  hrAttendanceOverview: `${API_BASE}/hr/attendance/overview`,
+  hrLeaveRequests: `${API_BASE}/hr/leave/requests`,
+  hrLeaveDecision: `${API_BASE}/hr/leave/decision`,
+  hrDepartments: `${API_BASE}/hr/departments`,
+  hrNotifications: `${API_BASE}/hr/notifications`,
+};
+
+/* ---- localStorage session keys ---- */
+const STORAGE_KEYS = {
+  token: 'dayflow_token',
+  user: 'dayflow_user',
+};
+
+function saveSession(token, user) {
+  localStorage.setItem(STORAGE_KEYS.token, token);
+  localStorage.setItem(STORAGE_KEYS.user, JSON.stringify(user));
+}
+
+function getToken() {
+  return localStorage.getItem(STORAGE_KEYS.token);
+}
+
+function getUser() {
+  const raw = localStorage.getItem(STORAGE_KEYS.user);
+  try { return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+}
+
+function clearSession() {
+  localStorage.removeItem(STORAGE_KEYS.token);
+  localStorage.removeItem(STORAGE_KEYS.user);
+}
+
+/**
+ * Redirect to the correct dashboard for a role.
+ */
+function redirectForRole(role) {
+  if (role === 'HR') {
+    window.location.href = 'admin-dashboard.html';
+  } else {
+    window.location.href = 'employee-dashboard.html';
+  }
+}
+
+/**
+ * Guard for dashboard pages: bounce back to login if no session exists,
+ * and bounce a user to their own dashboard if they land on the wrong one.
+ */
+function requireAuth(expectedRole) {
+  const user = getUser();
+  const token = getToken();
+  if (!token || !user) {
+    window.location.href = 'login.html';
+    return null;
+  }
+  if (expectedRole && user.role !== expectedRole) {
+    redirectForRole(user.role);
+    return null;
+  }
+  return user;
+}
+
+function logout() {
+  clearSession();
+  window.location.href = 'login.html';
+}
+
+/**
+ * Central fetch wrapper. Attaches the auth token, parses JSON, and
+ * normalizes errors so callers get a consistent { ok, status, data } shape
+ * instead of every screen re-implementing try/catch.
+ */
+async function apiRequest(url, options = {}) {
+  const headers = Object.assign(
+    { 'Content-Type': 'application/json' },
+    options.headers || {}
+  );
+  const token = getToken();
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+
+  try {
+    const response = await fetch(url, Object.assign({}, options, { headers }));
+    let data = null;
+    try { data = await response.json(); } catch (e) { /* empty body */ }
+
+    if (response.status === 401) {
+      clearSession();
+    }
+
+    return { ok: response.ok, status: response.status, data };
+  } catch (networkError) {
+    return { ok: false, status: 0, data: null, networkError: true };
+  }
+}
+
+/* ==========================================================================
+   Toast notifications (shared across all pages)
+   ========================================================================== */
+
+function ensureToastRegion() {
+  let region = document.querySelector('.toast-region');
+  if (!region) {
+    region = document.createElement('div');
+    region.className = 'toast-region';
+    region.setAttribute('aria-live', 'polite');
+    document.body.appendChild(region);
+  }
+  return region;
+}
+
+function showToast(message, type = 'info', duration = 4000) {
+  const region = ensureToastRegion();
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.setAttribute('role', 'status');
+  toast.textContent = message;
+  region.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add('is-leaving');
+    setTimeout(() => toast.remove(), 200);
+  }, duration);
+}
+
+/* ==========================================================================
+   Mobile sidebar toggle (shared markup/behavior across both dashboards)
+   ========================================================================== */
+
+function initMobileNav() {
+  const openBtn = document.querySelector('[data-open-sidebar]');
+  const closeBtn = document.querySelector('[data-close-sidebar]');
+  const sidebar = document.querySelector('.sidebar');
+  const scrim = document.querySelector('.sidebar-scrim');
+  if (!sidebar || !scrim) return;
+
+  const open = () => { sidebar.classList.add('is-open'); scrim.classList.add('is-open'); };
+  const close = () => { sidebar.classList.remove('is-open'); scrim.classList.remove('is-open'); };
+
+  if (openBtn) openBtn.addEventListener('click', open);
+  if (closeBtn) closeBtn.addEventListener('click', close);
+  scrim.addEventListener('click', close);
+}
+
+/* ==========================================================================
+   Profile menu + logout wiring (shared across both dashboards)
+   ========================================================================== */
+
+function initProfileMenu() {
+  const btn = document.querySelector('[data-profile-toggle]');
+  const menu = document.querySelector('[data-profile-menu]');
+  if (btn && menu) {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      menu.classList.toggle('is-open');
+    });
+    document.addEventListener('click', () => menu.classList.remove('is-open'));
+  }
+
+  document.querySelectorAll('[data-logout]').forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      logout();
+    });
+  });
+}
+
+function initTopbarUser() {
+  const user = getUser();
+  if (!user) return;
+  document.querySelectorAll('[data-user-name]').forEach((el) => { el.textContent = user.name || user.employeeId || 'User'; });
+  document.querySelectorAll('[data-user-role]').forEach((el) => { el.textContent = user.role || ''; });
+  document.querySelectorAll('[data-user-initial]').forEach((el) => {
+    const source = user.name || user.employeeId || 'U';
+    el.textContent = source.trim().charAt(0).toUpperCase();
+  });
+}
+
+
+/* ==========================================================================
+   DayFlow HRMS — login.html behavior
+   ========================================================================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  // If already signed in, skip straight to the right dashboard.
+  const existingUser = getUser();
+  if (existingUser && getToken()) {
+    redirectForRole(existingUser.role);
+    return;
+  }
+
+  /* ---------------- Tab switching ---------------- */
+  const tabSignin = document.getElementById('tab-signin');
+  const tabSignup = document.getElementById('tab-signup');
+  const formSignin = document.getElementById('form-signin');
+  const formSignup = document.getElementById('form-signup');
+
+  function activate(tab) {
+    const showSignup = tab === 'signup';
+    tabSignin.classList.toggle('is-active', !showSignup);
+    tabSignup.classList.toggle('is-active', showSignup);
+    tabSignin.setAttribute('aria-selected', String(!showSignup));
+    tabSignup.setAttribute('aria-selected', String(showSignup));
+    formSignin.classList.toggle('is-active', !showSignup);
+    formSignup.classList.toggle('is-active', showSignup);
+  }
+  tabSignin.addEventListener('click', () => activate('signin'));
+  tabSignup.addEventListener('click', () => activate('signup'));
+
+  /* ---------------- Password show/hide ---------------- */
+  document.querySelectorAll('[data-toggle-password]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const input = document.getElementById(btn.getAttribute('data-toggle-password'));
+      const isHidden = input.type === 'password';
+      input.type = isHidden ? 'text' : 'password';
+      btn.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+    });
+  });
+
+  /* ---------------- Role selector ---------------- */
+  const roleEmployeeLabel = document.getElementById('role-employee-label');
+  const roleHrLabel = document.getElementById('role-hr-label');
+  function syncRoleSelection() {
+    const checked = document.querySelector('input[name="role"]:checked').value;
+    roleEmployeeLabel.classList.toggle('is-selected', checked === 'Employee');
+    roleHrLabel.classList.toggle('is-selected', checked === 'HR');
+  }
+  document.querySelectorAll('input[name="role"]').forEach((r) => r.addEventListener('change', syncRoleSelection));
+
+  /* ---------------- Password strength meter ---------------- */
+  const pwInput = document.getElementById('signup-password');
+  const meter = document.getElementById('strength-meter');
+  const strengthLabel = document.getElementById('strength-label');
+
+  function scorePassword(pw) {
+    let score = 0;
+    if (pw.length >= 8) score++;
+    if (/[A-Z]/.test(pw) && /[a-z]/.test(pw)) score++;
+    if (/\d/.test(pw)) score++;
+    if (/[^A-Za-z0-9]/.test(pw)) score++;
+    return score;
+  }
+
+  pwInput.addEventListener('input', () => {
+    const score = scorePassword(pwInput.value);
+    meter.className = 'strength-meter';
+    if (!pwInput.value) {
+      strengthLabel.textContent = 'Use 8+ characters with a number and a symbol.';
+      return;
+    }
+    if (score <= 1) { meter.classList.add('s-weak'); strengthLabel.textContent = 'Weak — add length, numbers, and symbols.'; }
+    else if (score === 2) { meter.classList.add('s-fair'); strengthLabel.textContent = 'Fair — add a symbol or mix case.'; }
+    else if (score === 3) { meter.classList.add('s-good'); strengthLabel.textContent = 'Good — almost there.'; }
+    else { meter.classList.add('s-strong'); strengthLabel.textContent = 'Strong password.'; }
+  });
+
+  /* ---------------- Validation helpers ---------------- */
+  function setFieldError(fieldId, hasError) {
+    document.getElementById(fieldId).classList.toggle('has-error', hasError);
+  }
+  function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+  function showBanner(el, message) {
+    el.textContent = message;
+    el.classList.add('is-visible');
+  }
+  function hideBanner(el) { el.classList.remove('is-visible'); }
+  function setLoading(btn, loading) { btn.classList.toggle('is-loading', loading); btn.disabled = loading; }
+
+  /* ---------------- Sign in submit ---------------- */
+  const signinError = document.getElementById('signin-error');
+  const signinSuccess = document.getElementById('signin-success');
+  const signinSubmit = document.getElementById('signin-submit');
+
+  formSignin.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideBanner(signinError);
+    hideBanner(signinSuccess);
+
+    const email = document.getElementById('signin-email').value.trim();
+    const password = document.getElementById('signin-password').value;
+
+    const emailValid = isValidEmail(email);
+    const passwordValid = password.length > 0;
+    setFieldError('signin-email-field', !emailValid);
+    setFieldError('signin-password-field', !passwordValid);
+    if (!emailValid || !passwordValid) return;
+
+    setLoading(signinSubmit, true);
+    const res = await apiRequest(ENDPOINTS.login, {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    });
+    setLoading(signinSubmit, false);
+
+    if (res.networkError) {
+      showBanner(signinError, "Can't reach the DayFlow server. Confirm the backend is running on port 5000 and try again.");
+      return;
+    }
+
+    if (!res.ok) {
+      const message = (res.data && res.data.message) || 'Incorrect email or password.';
+      showBanner(signinError, message);
+      return;
+    }
+
+    const { token, user } = res.data || {};
+    if (!token || !user) {
+      showBanner(signinError, 'Unexpected response from server. Please try again.');
+      return;
+    }
+
+    saveSession(token, user);
+    showBanner(signinSuccess, 'Signed in successfully. Redirecting…');
+    setTimeout(() => redirectForRole(user.role), 500);
+  });
+
+  /* ---------------- Sign up submit ---------------- */
+  const signupError = document.getElementById('signup-error');
+  const signupVerify = document.getElementById('signup-verify');
+  const signupSubmit = document.getElementById('signup-submit');
+
+  formSignup.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideBanner(signupError);
+    hideBanner(signupVerify);
+
+    const employeeId = document.getElementById('signup-empid').value.trim();
+    const email = document.getElementById('signup-email').value.trim();
+    const password = document.getElementById('signup-password').value;
+    const confirm = document.getElementById('signup-confirm').value;
+    const role = document.querySelector('input[name="role"]:checked').value;
+
+    const empIdValid = employeeId.length > 0;
+    const emailValid = isValidEmail(email);
+    const passwordValid = scorePassword(password) >= 3 && password.length >= 8;
+    const confirmValid = password === confirm && confirm.length > 0;
+
+    setFieldError('signup-empid-field', !empIdValid);
+    setFieldError('signup-email-field', !emailValid);
+    setFieldError('signup-password-field', !passwordValid);
+    setFieldError('signup-confirm-field', !confirmValid);
+
+    if (!empIdValid || !emailValid || !passwordValid || !confirmValid) return;
+
+    setLoading(signupSubmit, true);
+    const res = await apiRequest(ENDPOINTS.signup, {
+      method: 'POST',
+      body: JSON.stringify({ employeeId, email, password, role }),
+    });
+    setLoading(signupSubmit, false);
+
+    if (res.networkError) {
+      showBanner(signupError, "Can't reach the DayFlow server. Confirm the backend is running on port 5000 and try again.");
+      return;
+    }
+
+    if (!res.ok) {
+      const message = (res.data && res.data.message) || 'Could not create your account. Please check your details.';
+      showBanner(signupError, message);
+      return;
+    }
+
+    // Show the email-verification state rather than logging the user straight in —
+    // per the requirement that email verification is required before sign-in.
+    signupVerify.classList.add('is-visible');
+    formSignup.reset();
+    syncRoleSelection();
+    meter.className = 'strength-meter';
+    strengthLabel.textContent = 'Use 8+ characters with a number and a symbol.';
+    showToast('Account created. Check your email to verify.', 'success');
+  });
+
+  /* ---------------- Forgot password modal ---------------- */
+  const forgotModal = document.getElementById('forgot-modal');
+  const forgotSuccess = document.getElementById('forgot-success');
+  const forgotSend = document.getElementById('forgot-send');
+
+  document.getElementById('open-forgot').addEventListener('click', () => {
+    hideBanner(forgotSuccess);
+    document.getElementById('forgot-email').value = document.getElementById('signin-email').value;
+    forgotModal.classList.add('is-open');
+  });
+  document.getElementById('forgot-cancel').addEventListener('click', () => forgotModal.classList.remove('is-open'));
+  forgotModal.addEventListener('click', (e) => { if (e.target === forgotModal) forgotModal.classList.remove('is-open'); });
+
+  forgotSend.addEventListener('click', async () => {
+    const email = document.getElementById('forgot-email').value.trim();
+    if (!isValidEmail(email)) { showToast('Enter a valid email first.', 'error'); return; }
+
+    setLoading(forgotSend, true);
+    const res = await apiRequest(ENDPOINTS.forgotPassword, {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    });
+    setLoading(forgotSend, false);
+
+    if (res.networkError) {
+      showToast("Can't reach the server right now.", 'error');
+      return;
+    }
+    // Always show the same neutral confirmation regardless of whether the
+    // email exists, so the UI never reveals account existence.
+    showBanner(forgotSuccess, 'If an account exists for this email, a reset link is on its way.');
+  });
+});
+
+
+</script>
+</body>
+</html>
