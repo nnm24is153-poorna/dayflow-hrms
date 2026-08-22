@@ -131,5 +131,36 @@ def update_leave_status(leave_id):
     conn.close()
     return jsonify({"id": leave_id, "status": new_status})
 
+@app.route('/employees', methods=['GET'])
+def get_employees():
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id, name, email, role FROM employees")
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+    employees = [{"id": r[0], "name": r[1], "email": r[2], "role": r[3]} for r in rows]
+    return jsonify(employees)
+
+@app.route('/leaves/pending', methods=['GET'])
+def get_pending_leaves():
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT l.id, e.name, l.leave_type, l.start_date, l.end_date, l.remarks, l.status
+        FROM leave_requests l
+        JOIN employees e ON l.employee_id = e.id
+        WHERE l.status = 'pending'
+    """)
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+    leaves = [{
+        "id": r[0], "employee_name": r[1], "leave_type": r[2],
+        "start_date": str(r[3]), "end_date": str(r[4]),
+        "remarks": r[5], "status": r[6]
+    } for r in rows]
+    return jsonify(leaves)
+
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=5000)
