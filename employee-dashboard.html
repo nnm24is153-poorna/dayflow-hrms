@@ -5,374 +5,3567 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DayFlow HRMS — Employee Dashboard</title>
 <link rel="stylesheet" href="style.css">
+
+<style>
+.employee-extra-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.employee-card {
+  background: #fff;
+  border: 1px solid #e8eaf0;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(11, 19, 48, 0.04);
+}
+
+.employee-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.employee-card-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #0b1330;
+}
+
+.profile-card-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.large-profile-avatar {
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+  border-radius: 50%;
+  background: #eef2ff;
+  color: #0b1330;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+  overflow: hidden;
+  border: 2px solid #e3e7f5;
+}
+
+.large-profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-card-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0b1330;
+  margin-bottom: 4px;
+}
+
+.profile-card-role {
+  font-size: 13px;
+  color: #73798c;
+}
+
+.profile-card-email {
+  font-size: 13px;
+  color: #73798c;
+  margin-top: 4px;
+}
+
+.profile-card-link {
+  display: inline-block;
+  margin-top: 14px;
+  color: #4f46e5;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.attendance-number {
+  font-size: 30px;
+  font-weight: 700;
+  color: #0b1330;
+  margin-bottom: 4px;
+}
+
+.attendance-label {
+  font-size: 13px;
+  color: #73798c;
+}
+
+.attendance-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.attendance-item {
+  background: #f8f9fc;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+
+.attendance-item strong {
+  display: block;
+  font-size: 17px;
+  color: #0b1330;
+}
+
+.attendance-item span {
+  display: block;
+  margin-top: 3px;
+  font-size: 11px;
+  color: #73798c;
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.activity-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid #eef0f5;
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-icon {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  background: #f0f2ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4f46e5;
+  font-size: 14px;
+}
+
+.activity-text {
+  font-size: 13px;
+  color: #3e4354;
+  line-height: 1.45;
+}
+
+.activity-time {
+  display: block;
+  color: #9297a6;
+  font-size: 11px;
+  margin-top: 3px;
+}
+
+.employee-profile-section {
+  display: none;
+}
+
+.employee-profile-section.is-visible {
+  display: block;
+}
+
+.profile-page-header {
+  margin-bottom: 22px;
+}
+
+.profile-page-header h2 {
+  margin: 0 0 5px;
+  color: #0b1330;
+}
+
+.profile-page-header p {
+  margin: 0;
+  color: #73798c;
+  font-size: 13px;
+}
+
+.profile-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
+}
+
+.profile-picture-card,
+.profile-details-card {
+  background: #fff;
+  border: 1px solid #e8eaf0;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 2px 8px rgba(11, 19, 48, 0.04);
+}
+
+.profile-picture-card {
+  text-align: center;
+}
+
+.profile-page-avatar {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background: #eef2ff;
+  color: #0b1330;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  font-weight: 700;
+  overflow: hidden;
+  border: 3px solid #e3e7f5;
+}
+
+.profile-page-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-picture-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0b1330;
+}
+
+.profile-picture-role {
+  font-size: 13px;
+  color: #73798c;
+  margin-top: 4px;
+}
+
+.profile-section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0b1330;
+  margin: 0 0 15px;
+}
+
+.profile-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.profile-detail {
+  padding: 13px;
+  background: #f8f9fc;
+  border-radius: 10px;
+}
+
+.profile-detail-label {
+  display: block;
+  color: #858b9b;
+  font-size: 11px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+
+.profile-detail-value {
+  display: block;
+  color: #20263a;
+  font-size: 13px;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.profile-divider {
+  border: 0;
+  border-top: 1px solid #eceef4;
+  margin: 22px 0;
+}
+
+.profile-edit-btn {
+  margin-top: 18px;
+}
+
+.profile-edit-form {
+  display: none;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eceef4;
+}
+
+.profile-edit-form.is-open {
+  display: block;
+}
+
+.profile-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.profile-form-full {
+  grid-column: 1 / -1;
+}
+
+.profile-edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.documents-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.document-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border: 1px solid #e8eaf0;
+  border-radius: 10px;
+}
+
+.document-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.document-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: #f1f3ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4f46e5;
+}
+
+.document-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #20263a;
+}
+
+.document-type {
+  font-size: 11px;
+  color: #8b90a0;
+  margin-top: 2px;
+}
+
+.document-status {
+  font-size: 11px;
+  color: #16825d;
+  font-weight: 600;
+}
+
+.profile-note {
+  margin-top: 15px;
+  font-size: 11px;
+  color: #858b9b;
+}
+
+@media (max-width: 900px) {
+  .employee-extra-grid,
+  .profile-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-details-grid,
+  .profile-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-form-full {
+    grid-column: auto;
+  }
+
+  .attendance-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+</style>
 </head>
+
 <body>
 
-<!-- Mobile top bar -->
 <div class="mobile-topbar">
-  <button class="mobile-menu-btn" data-open-sidebar aria-label="Open menu">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+
+  <button class="mobile-menu-btn"
+          data-open-sidebar
+          aria-label="Open menu">
+
+    <svg width="18"
+         height="18"
+         viewBox="0 0 24 24"
+         fill="none">
+
+      <path d="M3 6h18M3 12h18M3 18h18"
+            stroke="#fff"
+            stroke-width="2"
+            stroke-linecap="round"/>
+
+    </svg>
+
   </button>
+
   <div class="brand-logo" style="font-size:15px;">
-    <span class="mark" style="width:26px;height:26px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 0 1 14.5-4.5M20 12a8 8 0 0 1-14.5 4.5" stroke="#0B1330" stroke-width="2.4" stroke-linecap="round"/></svg></span>
+
+    <span class="mark"
+          style="width:26px;height:26px;">
+
+      <svg width="14"
+           height="14"
+           viewBox="0 0 24 24"
+           fill="none">
+
+        <path d="M4 12a8 8 0 0 1 14.5-4.5M20 12a8 8 0 0 1-14.5 4.5"
+              stroke="#0B1330"
+              stroke-width="2.4"
+              stroke-linecap="round"/>
+
+      </svg>
+
+    </span>
+
     DayFlow
+
   </div>
-  <span class="avatar" style="width:30px;height:30px;font-size:12px;" data-user-initial>E</span>
+
+  <span class="avatar"
+        style="width:30px;height:30px;font-size:12px;"
+        data-user-initial>E</span>
+
 </div>
-<div class="sidebar-scrim" data-close-sidebar></div>
+
+
+<div class="sidebar-scrim"
+     data-close-sidebar></div>
+
 
 <div class="app-shell">
 
-  <!-- ===================== SIDEBAR ===================== -->
+  <!-- SIDEBAR -->
+
   <aside class="sidebar">
+
     <div class="brand-logo">
-      <span class="mark" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 0 1 14.5-4.5M20 12a8 8 0 0 1-14.5 4.5" stroke="#0B1330" stroke-width="2.4" stroke-linecap="round"/><path d="M18.5 4v4h-4M5.5 20v-4h4" stroke="#0B1330" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+
+      <span class="mark">
+
+        <svg width="18"
+             height="18"
+             viewBox="0 0 24 24"
+             fill="none">
+
+          <path d="M4 12a8 8 0 0 1 14.5-4.5M20 12a8 8 0 0 1-14.5 4.5"
+                stroke="#0B1330"
+                stroke-width="2.4"
+                stroke-linecap="round"/>
+
+          <path d="M18.5 4v4h-4M5.5 20v-4h4"
+                stroke="#0B1330"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"/>
+
+        </svg>
+
+      </span>
+
       DayFlow
-      <button class="mobile-menu-btn" data-close-sidebar style="margin-left:auto; display:none;" aria-label="Close menu">&times;</button>
+
     </div>
+
 
     <nav aria-label="Primary">
-      <a href="#" class="nav-link is-active" data-section-link="dashboard">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="9" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="5" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="12" width="7" height="9" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="16" width="7" height="5" rx="1.5" stroke="currentColor" stroke-width="1.8"/></svg>
-        Dashboard
-      </a>
-      <a href="#" class="nav-link" data-section-link="leave">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M8 2v4M16 2v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        Leave
-      </a>
-    </nav>
+
+  <a href="#"
+     class="nav-link is-active"
+     data-section-link="dashboard">
+
+    Dashboard
+
+  </a>
+
+
+  <a href="#"
+     class="nav-link"
+     data-section-link="leave">
+
+    Leave
+
+  </a>
+
+
+  <a href="#"
+     class="nav-link"
+     data-section-link="profile">
+
+    My Profile
+
+  </a>
+
+
+  <a href="employees-list.html"
+     class="nav-link">
+
+    Employees
+
+  </a>
+
+</nav>
+
 
     <div class="sidebar-footer">
-      <a href="#" class="nav-link" data-logout>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+      <a href="#"
+         class="nav-link"
+         data-logout>
+
         Logout
+
       </a>
+
     </div>
+
   </aside>
 
-  <!-- ===================== MAIN ===================== -->
+
+  <!-- MAIN -->
+
   <div class="main">
 
     <header class="topbar">
+
       <div class="topbar-title">
-        <h1>Dashboard</h1>
-        <div class="crumb">Employee workspace</div>
-      </div>
-      <div class="topbar-actions">
-        <div style="position:relative;">
-          <button class="profile-menu-btn" data-profile-toggle>
-            <span class="avatar" data-user-initial>E</span>
-            <span class="profile-name-block">
-              <span class="name" data-user-name>—</span>
-              <span class="role" data-user-role>—</span>
-            </span>
-          </button>
+
+        <h1 id="page-title">
+          Dashboard
+        </h1>
+
+        <div class="crumb"
+             id="page-crumb">
+          Employee workspace
         </div>
+
       </div>
+
+
+      <div class="topbar-actions">
+
+        <button class="profile-menu-btn"
+                data-profile-toggle>
+
+          <span class="avatar"
+                data-user-initial>
+            E
+          </span>
+
+          <span class="profile-name-block">
+
+            <span class="name"
+                  data-user-name>
+              —
+            </span>
+
+            <span class="role"
+                  data-user-role>
+              —
+            </span>
+
+          </span>
+
+        </button>
+
+      </div>
+
     </header>
+
 
     <main class="content">
 
-      <div style="margin-bottom:22px;">
-        <div class="section-title" id="welcome-heading">Good day, there</div>
-        <div class="section-sub">Here's your leave overview.</div>
-      </div>
+      <!-- DASHBOARD -->
 
-      <!-- ---------- Summary cards ---------- -->
-      <div class="grid grid-4" style="margin-bottom:20px;">
-        <div class="card stat-card is-hoverable">
-          <div class="stat-icon icon-tint-amber"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" stroke-width="1.8"/></svg></div>
-          <div class="stat-label">Total Requests</div>
-          <div class="stat-value" id="stat-total">—</div>
-          <span class="stat-trend trend-flat">all time</span>
-        </div>
-        <div class="card stat-card is-hoverable">
-          <div class="stat-icon icon-tint-danger"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M12 8v5M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/></svg></div>
-          <div class="stat-label">Pending</div>
-          <div class="stat-value" id="stat-pending">—</div>
-          <span class="stat-trend trend-flat">awaiting approval</span>
-        </div>
-        <div class="card stat-card is-hoverable">
-          <div class="stat-icon icon-tint-teal"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3 8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <div class="stat-label">Approved</div>
-          <div class="stat-value" id="stat-approved">—</div>
-          <span class="stat-trend trend-up">confirmed</span>
-        </div>
-        <div class="card stat-card is-hoverable">
-          <div class="stat-icon icon-tint-blue"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M9 9l6 6M15 9l-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-          <div class="stat-label">Rejected</div>
-          <div class="stat-value" id="stat-rejected">—</div>
-          <span class="stat-trend trend-flat">—</span>
-        </div>
-      </div>
+      <section id="dashboard-section">
 
-      <!-- ---------- Recent leave table ---------- -->
-      <div class="card">
-        <div class="card-header">
-          <h3>My Leave Requests</h3>
-          <button class="btn btn-accent btn-sm" id="btn-apply-leave">Apply for Leave</button>
+        <div style="margin-bottom:22px;">
+
+          <div class="section-title"
+               id="welcome-heading">
+
+            Good day, there
+
+          </div>
+
+          <div class="section-sub">
+
+            Here's your leave overview.
+
+          </div>
+
         </div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Type</th><th>From</th><th>To</th><th>Remarks</th><th>Status</th></tr></thead>
-            <tbody id="leave-table-body"></tbody>
-          </table>
+
+
+        <!-- STATISTICS -->
+
+        <div class="grid grid-4"
+             style="margin-bottom:20px;">
+
+          <div class="card stat-card is-hoverable">
+
+            <div class="stat-label">
+              Total Requests
+            </div>
+
+            <div class="stat-value"
+                 id="stat-total">
+              —
+            </div>
+
+          </div>
+
+
+          <div class="card stat-card is-hoverable">
+
+            <div class="stat-label">
+              Pending
+            </div>
+
+            <div class="stat-value"
+                 id="stat-pending">
+              —
+            </div>
+
+          </div>
+
+
+          <div class="card stat-card is-hoverable">
+
+            <div class="stat-label">
+              Approved
+            </div>
+
+            <div class="stat-value"
+                 id="stat-approved">
+              —
+            </div>
+
+          </div>
+
+
+          <div class="card stat-card is-hoverable">
+
+            <div class="stat-label">
+              Rejected
+            </div>
+
+            <div class="stat-value"
+                 id="stat-rejected">
+              —
+            </div>
+
+          </div>
+
         </div>
-        <div class="empty-state" id="leave-empty" style="display:none;">
-          <div class="empty-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" stroke-width="1.8"/></svg></div>
-          <div class="empty-title">No leave requests yet</div>
-          <div class="empty-sub">Apply for leave and it will show up here.</div>
+
+
+        <!-- PROFILE + ATTENDANCE -->
+
+        <div class="employee-extra-grid">
+
+          <div class="employee-card">
+
+            <div class="employee-card-header">
+
+              <h3>
+                My Profile
+              </h3>
+
+            </div>
+
+
+            <div class="profile-card-content">
+
+              <div class="large-profile-avatar"
+                   id="dashboard-profile-avatar">
+
+                <span data-profile-initial>
+                  E
+                </span>
+
+              </div>
+
+
+              <div>
+
+                <div class="profile-card-name"
+                     id="dashboard-profile-name">
+                  Employee
+                </div>
+
+                <div class="profile-card-role"
+                     id="dashboard-profile-role">
+                  Employee
+                </div>
+
+                <div class="profile-card-email"
+                     id="dashboard-profile-email">
+                  —
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <a class="profile-card-link"
+               data-open-profile>
+
+              View Employee Profile →
+
+            </a>
+
+          </div>
+
+
+          <div class="employee-card">
+
+            <div class="employee-card-header">
+
+              <h3>
+                Attendance
+              </h3>
+
+            </div>
+
+
+            <div class="attendance-number"
+                 id="attendance-percentage">
+              —
+            </div>
+
+
+            <div class="attendance-label">
+              Attendance this month
+            </div>
+
+
+            <div class="attendance-grid">
+
+              <div class="attendance-item">
+
+                <strong id="attendance-present">
+                  —
+                </strong>
+
+                <span>
+                  Present
+                </span>
+
+              </div>
+
+
+              <div class="attendance-item">
+
+                <strong id="attendance-absent">
+                  —
+                </strong>
+
+                <span>
+                  Absent
+                </span>
+
+              </div>
+
+
+              <div class="attendance-item">
+
+                <strong id="attendance-days">
+                  —
+                </strong>
+
+                <span>
+                  Working Days
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
-      </div>
+
+
+        <!-- ACTIVITY -->
+
+        <div class="employee-card"
+             style="margin-bottom:20px;">
+
+          <div class="employee-card-header">
+
+            <h3>
+              Recent Activity & Alerts
+            </h3>
+
+          </div>
+
+
+          <div class="activity-list"
+               id="activity-list">
+
+            <div class="activity-item">
+
+              <div class="activity-icon">
+                ✓
+              </div>
+
+              <div class="activity-text">
+
+                Your employee dashboard is ready.
+
+                <span class="activity-time">
+                  Just now
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- LEAVE TABLE -->
+
+        <div class="card">
+
+          <div class="card-header">
+
+            <h3>
+              My Leave Requests
+            </h3>
+
+
+            <button class="btn btn-accent btn-sm"
+                    id="btn-apply-leave">
+
+              Apply for Leave
+
+            </button>
+
+          </div>
+
+
+          <div class="table-wrap">
+
+            <table>
+
+              <thead>
+
+                <tr>
+
+                  <th>
+                    Type
+                  </th>
+
+                  <th>
+                    From
+                  </th>
+
+                  <th>
+                    To
+                  </th>
+
+                  <th>
+                    Remarks
+                  </th>
+
+                  <th>
+                    Status
+                  </th>
+
+                </tr>
+
+              </thead>
+
+
+              <tbody id="leave-table-body"></tbody>
+
+            </table>
+
+          </div>
+
+
+          <div class="empty-state"
+               id="leave-empty"
+               style="display:none;">
+
+            <div class="empty-title">
+              No leave requests yet
+            </div>
+
+            <div class="empty-sub">
+              Apply for leave and it will show up here.
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- PROFILE SECTION -->
+
+      <section id="profile-section"
+               class="employee-profile-section">
+
+        <div class="profile-page-header">
+
+          <h2>
+            Employee Profile
+          </h2>
+
+          <p>
+            View and edit your personal information.
+          </p>
+
+        </div>
+
+
+        <div class="profile-layout">
+
+          <!-- LEFT -->
+
+          <div class="profile-picture-card">
+
+            <div class="profile-page-avatar"
+                 id="profile-page-avatar">
+
+              <span id="profile-page-initial">
+                E
+              </span>
+
+            </div>
+
+
+            <div class="profile-picture-name"
+                 id="profile-page-name">
+              Employee
+            </div>
+
+
+            <div class="profile-picture-role"
+                 id="profile-page-role">
+              Employee
+            </div>
+
+
+            <button class="btn btn-secondary profile-edit-btn"
+                    id="profile-edit-button">
+
+              Edit Profile
+
+            </button>
+
+
+            <!-- EDIT FORM -->
+
+            <div class="profile-edit-form"
+                 id="profile-edit-form">
+
+              <!-- NEW NAME FIELD -->
+
+              <div class="field">
+
+                <label for="profile-name">
+                  Full Name
+                </label>
+
+                <input class="input"
+                       type="text"
+                       id="profile-name"
+                       placeholder="Enter your full name">
+
+              </div>
+
+
+              <div class="field">
+
+                <label for="profile-phone">
+                  Phone
+                </label>
+
+                <input class="input"
+                       type="tel"
+                       id="profile-phone"
+                       placeholder="Enter phone number">
+
+              </div>
+
+
+              <div class="field">
+
+                <label for="profile-address">
+                  Address
+                </label>
+
+                <input class="input"
+                       type="text"
+                       id="profile-address"
+                       placeholder="Enter address">
+
+              </div>
+
+
+              <div class="field">
+
+                <label for="profile-picture">
+                  Profile picture
+                </label>
+
+                <input class="input"
+                       type="file"
+                       id="profile-picture"
+                       accept="image/*">
+
+              </div>
+
+
+              <div class="profile-edit-actions">
+
+                <button class="btn btn-secondary"
+                        id="profile-edit-cancel">
+
+                  Cancel
+
+                </button>
+
+
+                <button class="btn btn-accent"
+                        id="profile-edit-save">
+
+                  Save Changes
+
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <div class="profile-note">
+
+              You can edit your name, phone number,
+              address and profile picture.
+
+            </div>
+
+          </div>
+
+
+          <!-- RIGHT -->
+
+          <div class="profile-details-card">
+
+            <h3 class="profile-section-title">
+              Personal Details
+            </h3>
+
+
+            <div class="profile-details-grid">
+
+              <div class="profile-detail">
+
+                <span class="profile-detail-label">
+                  Full Name
+                </span>
+
+                <span class="profile-detail-value"
+                      id="profile-full-name">
+                  —
+                </span>
+
+              </div>
+
+
+              <div class="profile-detail">
+
+                <span class="profile-detail-label">
+                  Email
+                </span>
+
+                <span class="profile-detail-value"
+                      id="profile-email">
+                  —
+                </span>
+
+              </div>
+
+
+              <div class="profile-detail">
+
+                <span class="profile-detail-label">
+                  Phone
+                </span>
+
+                <span class="profile-detail-value"
+                      id="profile-phone-display">
+                  —
+                </span>
+
+              </div>
+
+
+              <div class="profile-detail">
+
+                <span class="profile-detail-label">
+                  Address
+                </span>
+
+                <span class="profile-detail-value"
+                      id="profile-address-display">
+                  —
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <hr class="profile-divider">
+
+
+            <h3 class="profile-section-title">
+              Job Details
+            </h3>
+
+
+            <div class="profile-details-grid">
+
+              <div class="profile-detail">
+
+                <span class="profile-detail-label">
+                  Employee ID
+                </span>
+
+                <span class="profile-detail-value"
+                      id="profile-employee-id">
+                  —
+                </span>
+
+              </div>
+
+
+              <div class="profile-detail">
+
+                <span class="profile-detail-label">
+                  Role
+                </span>
+
+                <span class="profile-detail-value"
+                      id="profile-job-role">
+                  —
+                </span>
+
+              </div>
+
+
+              <div class="profile-detail">
+
+                <span class="profile-detail-label">
+                  Department
+                </span>
+
+                <span class="profile-detail-value"
+                      id="profile-department">
+                  —
+                </span>
+
+              </div>
+
+
+              <div class="profile-detail">
+
+                <span class="profile-detail-label">
+                  Joining Date
+                </span>
+
+                <span class="profile-detail-value"
+                      id="profile-joining-date">
+                  —
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <hr class="profile-divider">
+
+
+            <h3 class="profile-section-title">
+              Salary Structure
+            </h3>
+
+
+            <div class="profile-details-grid">
+
+              <div class="profile-detail">
+
+                <span class="profile-detail-label">
+                  Basic Salary
+                </span>
+
+                <span class="profile-detail-value"
+                      id="salary-basic">
+                  Not available
+                </span>
+
+              </div>
+
+
+              <div class="profile-detail">
+
+                <span class="profile-detail-label">
+                  HRA
+                </span>
+
+                <span class="profile-detail-value"
+                      id="salary-hra">
+                  Not available
+                </span>
+
+              </div>
+
+
+              <div class="profile-detail">
+
+                <span class="profile-detail-label">
+                  Allowances
+                </span>
+
+                <span class="profile-detail-value"
+                      id="salary-allowances">
+                  Not available
+                </span>
+
+              </div>
+
+
+              <div class="profile-detail">
+
+                <span class="profile-detail-label">
+                  Gross Salary
+                </span>
+
+                <span class="profile-detail-value"
+                      id="salary-gross">
+                  Not available
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <hr class="profile-divider">
+
+
+            <h3 class="profile-section-title">
+              Documents
+            </h3>
+
+
+            <div class="documents-list">
+
+              <div class="document-item">
+
+                <div class="document-info">
+
+                  <div class="document-icon">
+                    📄
+                  </div>
+
+                  <div>
+
+                    <div class="document-name">
+                      Employee Documents
+                    </div>
+
+                    <div class="document-type">
+                      HR records
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+                <span class="document-status">
+                  Available
+                </span>
+
+              </div>
+
+
+              <div class="document-item">
+
+                <div class="document-info">
+
+                  <div class="document-icon">
+                    🪪
+                  </div>
+
+                  <div>
+
+                    <div class="document-name">
+                      Identity Information
+                    </div>
+
+                    <div class="document-type">
+                      Employee record
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+                <span class="document-status">
+                  Available
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="profile-note">
+              Documents are view-only for employees.
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
 
     </main>
+
   </div>
+
 </div>
 
-<!-- ---------- Apply for leave modal ---------- -->
-<div class="modal-overlay" id="leave-modal">
+
+<!-- LEAVE MODAL -->
+
+<div class="modal-overlay"
+     id="leave-modal">
+
   <div class="modal-card">
-    <h3>Apply for Leave</h3>
-    <p class="modal-sub">Submit a new leave request for HR approval.</p>
+
+    <h3>
+      Apply for Leave
+    </h3>
+
+    <p class="modal-sub">
+      Submit a new leave request for HR approval.
+    </p>
+
+
     <div class="field">
-      <label for="leave-type">Leave type</label>
-      <select class="input" id="leave-type">
-        <option>Casual Leave</option>
-        <option>Sick Leave</option>
-        <option>Earned Leave</option>
+
+      <label for="leave-type">
+        Leave type
+      </label>
+
+      <select class="input"
+              id="leave-type">
+
+        <option>
+          Casual Leave
+        </option>
+
+        <option>
+          Sick Leave
+        </option>
+
+        <option>
+          Earned Leave
+        </option>
+
       </select>
+
     </div>
+
+
     <div class="select-row">
-      <div class="field"><label for="leave-start">From</label><input class="input" type="date" id="leave-start"></div>
-      <div class="field"><label for="leave-end">To</label><input class="input" type="date" id="leave-end"></div>
+
+      <div class="field">
+
+        <label for="leave-start">
+          From
+        </label>
+
+        <input class="input"
+               type="date"
+               id="leave-start">
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="leave-end">
+          To
+        </label>
+
+        <input class="input"
+               type="date"
+               id="leave-end">
+
+      </div>
+
     </div>
-    <div class="field" style="margin-bottom:0;">
-      <label for="leave-reason">Reason</label>
-      <input class="input" type="text" id="leave-reason" placeholder="Brief reason for leave">
+
+
+    <div class="field">
+
+      <label for="leave-reason">
+        Reason
+      </label>
+
+      <input class="input"
+             type="text"
+             id="leave-reason"
+             placeholder="Brief reason for leave">
+
     </div>
+
+
     <div class="modal-actions">
-      <button class="btn btn-secondary" id="leave-cancel">Cancel</button>
-      <button class="btn btn-accent" id="leave-submit">
-        <span class="btn-label">Submit Request</span><span class="spinner"></span>
+
+      <button class="btn btn-secondary"
+              id="leave-cancel">
+
+        Cancel
+
       </button>
+
+
+      <button class="btn btn-accent"
+              id="leave-submit">
+
+        Submit Request
+
+      </button>
+
     </div>
+
   </div>
+
 </div>
+
 
 <script>
-/* ==========================================================================
-   DayFlow HRMS — shared API layer
-   Matches the REAL Flask backend (app.py) on http://127.0.0.1:5000
-   No auth token. Role values are lowercase: "employee" / "admin".
-   ========================================================================== */
 
-const API_BASE = 'http://127.0.0.1:5000';
+const API_BASE =
+  'http://127.0.0.1:5000';
+
 
 const ENDPOINTS = {
-  login: `${API_BASE}/login`,
-  signup: `${API_BASE}/signup`,
-  leaves: `${API_BASE}/leaves`,
-  leavesPending: `${API_BASE}/leaves/pending`,
-  employeeLeaves: (id) => `${API_BASE}/leaves/employee/${id}`,
-  leaveDecision: (id) => `${API_BASE}/leaves/${id}`,
-  employees: `${API_BASE}/employees`,
-  health: `${API_BASE}/health`,
+
+  login:
+    `${API_BASE}/login`,
+
+  signup:
+    `${API_BASE}/signup`,
+
+  leaves:
+    `${API_BASE}/leaves`,
+
+  employeeLeaves:
+    (id) =>
+      `${API_BASE}/leaves/employee/${id}`,
+
+  employees:
+    `${API_BASE}/employees`,
+
+  health:
+    `${API_BASE}/health`
+
 };
 
-const STORAGE_KEYS = { user: 'dayflow_user' };
 
-function saveSession(user) { localStorage.setItem(STORAGE_KEYS.user, JSON.stringify(user)); }
+const STORAGE_KEYS = {
+
+  user:
+    'dayflow_user'
+
+};
+
+
 function getUser() {
-  const raw = localStorage.getItem(STORAGE_KEYS.user);
-  try { return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+
+  const raw =
+    localStorage.getItem(
+      STORAGE_KEYS.user
+    );
+
+  try {
+
+    return raw
+      ? JSON.parse(raw)
+      : null;
+
+  } catch (e) {
+
+    return null;
+
+  }
+
 }
-function clearSession() { localStorage.removeItem(STORAGE_KEYS.user); }
+
+
+function saveSession(user) {
+
+  localStorage.setItem(
+    STORAGE_KEYS.user,
+    JSON.stringify(user)
+  );
+
+}
+
+
+function clearSession() {
+
+  localStorage.removeItem(
+    STORAGE_KEYS.user
+  );
+
+}
+
 
 function redirectForRole(role) {
-  window.location.href = (role === 'admin') ? 'admin-dashboard.html' : 'employee-dashboard.html';
+
+  window.location.href =
+    role === 'admin'
+      ? 'admin-dashboard.html'
+      : 'employee-dashboard.html';
+
 }
+
 
 function requireAuth(expectedRole) {
-  const user = getUser();
-  if (!user) { window.location.href = 'login.html'; return null; }
-  if (expectedRole && user.role !== expectedRole) { redirectForRole(user.role); return null; }
-  return user;
-}
 
-function logout() { clearSession(); window.location.href = 'login.html'; }
+  const user =
+    getUser();
 
-async function apiRequest(url, options = {}) {
-  const headers = Object.assign({ 'Content-Type': 'application/json' }, options.headers || {});
-  try {
-    const response = await fetch(url, Object.assign({}, options, { headers }));
-    let data = null;
-    try { data = await response.json(); } catch (e) { /* empty body */ }
-    return { ok: response.ok, status: response.status, data };
-  } catch (networkError) {
-    return { ok: false, status: 0, data: null, networkError: true };
+  if (!user) {
+
+    window.location.href =
+      'login.html';
+
+    return null;
+
   }
+
+
+  if (
+    expectedRole &&
+    user.role !== expectedRole
+  ) {
+
+    redirectForRole(
+      user.role
+    );
+
+    return null;
+
+  }
+
+
+  return user;
+
 }
+
+
+function logout() {
+
+  clearSession();
+
+  window.location.href =
+    'login.html';
+
+}
+
+
+async function apiRequest(
+  url,
+  options = {}
+) {
+
+  const headers =
+    Object.assign(
+      {
+        'Content-Type':
+          'application/json'
+      },
+      options.headers || {}
+    );
+
+
+  try {
+
+    const response =
+      await fetch(
+        url,
+        Object.assign(
+          {},
+          options,
+          {
+            headers
+          }
+        )
+      );
+
+
+    let data = null;
+
+
+    try {
+
+      data =
+        await response.json();
+
+    } catch (e) {}
+
+
+    return {
+
+      ok:
+        response.ok,
+
+      status:
+        response.status,
+
+      data
+
+    };
+
+  } catch (networkError) {
+
+    return {
+
+      ok: false,
+
+      status: 0,
+
+      data: null,
+
+      networkError: true
+
+    };
+
+  }
+
+}
+
 
 function ensureToastRegion() {
-  let region = document.querySelector('.toast-region');
+
+  let region =
+    document.querySelector(
+      '.toast-region'
+    );
+
+
   if (!region) {
-    region = document.createElement('div');
-    region.className = 'toast-region';
-    region.setAttribute('aria-live', 'polite');
-    document.body.appendChild(region);
+
+    region =
+      document.createElement(
+        'div'
+      );
+
+    region.className =
+      'toast-region';
+
+    document.body.appendChild(
+      region
+    );
+
   }
+
+
   return region;
+
 }
-function showToast(message, type = 'info', duration = 4000) {
-  const region = ensureToastRegion();
-  const toast = document.createElement('div');
-  toast.className = `toast toast-${type}`;
-  toast.setAttribute('role', 'status');
-  toast.textContent = message;
-  region.appendChild(toast);
-  setTimeout(() => { toast.classList.add('is-leaving'); setTimeout(() => toast.remove(), 200); }, duration);
+
+
+function showToast(
+  message,
+  type = 'info',
+  duration = 4000
+) {
+
+  const region =
+    ensureToastRegion();
+
+
+  const toast =
+    document.createElement(
+      'div'
+    );
+
+
+  toast.className =
+    `toast toast-${type}`;
+
+
+  toast.textContent =
+    message;
+
+
+  region.appendChild(
+    toast
+  );
+
+
+  setTimeout(
+    () => {
+
+      toast.remove();
+
+    },
+    duration
+  );
+
 }
+
 
 function initMobileNav() {
-  const openBtn = document.querySelector('[data-open-sidebar]');
-  const closeBtn = document.querySelector('[data-close-sidebar]');
-  const sidebar = document.querySelector('.sidebar');
-  const scrim = document.querySelector('.sidebar-scrim');
-  if (!sidebar || !scrim) return;
-  const open = () => { sidebar.classList.add('is-open'); scrim.classList.add('is-open'); };
-  const close = () => { sidebar.classList.remove('is-open'); scrim.classList.remove('is-open'); };
-  if (openBtn) openBtn.addEventListener('click', open);
-  if (closeBtn) closeBtn.addEventListener('click', close);
-  scrim.addEventListener('click', close);
+
+  const openBtn =
+    document.querySelector(
+      '[data-open-sidebar]'
+    );
+
+
+  const closeBtn =
+    document.querySelector(
+      '[data-close-sidebar]'
+    );
+
+
+  const sidebar =
+    document.querySelector(
+      '.sidebar'
+    );
+
+
+  const scrim =
+    document.querySelector(
+      '.sidebar-scrim'
+    );
+
+
+  if (
+    !sidebar ||
+    !scrim
+  )
+    return;
+
+
+  const open =
+    () => {
+
+      sidebar.classList.add(
+        'is-open'
+      );
+
+      scrim.classList.add(
+        'is-open'
+      );
+
+    };
+
+
+  const close =
+    () => {
+
+      sidebar.classList.remove(
+        'is-open'
+      );
+
+      scrim.classList.remove(
+        'is-open'
+      );
+
+    };
+
+
+  if (openBtn)
+    openBtn.addEventListener(
+      'click',
+      open
+    );
+
+
+  if (closeBtn)
+    closeBtn.addEventListener(
+      'click',
+      close
+    );
+
+
+  scrim.addEventListener(
+    'click',
+    close
+  );
+
 }
+
 
 function initProfileMenu() {
-  const btn = document.querySelector('[data-profile-toggle]');
-  const menu = document.querySelector('[data-profile-menu]');
-  if (btn && menu) {
-    btn.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('is-open'); });
-    document.addEventListener('click', () => menu.classList.remove('is-open'));
-  }
-  document.querySelectorAll('[data-logout]').forEach((el) => {
-    el.addEventListener('click', (e) => { e.preventDefault(); logout(); });
-  });
+
+  document
+    .querySelectorAll(
+      '[data-logout]'
+    )
+    .forEach(
+      (el) => {
+
+        el.addEventListener(
+          'click',
+          (e) => {
+
+            e.preventDefault();
+
+            logout();
+
+          }
+        );
+
+      }
+    );
+
 }
+
 
 function initTopbarUser() {
-  const user = getUser();
-  if (!user) return;
-  document.querySelectorAll('[data-user-name]').forEach((el) => { el.textContent = user.name || 'User'; });
-  document.querySelectorAll('[data-user-role]').forEach((el) => { el.textContent = user.role || ''; });
-  document.querySelectorAll('[data-user-initial]').forEach((el) => {
-    el.textContent = (user.name || 'U').trim().charAt(0).toUpperCase();
-  });
+
+  const user =
+    getUser();
+
+
+  if (!user)
+    return;
+
+
+  document
+    .querySelectorAll(
+      '[data-user-name]'
+    )
+    .forEach(
+      (el) => {
+
+        el.textContent =
+          user.name ||
+          'User';
+
+      }
+    );
+
+
+  document
+    .querySelectorAll(
+      '[data-user-role]'
+    )
+    .forEach(
+      (el) => {
+
+        el.textContent =
+          user.role ||
+          '';
+
+      }
+    );
+
+
+  document
+    .querySelectorAll(
+      '[data-user-initial]'
+    )
+    .forEach(
+      (el) => {
+
+        el.textContent =
+          (
+            user.name ||
+            'U'
+          )
+            .trim()
+            .charAt(0)
+            .toUpperCase();
+
+      }
+    );
+
 }
+
 
 function escapeHtml(str) {
-  const div = document.createElement('div');
-  div.textContent = str == null ? '' : String(str);
+
+  const div =
+    document.createElement(
+      'div'
+    );
+
+
+  div.textContent =
+    str == null
+      ? ''
+      : String(str);
+
+
   return div.innerHTML;
+
 }
+
 
 function statusBadge(status) {
-  const s = (status || 'pending').toLowerCase();
-  if (s === 'approved') return '<span class="badge badge-success">Approved</span>';
-  if (s === 'rejected') return '<span class="badge badge-danger">Rejected</span>';
-  return '<span class="badge badge-warning">Pending</span>';
-}
 
-/* ==========================================================================
-   employee-dashboard.html behavior
-   ========================================================================== */
+  const s =
+    (
+      status ||
+      'pending'
+    ).toLowerCase();
 
-document.addEventListener('DOMContentLoaded', () => {
-  const user = requireAuth('employee');
-  if (!user) return;
 
-  initMobileNav();
-  initProfileMenu();
-  initTopbarUser();
+  if (
+    s === 'approved'
+  ) {
 
-  document.getElementById('welcome-heading').textContent = `Good day, ${user.name || ''}`.trim();
+    return `
+      <span class="badge badge-success">
+        Approved
+      </span>
+    `;
 
-  loadLeave();
-
-  document.querySelectorAll('[data-section-link]').forEach((link) => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      document.querySelectorAll('[data-section-link]').forEach((l) => l.classList.remove('is-active'));
-      link.classList.add('is-active');
-      const sidebar = document.querySelector('.sidebar');
-      const scrim = document.querySelector('.sidebar-scrim');
-      if (sidebar) sidebar.classList.remove('is-open');
-      if (scrim) scrim.classList.remove('is-open');
-    });
-  });
-
-  async function loadLeave() {
-    const res = await apiRequest(ENDPOINTS.employeeLeaves(user.id));
-    const tbody = document.getElementById('leave-table-body');
-    const empty = document.getElementById('leave-empty');
-    tbody.innerHTML = '';
-
-    if (res.networkError) { showToast("Can't reach the server.", 'error'); return; }
-
-    const rows = (res.ok && Array.isArray(res.data)) ? res.data : [];
-
-    document.getElementById('stat-total').textContent = rows.length;
-    document.getElementById('stat-pending').textContent = rows.filter(r => r.status === 'pending').length;
-    document.getElementById('stat-approved').textContent = rows.filter(r => r.status === 'approved').length;
-    document.getElementById('stat-rejected').textContent = rows.filter(r => r.status === 'rejected').length;
-
-    if (rows.length === 0) { empty.style.display = 'block'; return; }
-    empty.style.display = 'none';
-
-    rows.forEach((req) => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${escapeHtml(req.leave_type || '—')}</td>
-        <td>${escapeHtml(req.start_date || '')}</td>
-        <td>${escapeHtml(req.end_date || '')}</td>
-        <td>${escapeHtml(req.remarks || '—')}</td>
-        <td>${statusBadge(req.status)}</td>
-      `;
-      tbody.appendChild(tr);
-    });
   }
 
-  /* ---------------- Apply for leave modal ---------------- */
-  const leaveModal = document.getElementById('leave-modal');
-  document.getElementById('btn-apply-leave').addEventListener('click', () => leaveModal.classList.add('is-open'));
-  document.getElementById('leave-cancel').addEventListener('click', () => leaveModal.classList.remove('is-open'));
-  leaveModal.addEventListener('click', (e) => { if (e.target === leaveModal) leaveModal.classList.remove('is-open'); });
 
-  document.getElementById('leave-submit').addEventListener('click', async () => {
-    const leave_type = document.getElementById('leave-type').value;
-    const start_date = document.getElementById('leave-start').value;
-    const end_date = document.getElementById('leave-end').value;
-    const remarks = document.getElementById('leave-reason').value.trim();
+  if (
+    s === 'rejected'
+  ) {
 
-    if (!start_date || !end_date) { showToast('Select a start and end date.', 'error'); return; }
+    return `
+      <span class="badge badge-danger">
+        Rejected
+      </span>
+    `;
 
-    const btn = document.getElementById('leave-submit');
-    btn.disabled = true;
-    const res = await apiRequest(ENDPOINTS.leaves, {
-      method: 'POST',
-      body: JSON.stringify({ employee_id: user.id, leave_type, start_date, end_date, remarks }),
-    });
-    btn.disabled = false;
+  }
 
-    if (res.networkError) { showToast("Can't reach the server. Request not submitted.", 'error'); return; }
-    if (!res.ok) { showToast((res.data && res.data.error) || 'Could not submit leave request.', 'error'); return; }
 
-    leaveModal.classList.remove('is-open');
-    document.getElementById('leave-start').value = '';
-    document.getElementById('leave-end').value = '';
-    document.getElementById('leave-reason').value = '';
-    showToast('Leave request submitted.', 'success');
+  return `
+    <span class="badge badge-warning">
+      Pending
+    </span>
+  `;
+
+}
+
+
+/* ============================================================
+   PROFILE DATA
+   ============================================================ */
+
+function getProfileData(user) {
+
+  const storageKey =
+    `dayflow_profile_${user.id}`;
+
+
+  let saved = {};
+
+
+  try {
+
+    saved =
+      JSON.parse(
+        localStorage.getItem(
+          storageKey
+        ) || '{}'
+      );
+
+  } catch (e) {
+
+    saved = {};
+
+  }
+
+
+  return Object.assign(
+    {},
+    user,
+    saved
+  );
+
+}
+
+
+function saveProfileData(
+  user,
+  data
+) {
+
+  const storageKey =
+    `dayflow_profile_${user.id}`;
+
+
+  localStorage.setItem(
+    storageKey,
+    JSON.stringify(data)
+  );
+
+}
+
+
+function getValue(
+  object,
+  keys,
+  fallback = 'Not available'
+) {
+
+  for (
+    const key of keys
+  ) {
+
+    if (
+      object[key] !== undefined &&
+      object[key] !== null &&
+      String(
+        object[key]
+      ).trim() !== ''
+    ) {
+
+      return object[key];
+
+    }
+
+  }
+
+
+  return fallback;
+
+}
+
+
+/* ============================================================
+   PROFILE DISPLAY
+   ============================================================ */
+
+function renderEmployeeProfile(user) {
+
+  const profile =
+    getProfileData(user);
+
+
+  const name =
+    getValue(
+      profile,
+      [
+        'name',
+        'full_name'
+      ],
+      'Employee'
+    );
+
+
+  const email =
+    getValue(
+      profile,
+      ['email'],
+      'Not available'
+    );
+
+
+  const phone =
+    getValue(
+      profile,
+      [
+        'phone',
+        'mobile',
+        'phone_number'
+      ],
+      'Not available'
+    );
+
+
+  const address =
+    getValue(
+      profile,
+      ['address'],
+      'Not available'
+    );
+
+
+  const employeeId =
+    getValue(
+      profile,
+      [
+        'employee_id',
+        'id'
+      ],
+      'Not available'
+    );
+
+
+  const role =
+    getValue(
+      profile,
+      [
+        'job_role',
+        'position',
+        'designation',
+        'role'
+      ],
+      'Employee'
+    );
+
+
+  const department =
+    getValue(
+      profile,
+      [
+        'department',
+        'dept'
+      ],
+      'Not available'
+    );
+
+
+  const joiningDate =
+    getValue(
+      profile,
+      [
+        'joining_date',
+        'date_of_joining'
+      ],
+      'Not available'
+    );
+
+
+  /* Dashboard */
+
+  document.getElementById(
+    'dashboard-profile-name'
+  ).textContent =
+    name;
+
+
+  document.getElementById(
+    'dashboard-profile-role'
+  ).textContent =
+    role;
+
+
+  document.getElementById(
+    'dashboard-profile-email'
+  ).textContent =
+    email;
+
+
+  /* Profile */
+
+  document.getElementById(
+    'profile-page-name'
+  ).textContent =
+    name;
+
+
+  document.getElementById(
+    'profile-page-role'
+  ).textContent =
+    role;
+
+
+  document.getElementById(
+    'profile-full-name'
+  ).textContent =
+    name;
+
+
+  document.getElementById(
+    'profile-email'
+  ).textContent =
+    email;
+
+
+  document.getElementById(
+    'profile-phone-display'
+  ).textContent =
+    phone;
+
+
+  document.getElementById(
+    'profile-address-display'
+  ).textContent =
+    address;
+
+
+  document.getElementById(
+    'profile-employee-id'
+  ).textContent =
+    employeeId;
+
+
+  document.getElementById(
+    'profile-job-role'
+  ).textContent =
+    role;
+
+
+  document.getElementById(
+    'profile-department'
+  ).textContent =
+    department;
+
+
+  document.getElementById(
+    'profile-joining-date'
+  ).textContent =
+    joiningDate;
+
+
+  /* IMPORTANT:
+     Name field is now populated here.
+  */
+
+  document.getElementById(
+    'profile-name'
+  ).value =
+    name === 'Employee'
+      ? ''
+      : name;
+
+
+  document.getElementById(
+    'profile-phone'
+  ).value =
+    phone === 'Not available'
+      ? ''
+      : phone;
+
+
+  document.getElementById(
+    'profile-address'
+  ).value =
+    address === 'Not available'
+      ? ''
+      : address;
+
+
+  /* Salary */
+
+  document.getElementById(
+    'salary-basic'
+  ).textContent =
+    getValue(
+      profile,
+      [
+        'basic_salary',
+        'basic'
+      ],
+      'Not available'
+    );
+
+
+  document.getElementById(
+    'salary-hra'
+  ).textContent =
+    getValue(
+      profile,
+      [
+        'hra',
+        'house_rent_allowance'
+      ],
+      'Not available'
+    );
+
+
+  document.getElementById(
+    'salary-allowances'
+  ).textContent =
+    getValue(
+      profile,
+      [
+        'allowances',
+        'other_allowances'
+      ],
+      'Not available'
+    );
+
+
+  document.getElementById(
+    'salary-gross'
+  ).textContent =
+    getValue(
+      profile,
+      [
+        'gross_salary',
+        'salary',
+        'ctc'
+      ],
+      'Not available'
+    );
+
+
+  updateProfilePictures(
+    profile
+  );
+
+}
+
+
+function updateProfilePictures(
+  profile
+) {
+
+  const name =
+    profile.name ||
+    profile.full_name ||
+    'Employee';
+
+
+  const initial =
+    name
+      .trim()
+      .charAt(0)
+      .toUpperCase();
+
+
+  const picture =
+    profile.profile_picture ||
+    profile.profilePicture ||
+    '';
+
+
+  const dashboardAvatar =
+    document.getElementById(
+      'dashboard-profile-avatar'
+    );
+
+
+  const pageAvatar =
+    document.getElementById(
+      'profile-page-avatar'
+    );
+
+
+  if (picture) {
+
+    dashboardAvatar.innerHTML =
+      `<img src="${picture}" alt="Profile picture">`;
+
+
+    pageAvatar.innerHTML =
+      `<img src="${picture}" alt="Profile picture">`;
+
+  } else {
+
+    dashboardAvatar.innerHTML =
+      `<span>${escapeHtml(initial)}</span>`;
+
+
+    pageAvatar.innerHTML =
+      `<span>${escapeHtml(initial)}</span>`;
+
+  }
+
+
+  document
+    .querySelectorAll(
+      '[data-user-initial]'
+    )
+    .forEach(
+      (el) => {
+
+        el.textContent =
+          initial;
+
+      }
+    );
+
+
+  /*
+     UPDATE TOPBAR NAME TOO
+
+     This is important after employee changes name.
+  */
+
+  document
+    .querySelectorAll(
+      '[data-user-name]'
+    )
+    .forEach(
+      (el) => {
+
+        el.textContent =
+          name;
+
+      }
+    );
+
+}
+
+
+/* ============================================================
+   ATTENDANCE
+   ============================================================ */
+
+function loadAttendance() {
+
+  document.getElementById(
+    'attendance-percentage'
+  ).textContent =
+    '—';
+
+
+  document.getElementById(
+    'attendance-present'
+  ).textContent =
+    '—';
+
+
+  document.getElementById(
+    'attendance-absent'
+  ).textContent =
+    '—';
+
+
+  document.getElementById(
+    'attendance-days'
+  ).textContent =
+    '—';
+
+}
+
+
+/* ============================================================
+   ACTIVITY
+   ============================================================ */
+
+function renderRecentActivity(rows) {
+
+  const list =
+    document.getElementById(
+      'activity-list'
+    );
+
+
+  list.innerHTML =
+    '';
+
+
+  if (
+    !rows ||
+    rows.length === 0
+  ) {
+
+    list.innerHTML = `
+
+      <div class="activity-item">
+
+        <div class="activity-icon">
+          ✓
+        </div>
+
+        <div class="activity-text">
+
+          No recent leave activity.
+
+          <span class="activity-time">
+            You're all caught up
+          </span>
+
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  const recent =
+    rows
+      .slice()
+      .reverse()
+      .slice(
+        0,
+        5
+      );
+
+
+  recent.forEach(
+    (req) => {
+
+      let icon =
+        '⏳';
+
+
+      let message =
+        'Leave request is awaiting approval.';
+
+
+      if (
+        req.status ===
+        'approved'
+      ) {
+
+        icon =
+          '✓';
+
+
+        message =
+          `${req.leave_type || 'Leave'} request was approved.`;
+
+      }
+
+
+      if (
+        req.status ===
+        'rejected'
+      ) {
+
+        icon =
+          '!';
+
+
+        message =
+          `${req.leave_type || 'Leave'} request was rejected.`;
+
+      }
+
+
+      if (
+        req.status ===
+        'pending'
+      ) {
+
+        icon =
+          '⏳';
+
+
+        message =
+          `${req.leave_type || 'Leave'} request is pending approval.`;
+
+      }
+
+
+      const item =
+        document.createElement(
+          'div'
+        );
+
+
+      item.className =
+        'activity-item';
+
+
+      item.innerHTML = `
+
+        <div class="activity-icon">
+          ${icon}
+        </div>
+
+        <div class="activity-text">
+
+          ${escapeHtml(message)}
+
+          <span class="activity-time">
+
+            ${escapeHtml(
+              req.start_date
+                ? `Leave date: ${req.start_date}`
+                : 'Recent activity'
+            )}
+
+          </span>
+
+        </div>
+
+      `;
+
+
+      list.appendChild(
+        item
+      );
+
+    }
+  );
+
+}
+
+
+/* ============================================================
+   PROFILE EDITING
+   ============================================================ */
+
+function initProfileEditing(user) {
+
+  const editButton =
+    document.getElementById(
+      'profile-edit-button'
+    );
+
+
+  const editForm =
+    document.getElementById(
+      'profile-edit-form'
+    );
+
+
+  const cancelButton =
+    document.getElementById(
+      'profile-edit-cancel'
+    );
+
+
+  const saveButton =
+    document.getElementById(
+      'profile-edit-save'
+    );
+
+
+  const pictureInput =
+    document.getElementById(
+      'profile-picture'
+    );
+
+
+  /* OPEN EDIT */
+
+  editButton.addEventListener(
+    'click',
+    () => {
+
+      const profile =
+        getProfileData(user);
+
+
+      /* NAME */
+
+      document.getElementById(
+        'profile-name'
+      ).value =
+        profile.name ||
+        profile.full_name ||
+        '';
+
+
+      /* PHONE */
+
+      document.getElementById(
+        'profile-phone'
+      ).value =
+        profile.phone ||
+        profile.mobile ||
+        profile.phone_number ||
+        '';
+
+
+      /* ADDRESS */
+
+      document.getElementById(
+        'profile-address'
+      ).value =
+        profile.address ||
+        '';
+
+
+      editForm.classList.add(
+        'is-open'
+      );
+
+    }
+  );
+
+
+  /* CANCEL */
+
+  cancelButton.addEventListener(
+    'click',
+    () => {
+
+      editForm.classList.remove(
+        'is-open'
+      );
+
+
+      pictureInput.value =
+        '';
+
+    }
+  );
+
+
+  /* SAVE */
+
+  saveButton.addEventListener(
+    'click',
+    () => {
+
+      const profile =
+        getProfileData(user);
+
+
+      /* GET NEW NAME */
+
+      const name =
+        document
+          .getElementById(
+            'profile-name'
+          )
+          .value
+          .trim();
+
+
+      /* GET PHONE */
+
+      const phone =
+        document
+          .getElementById(
+            'profile-phone'
+          )
+          .value
+          .trim();
+
+
+      /* GET ADDRESS */
+
+      const address =
+        document
+          .getElementById(
+            'profile-address'
+          )
+          .value
+          .trim();
+
+
+      /* VALIDATE NAME */
+
+      if (!name) {
+
+        showToast(
+          'Please enter your name.',
+          'error'
+        );
+
+        return;
+
+      }
+
+
+      if (
+        name.length < 2
+      ) {
+
+        showToast(
+          'Name must contain at least 2 characters.',
+          'error'
+        );
+
+        return;
+
+      }
+
+
+      /*
+         SAVE NEW NAME
+      */
+
+      profile.name =
+        name;
+
+
+      profile.full_name =
+        name;
+
+
+      /*
+         SAVE PHONE
+      */
+
+      profile.phone =
+        phone;
+
+
+      /*
+         SAVE ADDRESS
+      */
+
+      profile.address =
+        address;
+
+
+      const file =
+        pictureInput.files[0];
+
+
+      /* PROFILE PICTURE */
+
+      if (file) {
+
+        const reader =
+          new FileReader();
+
+
+        reader.onload =
+          function(event) {
+
+            profile.profile_picture =
+              event.target.result;
+
+
+            saveUpdatedProfile(
+              user,
+              profile
+            );
+
+          };
+
+
+        reader.readAsDataURL(
+          file
+        );
+
+      } else {
+
+        saveUpdatedProfile(
+          user,
+          profile
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* ============================================================
+   SAVE UPDATED PROFILE
+   ============================================================ */
+
+function saveUpdatedProfile(
+  user,
+  profile
+) {
+
+  /*
+     Save profile in localStorage.
+  */
+
+  saveProfileData(
+    user,
+    profile
+  );
+
+
+  /*
+     Update user session name also.
+
+     This makes the new name appear in
+     the top navigation and dashboard.
+  */
+
+  const currentUser =
+    getUser();
+
+
+  if (currentUser) {
+
+    currentUser.name =
+      profile.name;
+
+
+    localStorage.setItem(
+      STORAGE_KEYS.user,
+      JSON.stringify(
+        currentUser
+      )
+    );
+
+  }
+
+
+  /*
+     Refresh complete profile.
+  */
+
+  renderEmployeeProfile(
+    user
+  );
+
+
+  document
+    .getElementById(
+      'profile-edit-form'
+    )
+    .classList.remove(
+      'is-open'
+    );
+
+
+  document.getElementById(
+    'profile-picture'
+  ).value =
+    '';
+
+
+  showToast(
+    'Profile updated successfully.',
+    'success'
+  );
+
+}
+
+
+/* ============================================================
+   SECTION NAVIGATION
+   ============================================================ */
+
+function showSection(
+  section
+) {
+
+  const dashboard =
+    document.getElementById(
+      'dashboard-section'
+    );
+
+
+  const profile =
+    document.getElementById(
+      'profile-section'
+    );
+
+
+  if (
+    section ===
+    'profile'
+  ) {
+
+    dashboard.style.display =
+      'none';
+
+
+    profile.classList.add(
+      'is-visible'
+    );
+
+
+    document.getElementById(
+      'page-title'
+    ).textContent =
+      'Employee Profile';
+
+
+    document.getElementById(
+      'page-crumb'
+    ).textContent =
+      'Personal workspace';
+
+  } else {
+
+    dashboard.style.display =
+      'block';
+
+
+    profile.classList.remove(
+      'is-visible'
+    );
+
+
+    document.getElementById(
+      'page-title'
+    ).textContent =
+      'Dashboard';
+
+
+    document.getElementById(
+      'page-crumb'
+    ).textContent =
+      'Employee workspace';
+
+  }
+
+}
+
+
+/* ============================================================
+   MAIN
+   ============================================================ */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  () => {
+
+    const user =
+      requireAuth(
+        'employee'
+      );
+
+
+    if (!user)
+      return;
+
+
+    initMobileNav();
+
+    initProfileMenu();
+
+    initTopbarUser();
+
+
+    document.getElementById(
+      'welcome-heading'
+    ).textContent =
+      `Good day, ${user.name || ''}`.trim();
+
+
+    renderEmployeeProfile(
+      user
+    );
+
+
+    initProfileEditing(
+      user
+    );
+
+
+    loadAttendance();
+
+
     loadLeave();
-  });
-});
+
+
+    /* NAVIGATION */
+
+    document
+      .querySelectorAll(
+        '[data-section-link]'
+      )
+      .forEach(
+        (link) => {
+
+          link.addEventListener(
+            'click',
+            (e) => {
+
+              e.preventDefault();
+
+
+              document
+                .querySelectorAll(
+                  '[data-section-link]'
+                )
+                .forEach(
+                  (l) =>
+                    l.classList.remove(
+                      'is-active'
+                    )
+                );
+
+
+              link.classList.add(
+                'is-active'
+              );
+
+
+              showSection(
+                link.dataset.sectionLink
+              );
+
+            }
+          );
+
+        }
+      );
+
+
+    /* OPEN PROFILE */
+
+    document
+      .querySelectorAll(
+        '[data-open-profile]'
+      )
+      .forEach(
+        (button) => {
+
+          button.addEventListener(
+            'click',
+            (e) => {
+
+              e.preventDefault();
+
+
+              document
+                .querySelectorAll(
+                  '[data-section-link]'
+                )
+                .forEach(
+                  (l) =>
+                    l.classList.remove(
+                      'is-active'
+                    )
+                );
+
+
+              const profileLink =
+                document.querySelector(
+                  '[data-section-link="profile"]'
+                );
+
+
+              if (profileLink) {
+
+                profileLink.classList.add(
+                  'is-active'
+                );
+
+              }
+
+
+              showSection(
+                'profile'
+              );
+
+            }
+          );
+
+        }
+      );
+
+
+    /* ========================================================
+       LOAD LEAVE
+       ======================================================== */
+
+    async function loadLeave() {
+
+      const res =
+        await apiRequest(
+          ENDPOINTS.employeeLeaves(
+            user.id
+          )
+        );
+
+
+      const tbody =
+        document.getElementById(
+          'leave-table-body'
+        );
+
+
+      const empty =
+        document.getElementById(
+          'leave-empty'
+        );
+
+
+      tbody.innerHTML =
+        '';
+
+
+      if (
+        res.networkError
+      ) {
+
+        showToast(
+          "Can't reach the server.",
+          'error'
+        );
+
+        return;
+
+      }
+
+
+      const rows =
+        (
+          res.ok &&
+          Array.isArray(
+            res.data
+          )
+        )
+          ? res.data
+          : [];
+
+
+      document.getElementById(
+        'stat-total'
+      ).textContent =
+        rows.length;
+
+
+      document.getElementById(
+        'stat-pending'
+      ).textContent =
+        rows.filter(
+          r =>
+            r.status ===
+            'pending'
+        ).length;
+
+
+      document.getElementById(
+        'stat-approved'
+      ).textContent =
+        rows.filter(
+          r =>
+            r.status ===
+            'approved'
+        ).length;
+
+
+      document.getElementById(
+        'stat-rejected'
+      ).textContent =
+        rows.filter(
+          r =>
+            r.status ===
+            'rejected'
+        ).length;
+
+
+      renderRecentActivity(
+        rows
+      );
+
+
+      if (
+        rows.length === 0
+      ) {
+
+        empty.style.display =
+          'block';
+
+        return;
+
+      }
+
+
+      empty.style.display =
+        'none';
+
+
+      rows.forEach(
+        (req) => {
+
+          const tr =
+            document.createElement(
+              'tr'
+            );
+
+
+          tr.innerHTML = `
+
+            <td>
+              ${escapeHtml(
+                req.leave_type ||
+                '—'
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                req.start_date ||
+                ''
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                req.end_date ||
+                ''
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                req.remarks ||
+                '—'
+              )}
+            </td>
+
+            <td>
+              ${statusBadge(
+                req.status
+              )}
+            </td>
+
+          `;
+
+
+          tbody.appendChild(
+            tr
+          );
+
+        }
+      );
+
+    }
+
+
+    /* ========================================================
+       LEAVE MODAL
+       ======================================================== */
+
+    const leaveModal =
+      document.getElementById(
+        'leave-modal'
+      );
+
+
+    document.getElementById(
+      'btn-apply-leave'
+    ).addEventListener(
+      'click',
+      () =>
+        leaveModal.classList.add(
+          'is-open'
+        )
+    );
+
+
+    document.getElementById(
+      'leave-cancel'
+    ).addEventListener(
+      'click',
+      () =>
+        leaveModal.classList.remove(
+          'is-open'
+        )
+    );
+
+
+    leaveModal.addEventListener(
+      'click',
+      (e) => {
+
+        if (
+          e.target ===
+          leaveModal
+        ) {
+
+          leaveModal.classList.remove(
+            'is-open'
+          );
+
+        }
+
+      }
+    );
+
+
+    document.getElementById(
+      'leave-submit'
+    ).addEventListener(
+      'click',
+      async () => {
+
+        const leave_type =
+          document.getElementById(
+            'leave-type'
+          ).value;
+
+
+        const start_date =
+          document.getElementById(
+            'leave-start'
+          ).value;
+
+
+        const end_date =
+          document.getElementById(
+            'leave-end'
+          ).value;
+
+
+        const remarks =
+          document.getElementById(
+            'leave-reason'
+          ).value.trim();
+
+
+        if (
+          !start_date ||
+          !end_date
+        ) {
+
+          showToast(
+            'Select a start and end date.',
+            'error'
+          );
+
+          return;
+
+        }
+
+
+        if (
+          end_date <
+          start_date
+        ) {
+
+          showToast(
+            'End date cannot be before start date.',
+            'error'
+          );
+
+          return;
+
+        }
+
+
+        const btn =
+          document.getElementById(
+            'leave-submit'
+          );
+
+
+        btn.disabled =
+          true;
+
+
+        const res =
+          await apiRequest(
+            ENDPOINTS.leaves,
+            {
+              method:
+                'POST',
+
+              body:
+                JSON.stringify(
+                  {
+                    employee_id:
+                      user.id,
+
+                    leave_type,
+
+                    start_date,
+
+                    end_date,
+
+                    remarks
+                  }
+                )
+            }
+          );
+
+
+        btn.disabled =
+          false;
+
+
+        if (
+          res.networkError
+        ) {
+
+          showToast(
+            "Can't reach the server. Request not submitted.",
+            'error'
+          );
+
+          return;
+
+        }
+
+
+        if (
+          !res.ok
+        ) {
+
+          showToast(
+            (
+              res.data &&
+              res.data.error
+            ) ||
+            'Could not submit leave request.',
+            'error'
+          );
+
+          return;
+
+        }
+
+
+        leaveModal.classList.remove(
+          'is-open'
+        );
+
+
+        document.getElementById(
+          'leave-start'
+        ).value =
+          '';
+
+
+        document.getElementById(
+          'leave-end'
+        ).value =
+          '';
+
+
+        document.getElementById(
+          'leave-reason'
+        ).value =
+          '';
+
+
+        showToast(
+          'Leave request submitted.',
+          'success'
+        );
+
+
+        loadLeave();
+
+      }
+    );
+
+  }
+);
+
 </script>
+
 </body>
 </html>
