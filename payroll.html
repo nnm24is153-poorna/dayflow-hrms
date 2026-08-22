@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DayFlow - Payroll</title>
+<style>
+body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; padding: 24px; }
+h1 { color: #0b1330; }
+.card { background: white; border-radius: 10px; padding: 20px; max-width: 500px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+.row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eef0f5; }
+.row strong { color: #0b1330; }
+input { padding: 8px; margin: 6px 0; width: 100%; box-sizing: border-box; }
+button { padding: 10px 20px; background: #4f46e5; color: white; border: none; border-radius: 6px; cursor: pointer; margin-top: 10px; }
+table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+th, td { padding: 10px; text-align: left; border-bottom: 1px solid #eef0f5; }
+</style>
+</head>
+<body>
+
+<h1>Payroll</h1>
+
+<div id="employeeView" style="display:none;">
+  <div class="card">
+    <div class="row"><span>Basic Salary</span><strong id="p-basic">-</strong></div>
+    <div class="row"><span>Allowances</span><strong id="p-allow">-</strong></div>
+    <div class="row"><span>Deductions</span><strong id="p-deduct">-</strong></div>
+    <div class="row"><span>Net Salary</span><strong id="p-net">-</strong></div>
+  </div>
+</div>
+
+<div id="adminView" style="display:none;">
+  <div class="card">
+    <h3>Set Payroll</h3>
+    <input type="number" id="emp-id" placeholder="Employee ID">
+    <input type="number" id="basic-input" placeholder="Basic Salary">
+    <input type="number" id="allow-input" placeholder="Allowances">
+    <input type="number" id="deduct-input" placeholder="Deductions">
+    <input type="text" id="month-input" placeholder="Month (e.g. August)">
+    <input type="number" id="year-input" placeholder="Year (e.g. 2026)">
+    <button onclick="setPayroll()">Save Payroll</button>
+  </div>
+  <table>
+    <thead><tr><th>Employee</th><th>Basic</th><th>Allowances</th><th>Deductions</th><th>Net</th></tr></thead>
+    <tbody id="payrollBody"></tbody>
+  </table>
+</div>
+
+<script>
+const API_URL = "http://127.0.0.1:5000";
+
+function getUser() {
+  const raw = localStorage.getItem('dayflow_user');
+  try { return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+}
+
+const user = getUser();
+if (!user) window.location.href = 'login.html';
+
+if (user.role === 'admin') {
+  document.getElementById('adminView').style.display = 'block';
+  loadAllPayroll();
+} else {
+  document.getElementById('employeeView').style.display = 'block';
+  loadMyPayroll();
+}
+
+async function loadMyPayroll() {
+  const res = await fetch(`${API_URL}/payroll/${user.id}`);
+  const data = await res.json();
+  document.getElementById('p-basic').textContent = `₹${data.basic_salary}`;
+  document.getElementById('p-allow').textContent = `₹${data.allowances}`;
+  document.getElementById('p-deduct').textContent = `₹${data.deductions}`;
+  document.getElementById('p-net').textContent = `₹${data.net_salary}`;
+}
+
+async function loadAllPayroll() {
+  const res = await fetch(`${API_URL}/payroll`);
+  const rows = await res.json();
+  const tbody = document.getElementById('payrollBody');
+  tbody.innerHTML = '';
+  rows.forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${r.name}</td><td>₹${r.basic_salary}</td><td>₹${r.allowances}</td><td>₹${r.deductions}</td><td>₹${r.net_salary}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+async function setPayroll() {
+  const employee_id = document.getElementById('emp-id').value;
+  const basic_salary = document.getElementById('basic-input').value;
+  const allowances = document.getElementById('allow-input').value;
+  const deductions = document.getElementById('deduct-input').value;
+  const month = document.getElementById('month-input').value;
+  const year = document.getElementById('year-input').value;
+
+  await fetch(`${API_URL}/payroll/${employee_id}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ basic_salary, allowances, deductions, month, year })
+  });
+
+  loadAllPayroll();
+}
+</script>
+
+</body>
+</html>

@@ -250,5 +250,122 @@ def attendance_today():
     status_map = {row[0]: row[1] for row in rows}
     return jsonify(status_map)
 
+    # GET all attendance for a specific date (Admin view)
+@app.route('/attendance/date/<date>', methods=['GET'])
+def attendance_by_date(date):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT e.name, a.check_in, a.check_out, a.status
+        FROM attendance a
+        JOIN employees e ON a.employee_id = e.id
+        WHERE a.date = %s
+    """, (date,))
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    records = []
+    for row in rows:
+        records.append({
+            "name": row[0],
+            "check_in": str(row[1]) if row[1] else None,
+            "check_out": str(row[2]) if row[2] else None,
+            "status": row[3]
+        })
+    return jsonify(records)
+
+# GET one employee's attendance history (Employee view)
+@app.route('/attendance/employee/<int:employee_id>', methods=['GET'])
+def attendance_by_employee(employee_id):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT date, check_in, check_out, status
+        FROM attendance WHERE employee_id = %s ORDER BY date DESC
+    """, (employee_id,))
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    records = []
+    for row in rows:
+        records.append({
+            "date": str(row[0]),
+            "check_in": str(row[1]) if row[1] else None,
+            "check_out": str(row[2]) if row[2] else None,
+            "status": row[3]
+        })
+    return jsonify(records)
+
+    # GET payroll for one employee (Employee view - read only)
+@app.route('/payroll/<int:employee_id>', methods=['GET'])
+def get_payroll(employee_id):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT basic_salary, allowances, deductions, net_salary, month, year FROM payroll WHERE employee_id=%s ORDER BY year DESC, month DESC LIMIT 1", (employee_id,))
+    row = cur.fetchone()
+    cur.close()
+    conn.close()
+
+    if row:
+        return jsonify({
+            "basic_salary": float(row[0]) if row[0] else 0,
+            "allowances": float(row[1]) if row[1] else 0,
+            "deductions": float(row[2]) if row[2] else 0,
+            "net_salary": float(row[3]) if row[3] else 0,
+            "month": row[4], "year": row[5]
+        })
+    return jsonify({"basic_salary": 0, "allowances": 0, "deductions": 0, "net_salary": 0, "month": None, "year": None})
+
+# GET all employees' payroll (Admin view)
+@app.route('/payroll', methods=['GET'])
+def get_all_payroll():
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT p.employee_id, e.name, p.basic_salary, p.allowances, p.deductions, p.net_salary, p.month, p.year
+        FROM payroll p JOIN employees e ON p.employee_id = e.id
+    """)
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    result = []
+    for row in rows:
+        result.append({
+            "employee_id": row[0], "name": row[1],
+            "basic_salary": float(row[2]) if row[2] else 0,
+            "allowances": float(row[3]) if row[3] else 0,
+            "deductions": float(row[4]) if row[4] else 0,
+            "net_salary": float(row[5]) if row[5] else 0,
+            "month": row[6], "year": row[7]
+        })
+    return jsonify(result)
+
+# Admin: Add/Update payroll for an employee
+@app.route('/payroll/<int:employee_id>', methods=['POST'])
+def set_payroll(employee_id):
+    data = request.get_json()
+    basic = float(data.get("basic_salary", 0))
+    allowances = float(data.get("allowances", 0))
+    deductions = float(data.get("deductions", 0))
+    month = data.get("month")
+    year = data.get("year")
+
+    net_salary = basic + allowances - deductions
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute(
+        "INSERT INTO payroll (employee_id, basic_salary, allowances, deductions, net_salary, month, year) VALUES (%s,%s,%s,%s,%s,%s,%s)",
+        (employee_id, basic, allowances, deductions, net_salary, month, year)
+    )
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    return jsonify({"employee_id": employee_id, "net_salary": net_salary}), 201
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

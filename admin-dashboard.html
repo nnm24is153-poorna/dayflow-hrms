@@ -5,6 +5,45 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DayFlow HRMS — HR Dashboard</title>
 <link rel="stylesheet" href="style.css">
+<style>
+.admin-feature-section { margin-bottom: 20px; }
+.feature-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+.feature-toolbar h3 { margin: 0; font-size: 16px; font-weight: 700; }
+.feature-filters { display: flex; gap: 8px; flex-wrap: wrap; }
+.feature-filter { border: 1px solid #dbe1ea; background: #fff; color: #64748b; padding: 7px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600; }
+.feature-filter.is-active { background: #0b1330; color: #fff; border-color: #0b1330; }
+.admin-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.admin-info-card { padding: 18px; }
+.admin-info-label { font-size: 12px; color: #64748b; margin-bottom: 7px; }
+.admin-info-value { font-size: 22px; font-weight: 700; color: #0f172a; }
+
+.modal-overlay { position: fixed; inset: 0; background: rgba(11, 19, 48, 0.45); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 9999; }
+.modal-overlay.is-open { display: flex; }
+.admin-modal { width: min(600px, 100%); max-height: 90vh; overflow-y: auto; background: #fff; border-radius: 14px; box-shadow: 0 20px 60px rgba(0,0,0,.2); }
+.admin-modal-header { display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid #e5e7eb; }
+.admin-modal-header h3 { margin: 0; font-size: 17px; }
+.admin-modal-close { border: 0; background: transparent; font-size: 24px; cursor: pointer; color: #64748b; }
+.admin-modal-body { padding: 20px; }
+.admin-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.kv-row { display: flex; flex-direction: column; gap: 3px; }
+.kv-row .k { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #94a3b8; }
+.kv-row .v { font-size: 14px; font-weight: 600; color: #0f172a; }
+
+.status-action-row { display: flex; gap: 6px; }
+.status-pill-btn { border: none; padding: 7px 14px; border-radius: 999px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.status-pill-btn.approve { background: #dcfce7; color: #15803d; }
+.status-pill-btn.approve:hover { background: #22c55e; color: #fff; }
+.status-pill-btn.reject { background: #fee2e2; color: #b91c1c; }
+.status-pill-btn.reject:hover { background: #ef4444; color: #fff; }
+
+.notice-banner {
+  background: #f0fdfa; border: 1px solid #ccfbf1; color: #0f766e; font-size: 12.5px;
+  padding: 12px 14px; border-radius: 10px; line-height: 1.5;
+}
+
+@media (max-width: 1000px) { .admin-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 650px) { .admin-grid, .admin-form-grid { grid-template-columns: 1fr; } }
+</style>
 </head>
 <body>
 
@@ -42,7 +81,27 @@
       </a>
       <a href="#" class="nav-link" data-section-link="leave">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M8 2v4M16 2v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        Leave Management
+        Time Off
+      </a>
+      <a href="#" class="nav-link" data-section-link="attendance">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/></svg>
+        Attendance
+      </a>
+      <a href="#" class="nav-link" data-section-link="departments">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 21V8l9-5 9 5v13M9 21v-6h6v6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        Departments
+      </a>
+      <a href="#" class="nav-link" data-section-link="payroll">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="20" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12.5" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
+        Payroll
+      </a>
+      <a href="#" class="nav-link" data-section-link="reports">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 19V10M12 19V5M20 19v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Reports
+      </a>
+      <a href="#" class="nav-link" data-section-link="notifications">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M13.7 21a2 2 0 0 1-3.4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Notifications
       </a>
     </nav>
 
@@ -81,74 +140,262 @@
 
     <main class="content">
 
-      <div style="margin-bottom:22px;">
-        <div class="section-title">Good day, HR team</div>
-        <div class="section-sub">Here's how leave requests are looking today.</div>
-      </div>
+      <!-- ===================== DASHBOARD ===================== -->
+      <section data-admin-section="dashboard">
+        <div style="margin-bottom:22px;">
+          <div class="section-title">Good day, HR team</div>
+          <div class="section-sub">Here's how the organization is doing today.</div>
+        </div>
 
-      <!-- ---------- Summary cards ---------- -->
-      <div class="grid grid-4" style="margin-bottom:20px;">
-        <div class="card stat-card is-hoverable">
-          <div class="stat-icon icon-tint-blue"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M17 20v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8"/></svg></div>
-          <div class="stat-label">Total Employees</div>
-          <div class="stat-value" id="stat-total-employees">—</div>
-          <span class="stat-trend trend-flat">registered accounts</span>
+        <div class="grid grid-4" style="margin-bottom:20px;">
+          <div class="card stat-card is-hoverable">
+            <div class="stat-icon icon-tint-blue">👥</div>
+            <div class="stat-label">Total Employees</div>
+            <div class="stat-value" id="stat-total-employees">—</div>
+            <span class="stat-trend trend-flat">across the org</span>
+          </div>
+          <div class="card stat-card is-hoverable">
+            <div class="stat-icon icon-tint-amber">📅</div>
+            <div class="stat-label">Pending Leave Requests</div>
+            <div class="stat-value" id="stat-pending-leave">—</div>
+            <span class="stat-trend trend-flat">need review</span>
+          </div>
+          <div class="card stat-card is-hoverable">
+            <div class="stat-icon icon-tint-teal">✓</div>
+            <div class="stat-label">Approved Leaves</div>
+            <div class="stat-value" id="stat-approved-leave">—</div>
+            <span class="stat-trend trend-up">this period</span>
+          </div>
+          <div class="card stat-card is-hoverable">
+            <div class="stat-icon icon-tint-danger">×</div>
+            <div class="stat-label">Rejected Leaves</div>
+            <div class="stat-value" id="stat-rejected-leave">—</div>
+            <span class="stat-trend trend-flat">this period</span>
+          </div>
         </div>
-        <div class="card stat-card is-hoverable">
-          <div class="stat-icon icon-tint-amber"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" stroke-width="1.8"/></svg></div>
-          <div class="stat-label">Pending Leave Requests</div>
-          <div class="stat-value" id="stat-pending-leave">—</div>
-          <span class="stat-trend trend-flat">need review</span>
-        </div>
-        <div class="card stat-card is-hoverable">
-          <div class="stat-icon icon-tint-teal"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3 8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <div class="stat-label">Approved</div>
-          <div class="stat-value" id="stat-approved-leave">—</div>
-          <span class="stat-trend trend-up">total approved</span>
-        </div>
-        <div class="card stat-card is-hoverable">
-          <div class="stat-icon icon-tint-danger"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M9 9l6 6M15 9l-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-          <div class="stat-label">Rejected</div>
-          <div class="stat-value" id="stat-rejected-leave">—</div>
-          <span class="stat-trend trend-flat">total rejected</span>
-        </div>
-      </div>
 
-      <!-- ---------- Employees table ---------- -->
-      <div class="card" style="margin-bottom:20px;">
-        <div class="toolbar-row">
-          <h3 style="font-size:15.5px; font-weight:700;">Employees</h3>
+        <div class="card" style="margin-bottom:20px;">
+          <div class="toolbar-row">
+            <h3 style="font-size:15.5px; font-weight:700;">Employees</h3>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Employee</th><th>Employee ID</th><th>Email</th><th>Role</th><th>Actions</th></tr></thead>
+              <tbody id="employees-table-body"></tbody>
+            </table>
+          </div>
+          <div class="empty-state" id="employees-empty" style="display:none;">
+            <div class="empty-title">No employees found</div>
+          </div>
         </div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Name</th><th>Email</th><th>Role</th></tr></thead>
-            <tbody id="employees-table-body"></tbody>
-          </table>
-        </div>
-        <div class="empty-state" id="employees-empty" style="display:none;">
-          <div class="empty-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M17 20v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8"/></svg></div>
-          <div class="empty-title">No employees found</div>
-          <div class="empty-sub">Try a different search.</div>
-        </div>
-      </div>
 
-      <!-- ---------- Leave request management ---------- -->
-      <div class="card">
-        <div class="card-header"><h3>Leave Requests</h3></div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Employee</th><th>Type</th><th>From</th><th>To</th><th>Remarks</th><th>Status</th><th>Actions</th></tr></thead>
-            <tbody id="hr-leave-table-body"></tbody>
-          </table>
+        <div class="card">
+          <div class="card-header"><h3>Leave Requests</h3></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Employee</th><th>Type</th><th>Dates</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="hr-leave-table-body"></tbody>
+            </table>
+          </div>
+          <div class="empty-state" id="hr-leave-empty" style="display:none;">
+            <div class="empty-title">No leave requests</div>
+          </div>
         </div>
-        <div class="empty-state" id="hr-leave-empty" style="display:none;">
-          <div class="empty-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" stroke-width="1.8"/></svg></div>
-          <div class="empty-title">No leave requests yet</div>
-          <div class="empty-sub">New requests from employees will show up here.</div>
+      </section>
+
+      <!-- ===================== EMPLOYEES ===================== -->
+      <section data-admin-section="employees" style="display:none;">
+        <div class="card admin-feature-section">
+          <div class="feature-toolbar">
+            <div>
+              <h3>Employee Management</h3>
+              <div class="section-sub">View employee information.</div>
+            </div>
+            <input id="employee-management-search" type="search" placeholder="Search employee..." style="padding:9px 12px;border:1px solid #dbe1ea;border-radius:8px;">
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Employee</th><th>Employee ID</th><th>Email</th><th>Role</th><th>Actions</th></tr></thead>
+              <tbody id="management-employees-body"></tbody>
+            </table>
+          </div>
+          <div class="empty-state" id="management-employees-empty" style="display:none;">
+            <div class="empty-title">No employees found</div>
+          </div>
         </div>
-      </div>
+      </section>
+
+      <!-- ===================== ATTENDANCE ===================== -->
+      <section data-admin-section="attendance" style="display:none;">
+        <div class="card admin-feature-section">
+          <div class="feature-toolbar">
+            <div>
+              <h3>Attendance — Today</h3>
+              <div class="section-sub">Live check-in status for the organization.</div>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="refresh-attendance">Refresh</button>
+          </div>
+          <div class="admin-grid" style="margin-bottom:20px;">
+            <div class="card admin-info-card"><div class="admin-info-label">Present</div><div class="admin-info-value" id="attendance-present-count">—</div></div>
+            <div class="card admin-info-card"><div class="admin-info-label">On Leave</div><div class="admin-info-value" id="attendance-leave-count">—</div></div>
+            <div class="card admin-info-card"><div class="admin-info-label">Absent</div><div class="admin-info-value" id="attendance-absent-count">—</div></div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Employee</th><th>Employee ID</th><th>Status</th></tr></thead>
+              <tbody id="attendance-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== TIME OFF ===================== -->
+      <section data-admin-section="leave" style="display:none;">
+        <div class="card">
+          <div class="feature-toolbar">
+            <div>
+              <h3>Time Off</h3>
+              <div class="section-sub">Review and manage all employee time-off requests.</div>
+            </div>
+          </div>
+          <div class="feature-filters" style="margin-bottom:14px;">
+            <button class="feature-filter is-active" data-leave-filter="all">All</button>
+            <button class="feature-filter" data-leave-filter="pending">Pending</button>
+            <button class="feature-filter" data-leave-filter="approved">Approved</button>
+            <button class="feature-filter" data-leave-filter="rejected">Rejected</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Name</th><th>Start Date</th><th>End Date</th><th>Type</th><th>Status / Action</th></tr></thead>
+              <tbody id="all-leave-requests-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== DEPARTMENTS (placeholder) ===================== -->
+      <section data-admin-section="departments" style="display:none;">
+        <div class="card">
+          <div class="card-header"><h3>Departments</h3></div>
+          <div style="padding:20px;">
+            <div class="notice-banner">
+              This is placeholder UI — your Flask backend doesn't currently have a
+              <code>/departments</code> endpoint, so no real data is loaded here yet.
+              Add that route and this table can be wired up the same way Employees and Attendance are.
+            </div>
+            <div class="table-wrap" style="margin-top:16px;">
+              <table>
+                <thead><tr><th>Department</th><th>Employees</th><th>Percentage</th></tr></thead>
+                <tbody><tr><td colspan="3" style="color:var(--text-500);">No department data source connected.</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== PAYROLL (placeholder) ===================== -->
+      <section data-admin-section="payroll" style="display:none;">
+        <div class="card">
+          <div class="feature-toolbar">
+            <div>
+              <h3>Payroll / Salary Management</h3>
+              <div class="section-sub">Placeholder UI — no backend endpoint wired up yet.</div>
+            </div>
+          </div>
+          <div style="padding:0 4px 20px;">
+            <div class="notice-banner">
+              This is placeholder UI — there's no <code>/payroll</code> endpoint in your backend,
+              so salary data can't be shown or saved yet. Add that route and this table can pull real numbers.
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Employee</th><th>Employee ID</th><th>Basic Salary</th><th>Allowances</th><th>Net Salary</th><th>Actions</th></tr></thead>
+              <tbody><tr><td colspan="6" style="color:var(--text-500);">No payroll data source connected.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== REPORTS (placeholder) ===================== -->
+      <section data-admin-section="reports" style="display:none;">
+        <div class="admin-grid">
+          <div class="card admin-info-card"><h4 style="margin:0 0 6px;">Attendance Reports</h4><p style="color:var(--text-500,#64748b); font-size:12.5px;">Requires a reports endpoint.</p></div>
+          <div class="card admin-info-card"><h4 style="margin:0 0 6px;">Payroll Reports</h4><p style="color:var(--text-500,#64748b); font-size:12.5px;">Requires a reports endpoint.</p></div>
+          <div class="card admin-info-card"><h4 style="margin:0 0 6px;">Leave Summary</h4><p style="color:var(--text-500,#64748b); font-size:12.5px;">Requires a reports endpoint.</p></div>
+          <div class="card admin-info-card"><h4 style="margin:0 0 6px;">Org Statistics</h4><p style="color:var(--text-500,#64748b); font-size:12.5px;">Requires a reports endpoint.</p></div>
+        </div>
+        <div class="card" style="margin-top:20px;">
+          <div class="card-header"><h3>Report Results</h3></div>
+          <div style="padding:20px;">
+            <div class="notice-banner">
+              This is placeholder UI — there's no <code>/reports</code> endpoint in your backend yet,
+              so these cards aren't wired to real data.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== NOTIFICATIONS (placeholder) ===================== -->
+      <section data-admin-section="notifications" style="display:none;">
+        <div class="card">
+          <div class="feature-toolbar">
+            <div><h3>Notifications</h3><div class="section-sub">Placeholder UI — no backend endpoint wired up yet.</div></div>
+          </div>
+          <div style="padding:0 4px 20px;">
+            <div class="notice-banner">
+              This is placeholder UI — there's no <code>/notifications</code> endpoint in your backend,
+              so nothing loads here yet. Once that route exists, this can show real HR alerts.
+            </div>
+          </div>
+        </div>
+      </section>
 
     </main>
+  </div>
+</div>
+
+<!-- ===================== EMPLOYEE PROFILE MODAL ===================== -->
+<div class="modal-overlay" id="employee-details-modal">
+  <div class="admin-modal">
+    <div class="admin-modal-header">
+      <h3>Employee Profile</h3>
+      <button class="admin-modal-close" data-close-modal="employee-details-modal">&times;</button>
+    </div>
+    <div class="admin-modal-body" id="employee-details-content">Loading...</div>
+  </div>
+</div>
+
+<!-- ===================== EDIT EMPLOYEE MODAL (placeholder) ===================== -->
+<div class="modal-overlay" id="edit-employee-modal">
+  <div class="admin-modal">
+    <div class="admin-modal-header">
+      <h3>Edit Employee</h3>
+      <button class="admin-modal-close" data-close-modal="edit-employee-modal">&times;</button>
+    </div>
+    <div class="admin-modal-body">
+      <div class="notice-banner" style="margin-bottom:16px;">
+        This is placeholder UI — there's no <code>PUT /employees/&lt;id&gt;</code> endpoint in your
+        backend yet, so changes made here won't actually save. Add that route and this form can be wired up.
+      </div>
+      <div class="admin-form-grid">
+        <div class="admin-form-group" style="display:flex; flex-direction:column; gap:6px;">
+          <label style="font-size:12px; font-weight:600; color:#475569;">Name</label>
+          <input class="input" type="text" id="edit-employee-name" disabled>
+        </div>
+        <div class="admin-form-group" style="display:flex; flex-direction:column; gap:6px;">
+          <label style="font-size:12px; font-weight:600; color:#475569;">Email</label>
+          <input class="input" type="email" id="edit-employee-email" disabled>
+        </div>
+        <div class="admin-form-group" style="display:flex; flex-direction:column; gap:6px;">
+          <label style="font-size:12px; font-weight:600; color:#475569;">Role</label>
+          <input class="input" type="text" id="edit-employee-role" disabled>
+        </div>
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:18px;">
+        <button type="button" class="btn btn-secondary" data-close-modal="edit-employee-modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -157,6 +404,7 @@
    DayFlow HRMS — shared API layer
    Matches the REAL Flask backend (app.py) on http://127.0.0.1:5000
    No auth token. Role values are lowercase: "employee" / "admin".
+   This mirrors the confirmed-working contract from employee-dashboard.html.
    ========================================================================== */
 
 const API_BASE = 'http://127.0.0.1:5000';
@@ -164,17 +412,17 @@ const API_BASE = 'http://127.0.0.1:5000';
 const ENDPOINTS = {
   login: `${API_BASE}/login`,
   signup: `${API_BASE}/signup`,
-  leaves: `${API_BASE}/leaves`,
+  leaves: `${API_BASE}/leaves`,                              // GET -> all leaves incl. employee_name; POST -> create
   leavesPending: `${API_BASE}/leaves/pending`,
   employeeLeaves: (id) => `${API_BASE}/leaves/employee/${id}`,
-  leaveDecision: (id) => `${API_BASE}/leaves/${id}`,
-  employees: `${API_BASE}/employees`,
+  leaveDecision: (id) => `${API_BASE}/leaves/${id}`,          // PUT { status }
+  employees: `${API_BASE}/employees`,                        // -> [{id, name, email, role}] — no department field
+  attendanceToday: `${API_BASE}/attendance/today`,            // -> { [employee_id]: "present" | "leave" | "absent" }
   health: `${API_BASE}/health`,
 };
 
 const STORAGE_KEYS = { user: 'dayflow_user' };
 
-function saveSession(user) { localStorage.setItem(STORAGE_KEYS.user, JSON.stringify(user)); }
 function getUser() {
   const raw = localStorage.getItem(STORAGE_KEYS.user);
   try { return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
@@ -240,12 +488,6 @@ function initMobileNav() {
 }
 
 function initProfileMenu() {
-  const btn = document.querySelector('[data-profile-toggle]');
-  const menu = document.querySelector('[data-profile-menu]');
-  if (btn && menu) {
-    btn.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('is-open'); });
-    document.addEventListener('click', () => menu.classList.remove('is-open'));
-  }
   document.querySelectorAll('[data-logout]').forEach((el) => {
     el.addEventListener('click', (e) => { e.preventDefault(); logout(); });
   });
@@ -261,6 +503,17 @@ function initTopbarUser() {
   });
 }
 
+function openModal(id) { const modal = document.getElementById(id); if (modal) modal.classList.add('is-open'); }
+function closeModal(id) { const modal = document.getElementById(id); if (modal) modal.classList.remove('is-open'); }
+document.addEventListener('click', (e) => {
+  const closeBtn = e.target.closest('[data-close-modal]');
+  if (!closeBtn) return;
+  closeModal(closeBtn.getAttribute('data-close-modal'));
+});
+document.querySelectorAll('.modal-overlay').forEach((modal) => {
+  modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('is-open'); });
+});
+
 function escapeHtml(str) {
   const div = document.createElement('div');
   div.textContent = str == null ? '' : String(str);
@@ -274,8 +527,21 @@ function statusBadge(status) {
   return '<span class="badge badge-warning">Pending</span>';
 }
 
+/* Employee objects from /employees may use varying key names depending on
+   your Flask model — this reads the first key that actually has a value. */
+function getValue(obj, keys, fallback = '—') {
+  for (const key of keys) {
+    if (obj[key] !== undefined && obj[key] !== null && String(obj[key]).trim() !== '') return obj[key];
+  }
+  return fallback;
+}
+function empName(emp) { return getValue(emp, ['name', 'full_name'], 'Employee'); }
+function empId(emp) { return getValue(emp, ['employee_id', 'id'], '—'); }
+function empEmail(emp) { return getValue(emp, ['email'], '—'); }
+function empRole(emp) { return getValue(emp, ['role'], '—'); }
+
 /* ==========================================================================
-   admin-dashboard.html (HR) behavior
+   MAIN ADMIN DASHBOARD
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -287,28 +553,44 @@ document.addEventListener('DOMContentLoaded', () => {
   initTopbarUser();
 
   let allEmployees = [];
-  let allLeaves = [];
+  let allLeaveRequests = [];
+  let leaveFilter = 'all';
 
+  /* ---- Sidebar section nav ---- */
   document.querySelectorAll('[data-section-link]').forEach((link) => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
+      const section = link.getAttribute('data-section-link');
       document.querySelectorAll('[data-section-link]').forEach((l) => l.classList.remove('is-active'));
       link.classList.add('is-active');
+      document.querySelectorAll('[data-admin-section]').forEach((sectionEl) => {
+        sectionEl.style.display = sectionEl.getAttribute('data-admin-section') === section ? 'block' : 'none';
+      });
       const sidebar = document.querySelector('.sidebar');
       const scrim = document.querySelector('.sidebar-scrim');
       if (sidebar) sidebar.classList.remove('is-open');
       if (scrim) scrim.classList.remove('is-open');
+
+      if (section === 'employees') renderManagementEmployees();
+      if (section === 'leave') renderAllLeaveRequests();
+      if (section === 'attendance') loadAttendance();
+      // departments / payroll / reports / notifications are static placeholders — no data to load
     });
   });
 
-  loadEmployees();
-  loadLeaveRequests();
+  init();
 
-  /* ================= Employees table ================= */
+  async function init() {
+    await loadEmployees();
+    await loadAllLeaveRequests();
+    updateSummary();
+  }
+
+  /* ================= Employees ================= */
   async function loadEmployees() {
     const res = await apiRequest(ENDPOINTS.employees);
+    if (res.networkError) { showToast("Can't reach the server.", 'error'); }
     allEmployees = (res.ok && Array.isArray(res.data)) ? res.data : [];
-    document.getElementById('stat-total-employees').textContent = allEmployees.length;
     renderEmployees();
   }
 
@@ -316,95 +598,242 @@ document.addEventListener('DOMContentLoaded', () => {
     const tbody = document.getElementById('employees-table-body');
     const empty = document.getElementById('employees-empty');
     const searchTerm = document.getElementById('employee-search').value.trim().toLowerCase();
-
     let rows = allEmployees;
     if (searchTerm) {
       rows = rows.filter((e) =>
-        (e.name || '').toLowerCase().includes(searchTerm) ||
-        (e.email || '').toLowerCase().includes(searchTerm)
+        empName(e).toLowerCase().includes(searchTerm) ||
+        String(empId(e)).toLowerCase().includes(searchTerm) ||
+        empEmail(e).toLowerCase().includes(searchTerm)
       );
     }
-
     tbody.innerHTML = '';
     if (rows.length === 0) { empty.style.display = 'block'; return; }
     empty.style.display = 'none';
-
     rows.forEach((emp) => {
       const tr = document.createElement('tr');
-      const initial = (emp.name || '?').trim().charAt(0).toUpperCase();
+      const initial = empName(emp).trim().charAt(0).toUpperCase();
       tr.innerHTML = `
-        <td><div class="table-name-cell"><span class="mini-avatar">${initial}</span>${escapeHtml(emp.name || '—')}</div></td>
-        <td>${escapeHtml(emp.email || '—')}</td>
-        <td>${escapeHtml(emp.role || '—')}</td>
+        <td><div class="table-name-cell"><span class="mini-avatar">${escapeHtml(initial)}</span>${escapeHtml(empName(emp))}</div></td>
+        <td>${escapeHtml(String(empId(emp)))}</td>
+        <td>${escapeHtml(empEmail(emp))}</td>
+        <td>${escapeHtml(empRole(emp))}</td>
+        <td><button class="btn btn-secondary btn-sm" data-view-employee="${escapeHtml(String(empId(emp)))}">View</button></td>
       `;
       tbody.appendChild(tr);
     });
   }
 
   document.getElementById('employee-search').addEventListener('input', renderEmployees);
+  document.getElementById('employees-table-body').addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-view-employee]');
+    if (!btn) return;
+    viewEmployee(btn.getAttribute('data-view-employee'));
+  });
 
-  /* ================= Leave request management ================= */
-  async function loadLeaveRequests() {
-    const res = await apiRequest(ENDPOINTS.leaves);
-    allLeaves = (res.ok && Array.isArray(res.data)) ? res.data : [];
-
-    document.getElementById('stat-pending-leave').textContent = allLeaves.filter(r => r.status === 'pending').length;
-    document.getElementById('stat-approved-leave').textContent = allLeaves.filter(r => r.status === 'approved').length;
-    document.getElementById('stat-rejected-leave').textContent = allLeaves.filter(r => r.status === 'rejected').length;
-
-    renderLeaveRequests();
+  function viewEmployee(id) {
+    const emp = allEmployees.find((e) => String(empId(e)) === String(id));
+    const content = document.getElementById('employee-details-content');
+    if (!emp) { content.innerHTML = `<div class="empty-state"><div class="empty-title">Employee not found</div></div>`; openModal('employee-details-modal'); return; }
+    content.innerHTML = `
+      <div class="admin-form-grid">
+        <div class="kv-row"><span class="k">Name</span><span class="v">${escapeHtml(empName(emp))}</span></div>
+        <div class="kv-row"><span class="k">Employee ID</span><span class="v">${escapeHtml(String(empId(emp)))}</span></div>
+        <div class="kv-row"><span class="k">Email</span><span class="v">${escapeHtml(empEmail(emp))}</span></div>
+        <div class="kv-row"><span class="k">Role</span><span class="v">${escapeHtml(empRole(emp))}</span></div>
+      </div>
+    `;
+    openModal('employee-details-modal');
   }
 
-  function renderLeaveRequests() {
+  /* ================= Employee Management page ================= */
+  function renderManagementEmployees() {
+    const tbody = document.getElementById('management-employees-body');
+    const empty = document.getElementById('management-employees-empty');
+    const search = document.getElementById('employee-management-search').value.trim().toLowerCase();
+    let rows = allEmployees;
+    if (search) {
+      rows = rows.filter((e) =>
+        empName(e).toLowerCase().includes(search) ||
+        String(empId(e)).toLowerCase().includes(search) ||
+        empEmail(e).toLowerCase().includes(search)
+      );
+    }
+    tbody.innerHTML = '';
+    if (rows.length === 0) { empty.style.display = 'block'; return; }
+    empty.style.display = 'none';
+    rows.forEach((emp) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${escapeHtml(empName(emp))}</td>
+        <td>${escapeHtml(String(empId(emp)))}</td>
+        <td>${escapeHtml(empEmail(emp))}</td>
+        <td>${escapeHtml(empRole(emp))}</td>
+        <td>
+          <div class="admin-table-actions" style="display:flex; gap:6px;">
+            <button class="btn btn-secondary btn-sm" data-management-view="${escapeHtml(String(empId(emp)))}">View</button>
+            <button class="btn btn-accent btn-sm" data-management-edit="${escapeHtml(String(empId(emp)))}">Edit</button>
+          </div>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+  document.getElementById('employee-management-search').addEventListener('input', renderManagementEmployees);
+  document.getElementById('management-employees-body').addEventListener('click', (e) => {
+    const viewBtn = e.target.closest('[data-management-view]');
+    const editBtn = e.target.closest('[data-management-edit]');
+    if (viewBtn) viewEmployee(viewBtn.getAttribute('data-management-view'));
+    if (editBtn) openEditEmployeePlaceholder(editBtn.getAttribute('data-management-edit'));
+  });
+
+  function openEditEmployeePlaceholder(id) {
+    const emp = allEmployees.find((e) => String(empId(e)) === String(id));
+    document.getElementById('edit-employee-name').value = emp ? empName(emp) : '';
+    document.getElementById('edit-employee-email').value = emp ? empEmail(emp) : '';
+    document.getElementById('edit-employee-role').value = emp ? empRole(emp) : '';
+    openModal('edit-employee-modal');
+  }
+
+  /* ================= Leave requests =================
+     GET /leaves returns every leave request already merged with employee_name,
+     so no per-employee looping is needed. */
+  async function loadAllLeaveRequests() {
+    const res = await apiRequest(ENDPOINTS.leaves);
+    if (res.networkError) { showToast("Can't reach the server.", 'error'); }
+    allLeaveRequests = (res.ok && Array.isArray(res.data))
+      ? res.data.map((req) => Object.assign({ employeeName: req.employee_name || 'Employee' }, req))
+      : [];
+    renderLeaveTables();
+  }
+
+  /* ================= Attendance ================= */
+  async function loadAttendance() {
+    const tbody = document.getElementById('attendance-table-body');
+    tbody.innerHTML = `<tr><td colspan="3">Loading attendance...</td></tr>`;
+    const res = await apiRequest(ENDPOINTS.attendanceToday);
+    if (!res.ok || !res.data) {
+      tbody.innerHTML = `<tr><td colspan="3">Unable to load attendance.</td></tr>`;
+      return;
+    }
+    const statusMap = res.data; // { [employee_id]: "present" | "leave" | "absent" }
+    let present = 0, onLeave = 0, absent = 0;
+    tbody.innerHTML = '';
+    allEmployees.forEach((emp) => {
+      const status = statusMap[empId(emp)] || 'absent';
+      if (status === 'present') present++;
+      else if (status === 'leave') onLeave++;
+      else absent++;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><div class="table-name-cell"><span class="mini-avatar">${escapeHtml(empName(emp).charAt(0).toUpperCase())}</span>${escapeHtml(empName(emp))}</div></td>
+        <td>${escapeHtml(String(empId(emp)))}</td>
+        <td>${status === 'present' ? '<span class="badge badge-success">Present</span>' : status === 'leave' ? '<span class="badge badge-warning">On Leave</span>' : '<span class="badge badge-danger">Absent</span>'}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+    document.getElementById('attendance-present-count').textContent = present;
+    document.getElementById('attendance-leave-count').textContent = onLeave;
+    document.getElementById('attendance-absent-count').textContent = absent;
+  }
+  document.getElementById('refresh-attendance').addEventListener('click', loadAttendance);
+
+  function renderLeaveTables() {
+    renderHrLeaveTable();
+    renderAllLeaveRequests();
+    updateSummary();
+  }
+
+  function updateSummary() {
+    document.getElementById('stat-total-employees').textContent = allEmployees.length;
+    document.getElementById('stat-pending-leave').textContent = allLeaveRequests.filter((r) => (r.status || 'pending').toLowerCase() === 'pending').length;
+    document.getElementById('stat-approved-leave').textContent = allLeaveRequests.filter((r) => (r.status || '').toLowerCase() === 'approved').length;
+    document.getElementById('stat-rejected-leave').textContent = allLeaveRequests.filter((r) => (r.status || '').toLowerCase() === 'rejected').length;
+  }
+
+  function renderHrLeaveTable() {
     const tbody = document.getElementById('hr-leave-table-body');
     const empty = document.getElementById('hr-leave-empty');
     tbody.innerHTML = '';
-
-    if (allLeaves.length === 0) { empty.style.display = 'block'; return; }
+    if (allLeaveRequests.length === 0) { empty.style.display = 'block'; return; }
     empty.style.display = 'none';
-
-    allLeaves.forEach((req) => {
+    allLeaveRequests.forEach((req) => {
       const tr = document.createElement('tr');
+      const isPending = (req.status || 'pending').toLowerCase() === 'pending';
       tr.innerHTML = `
-        <td><div class="table-name-cell"><span class="mini-avatar">${(req.employee_name || '?').charAt(0).toUpperCase()}</span>${escapeHtml(req.employee_name || '—')}</div></td>
+        <td><div class="table-name-cell"><span class="mini-avatar">${escapeHtml((req.employeeName || '?').charAt(0).toUpperCase())}</span>${escapeHtml(req.employeeName || '—')}</div></td>
         <td>${escapeHtml(req.leave_type || '—')}</td>
-        <td>${escapeHtml(req.start_date || '')}</td>
-        <td>${escapeHtml(req.end_date || '')}</td>
-        <td>${escapeHtml(req.remarks || '—')}</td>
+        <td>${escapeHtml(req.start_date || '')} – ${escapeHtml(req.end_date || '')}</td>
         <td>${statusBadge(req.status)}</td>
         <td>
-          ${
-            (req.status || '').toLowerCase() === 'pending'
-              ? `<div style="display:flex; gap:6px;">
-                   <button class="btn btn-accent btn-sm" data-decision="approved" data-id="${escapeHtml(String(req.id))}">Approve</button>
-                   <button class="btn btn-danger-ghost btn-sm" data-decision="rejected" data-id="${escapeHtml(String(req.id))}">Reject</button>
-                 </div>`
-              : '<span style="color:var(--text-400); font-size:12.5px;">No action needed</span>'
-          }
+          ${isPending ? `
+            <div style="display:flex; gap:6px;">
+              <button class="btn btn-accent btn-sm" data-decision="approved" data-id="${escapeHtml(String(req.id))}">Approve</button>
+              <button class="btn btn-danger-ghost btn-sm" data-decision="rejected" data-id="${escapeHtml(String(req.id))}">Reject</button>
+            </div>
+          ` : '<span style="color:var(--text-400);font-size:12.5px;">No action needed</span>'}
         </td>
       `;
       tbody.appendChild(tr);
     });
   }
 
-  document.getElementById('hr-leave-table-body').addEventListener('click', async (e) => {
+  function renderAllLeaveRequests() {
+    const tbody = document.getElementById('all-leave-requests-body');
+    let rows = allLeaveRequests;
+    if (leaveFilter !== 'all') rows = rows.filter((r) => (r.status || 'pending').toLowerCase() === leaveFilter);
+    tbody.innerHTML = '';
+    if (rows.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="5" style="color:var(--text-500);">No time off requests match this filter.</td></tr>`;
+      return;
+    }
+    rows.forEach((req) => {
+      const isPending = (req.status || 'pending').toLowerCase() === 'pending';
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${escapeHtml(req.employeeName || '—')}</td>
+        <td>${escapeHtml(req.start_date || '')}</td>
+        <td>${escapeHtml(req.end_date || '')}</td>
+        <td>${escapeHtml(req.leave_type || '—')}</td>
+        <td>
+          ${isPending ? `
+            <div class="status-action-row">
+              <button class="status-pill-btn approve" data-decision="approved" data-id="${escapeHtml(String(req.id))}">Approve</button>
+              <button class="status-pill-btn reject" data-decision="rejected" data-id="${escapeHtml(String(req.id))}">Reject</button>
+            </div>
+          ` : statusBadge(req.status)}
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  document.querySelectorAll('[data-leave-filter]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-leave-filter]').forEach((b) => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      leaveFilter = btn.getAttribute('data-leave-filter');
+      renderAllLeaveRequests();
+    });
+  });
+
+  /* Approve / Reject — wired on both tables via event delegation on <main> */
+  document.querySelector('.content').addEventListener('click', async (e) => {
     const btn = e.target.closest('[data-decision]');
     if (!btn) return;
-    const decision = btn.getAttribute('data-decision'); // "approved" or "rejected"
+    const decision = btn.getAttribute('data-decision'); // 'approved' | 'rejected'
     const id = btn.getAttribute('data-id');
-
     btn.disabled = true;
+    // NOTE: adjust method/body here if your Flask route expects something different,
+    // e.g. PATCH instead of PUT, or {decision} instead of {status}.
     const res = await apiRequest(ENDPOINTS.leaveDecision(id), {
       method: 'PUT',
       body: JSON.stringify({ status: decision }),
     });
     btn.disabled = false;
-
     if (res.networkError) { showToast("Can't reach the server. Decision not recorded.", 'error'); return; }
-    if (!res.ok) { showToast((res.data && res.data.error) || 'Could not update this request.', 'error'); return; }
-
-    showToast(`Request ${decision}.`, 'success');
-    loadLeaveRequests();
+    if (!res.ok) { showToast((res.data && (res.data.error || res.data.message)) || 'Could not update this request.', 'error'); return; }
+    showToast(`Request ${decision === 'approved' ? 'approved' : 'rejected'}.`, 'success');
+    await loadAllLeaveRequests();
   });
 });
 </script>

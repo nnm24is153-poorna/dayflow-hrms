@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DayFlow - Attendance</title>
+<style>
+body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; padding: 24px; }
+h1 { color: #0b1330; }
+table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; margin-top: 16px; }
+th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eef0f5; font-size: 14px; }
+th { background: #f8f9fc; color: #73798c; font-weight: 600; }
+.checkin-btn { padding: 10px 20px; background: #2ecc71; color: white; border: none; border-radius: 6px; cursor: pointer; margin-right: 10px; }
+.checkout-btn { background: #e74c3c; }
+</style>
+</head>
+<body>
+
+<h1>Attendance</h1>
+
+<div>
+  <button class="checkin-btn" onclick="checkIn()">Check In</button>
+  <button class="checkin-btn checkout-btn" onclick="checkOut()">Check Out</button>
+</div>
+
+<table id="attendanceTable">
+  <thead>
+    <tr><th>Date</th><th>Check In</th><th>Check Out</th><th>Status</th></tr>
+  </thead>
+  <tbody id="attendanceBody"></tbody>
+</table>
+
+<script>
+const API_URL = "http://127.0.0.1:5000";
+
+function getUser() {
+  const raw = localStorage.getItem('dayflow_user');
+  try { return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+}
+
+const user = getUser();
+if (!user) window.location.href = 'login.html';
+
+async function loadAttendance() {
+  const isAdmin = user.role === 'admin';
+  const today = new Date().toISOString().split('T')[0];
+
+  const url = isAdmin
+    ? `${API_URL}/attendance/date/${today}`
+    : `${API_URL}/attendance/employee/${user.id}`;
+
+  const res = await fetch(url);
+  const rows = await res.json();
+
+  const tbody = document.getElementById("attendanceBody");
+  tbody.innerHTML = "";
+
+  rows.forEach(r => {
+    const tr = document.createElement("tr");
+    if (isAdmin) {
+      tr.innerHTML = `<td>${r.name}</td><td>${r.check_in || '-'}</td><td>${r.check_out || '-'}</td><td>${r.status}</td>`;
+    } else {
+      tr.innerHTML = `<td>${r.date}</td><td>${r.check_in || '-'}</td><td>${r.check_out || '-'}</td><td>${r.status}</td>`;
+    }
+    tbody.appendChild(tr);
+  });
+}
+
+async function checkIn() {
+  await fetch(`${API_URL}/attendance/checkin`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ employee_id: user.id })
+  });
+  loadAttendance();
+}
+
+async function checkOut() {
+  await fetch(`${API_URL}/attendance/checkout`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ employee_id: user.id })
+  });
+  loadAttendance();
+}
+
+loadAttendance();
+</script>
+
+</body>
+</html>
